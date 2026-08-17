@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#151B23" />
+      <stop offset="100%" stop-color="#0B0F14" />
+    </linearGradient>
+    <linearGradient id="accent-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F8CFF" />
+      <stop offset="100%" stop-color="#38BDF8" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" rx="32" fill="url(#bg-grad)"/>
+  <rect x="2" y="2" width="396" height="396" rx="30" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="4"/>
+  <!-- Developer Silhouette / Code Graphic -->
+  <circle cx="200" cy="150" r="60" fill="none" stroke="url(#accent-grad)" stroke-width="8"/>
+  <path d="M 100 320 C 100 240, 300 240, 300 320" fill="none" stroke="url(#accent-grad)" stroke-width="8" stroke-linecap="round"/>
+  <text x="200" y="370" font-family="monospace" font-size="20" fill="#9CA6B5" text-anchor="middle">Saad Ali Khan</text>
+</svg>
