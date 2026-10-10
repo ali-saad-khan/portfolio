@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://saadalikhan.dev/sitemap.xml
+Sitemap: https://saadconsulting.tech/sitemap.xml
