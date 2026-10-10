@@ -8,6 +8,39 @@
 
 // --- 1. PROJECT DATASTORE FOR MODAL DETAILS ---
 const PROJECTS_DATA = {
+  fincore: {
+    title: "FinCore: Wallet & Double-Entry Ledger API",
+    category: "Laravel 12 / MySQL 8 / Redis / REST API",
+    badge: "Open Source: code on GitHub",
+    overview: "A versioned REST API for digital wallets backed by an immutable double-entry ledger. Credits, debits, transfers and reversals all produce balanced ledger entries, with a full audit trail.",
+    problem: "Money systems fail in quiet ways: double-submitted requests, two transfers locking each other into a deadlock, balances drifting from the ledger, edited history. Each needs a deliberate answer, not a hope.",
+    solution: "Every mutation runs in a DB transaction and must balance (SUM debits = SUM credits at 4-decimal bcmath precision) or it rolls back. Transfers lock wallets in a deterministic order to prevent deadlocks. An Idempotency-Key middleware replays the stored response for a repeated request and returns 409 for a changed payload. Reversals are compensating transactions, never edits. A scheduled reconciliation command checks cached balances against the ledger.",
+    techStack: ["PHP 8.3", "Laravel", "MySQL 8", "Redis", "Sanctum Auth", "Policies / RBAC", "PHPUnit"],
+    responsibilities: [
+      "Designed the schema: ULID wallets, ledger accounts, immutable transactions and ledger entries, idempotency keys, audit logs.",
+      "Built domain services (Wallet, Transfer, Ledger, Reconciliation) with typed exceptions for each failure mode.",
+      "Wrote feature tests covering concurrent debits, idempotency, reversals, transfers, reconciliation and auth.",
+      "Documented architecture and design decisions in docs/FINCORE_WALKTHROUGH.md."
+    ],
+    link: "https://github.com/ali-saad-khan/fincore"
+  },
+  mystore: {
+    title: "my-store: Production E-commerce Platform",
+    category: "Next.js / TypeScript / PostgreSQL",
+    badge: "Open Source: code on GitHub",
+    overview: "A complete e-commerce platform for the Pakistan market, built to extend to other markets without a rewrite: storefront, customer accounts and a full admin area.",
+    problem: "A store has to stay correct when real people use it: stock can't oversell, prices can't be tampered with, coupons can't be abused, and the catalog has to be discoverable by search engines.",
+    solution: "Cart and checkout re-validate live price and stock on every mutation. Order placement (stock decrement, payment, address snapshot, cart clearing) happens in one DB transaction. Stock changes go through an append-only movement ledger. Coupons are re-validated server-side at view and again inside checkout. Orders follow a full status lifecycle with automatic restock. Rate limiting, security headers and error boundaries are in place for production.",
+    techStack: ["Next.js (App Router)", "TypeScript", "PostgreSQL", "Supabase Auth", "Drizzle ORM", "Tailwind / shadcn/ui", "Playwright"],
+    responsibilities: [
+      "Modelled catalog, variants, inventory ledger, orders, coupons, reviews and wishlists with indexed foreign keys and migrations.",
+      "Built the admin dashboard: revenue, orders, customers, low-stock alerts, coupons, review moderation and analytics.",
+      "Added SEO: canonical URLs, OpenGraph, JSON-LD (Product, Rating, Breadcrumb), generated sitemap and robots rules.",
+      "Tested with 36 unit tests, 18 transaction-rollback integration tests and a Playwright test of the full purchase flow.",
+      "Documented architecture, database, environment and deployment in the repo."
+    ],
+    link: "https://github.com/ali-saad-khan/my-store"
+  },
   practical: {
     title: "PractiCal Backend Platform",
     category: "Laravel / PHP / MySQL / REST API",
@@ -29,7 +62,7 @@ const PROJECTS_DATA = {
     category: "WordPress / PHP / ACF / Elementor",
     badge: "Production Project (800+ Pages)",
     overview: "Large-scale modernization and restructuring of an enterprise WordPress website comprising over 800-900+ pages of dynamic content, multi-language pages, custom post types, and custom taxonomy structures.",
-    problem: "The existing legacy legacy installation suffered from slow database queries, fragmented plugin bloat, broken page hierarchies, and unmaintainable hardcoded content blocks across hundreds of pages.",
+    problem: "The existing installation suffered from slow database queries, fragmented plugin bloat, broken page hierarchies, and unmaintainable hardcoded content blocks across hundreds of pages.",
     solution: "Executed a comprehensive architectural overhaul using Advanced Custom Fields (ACF Pro), custom PHP post types, streamlined Elementor templates, custom REST API integration, and clean MySQL database migration scripts.",
     techStack: ["WordPress", "PHP", "ACF Pro", "Elementor", "Custom Post Types", "MySQL", "PHP-FPM", "Nginx"],
     responsibilities: [
@@ -287,6 +320,16 @@ function populateModal(data) {
 
   if (respEl) {
     respEl.innerHTML = data.responsibilities.map(r => `<li>${r}</li>`).join("");
+    if (data.link) {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = data.link;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.textContent = "Read the source on GitHub";
+      li.appendChild(a);
+      respEl.appendChild(li);
+    }
   }
 }
 
@@ -360,6 +403,11 @@ function showToast(message) {
 /* --------------------------------------------------------------------------
    8. CONTACT FORM HANDLER
    -------------------------------------------------------------------------- */
+// Paste a Formspree / Web3Forms endpoint here to receive messages directly.
+// While empty, the form falls back to opening the visitor's mail client.
+const CONTACT_ENDPOINT = "";
+const CONTACT_EMAIL = "saadalikhan.dev@gmail.com";
+
 function initContactForm() {
   const form = document.getElementById("contact-form");
   const statusEl = document.getElementById("form-status");
@@ -387,16 +435,40 @@ function initContactForm() {
       return;
     }
 
-    // Feedback for user (mailto fallback ready)
-    showFormStatus("Thank you for reaching out! Opening mail client...", "success");
+    // Honeypot: real visitors never fill this hidden field
+    const trap = form.querySelector('input[name="website"]');
+    if (trap && trap.value) return;
 
-    // Optional mailto fallback URL trigger
-    const mailtoUrl = `mailto:saadalikhan.dev@gmail.com?subject=${encodeURIComponent('Inquiry from Portfolio: ' + name)}&body=${encodeURIComponent(message + '\n\nSender Email: ' + email)}`;
+    const mailto = () => {
+      const subject = encodeURIComponent("Project inquiry from " + name);
+      const body = encodeURIComponent(message + "\n\nReply to: " + email);
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+    };
 
-    setTimeout(() => {
-      window.location.href = mailtoUrl;
-      form.reset();
-    }, 1000);
+    if (!CONTACT_ENDPOINT) {
+      showFormStatus("Opening your email app to send this message...", "success");
+      setTimeout(() => { mailto(); form.reset(); }, 600);
+      return;
+    }
+
+    const btn = form.querySelector('button[type="submit"]');
+    if (btn) btn.disabled = true;
+    showFormStatus("Sending...", "success");
+
+    fetch(CONTACT_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({ name, email, message })
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Request failed");
+        showFormStatus("Thanks! Your message is in. I'll reply by email.", "success");
+        form.reset();
+      })
+      .catch(() => {
+        showFormStatus(`Couldn't send. Please email ${CONTACT_EMAIL} directly.`, "error");
+      })
+      .finally(() => { if (btn) btn.disabled = false; });
   });
 
   function showFormStatus(msg, type) {
