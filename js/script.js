@@ -405,7 +405,7 @@ function showToast(message) {
    -------------------------------------------------------------------------- */
 // Paste a Formspree / Web3Forms endpoint here to receive messages directly.
 // While empty, the form falls back to opening the visitor's mail client.
-const CONTACT_ENDPOINT = "";
+const CONTACT_ENDPOINT = "https://formspree.io/f/xvkzrrev";
 const CONTACT_EMAIL = "saadalikhan.dev@gmail.com";
 
 function initContactForm() {
