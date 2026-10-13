@@ -113,6 +113,11 @@ document.addEventListener("DOMContentLoaded", () => {
   initCopyButtons();
   initContactForm();
   initCurrentYear();
+  initScrollProgress();
+  initTyped();
+  initCounters();
+  initMarquee();
+  initSpotlight();
 });
 
 /* --------------------------------------------------------------------------
@@ -233,6 +238,8 @@ function initScrollReveal() {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("revealed");
+        // Drop the stagger delay once shown so hover effects stay snappy
+        setTimeout(() => { entry.target.style.transitionDelay = "0s"; }, 1000);
         observer.unobserve(entry.target);
       }
     });
@@ -490,4 +497,86 @@ function initCurrentYear() {
   if (yearSpan) {
     yearSpan.textContent = new Date().getFullYear();
   }
+}
+
+/* --------------------------------------------------------------------------
+   10. MODERN VISUAL EFFECTS
+   -------------------------------------------------------------------------- */
+const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function initScrollProgress() {
+  const bar = document.getElementById("scroll-progress");
+  if (!bar) return;
+  const update = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.transform = `scaleX(${max > 0 ? Math.min(window.scrollY / max, 1) : 0})`;
+  };
+  window.addEventListener("scroll", update, { passive: true });
+  update();
+}
+
+function initTyped() {
+  const el = document.getElementById("typed-text");
+  if (!el || REDUCED_MOTION) return;
+  const phrases = ["secure backends", "payment & wallet systems", "REST APIs that scale", "e-commerce platforms"];
+  let phrase = 0, char = 0, deleting = false;
+
+  const tick = () => {
+    const text = phrases[phrase];
+    char += deleting ? -1 : 1;
+    el.textContent = text.slice(0, char);
+
+    let delay = deleting ? 35 : 70;
+    if (!deleting && char === text.length) { deleting = true; delay = 1800; }
+    else if (deleting && char === 0) { deleting = false; phrase = (phrase + 1) % phrases.length; delay = 350; }
+    setTimeout(tick, delay);
+  };
+  el.textContent = "";
+  setTimeout(tick, 400);
+}
+
+function initCounters() {
+  const counters = document.querySelectorAll("[data-count]");
+  if (!counters.length || REDUCED_MOTION || !("IntersectionObserver" in window)) return;
+
+  const run = (el) => {
+    const target = parseInt(el.dataset.count, 10);
+    const suffix = el.dataset.suffix || "";
+    const duration = 1400;
+    const start = performance.now();
+    const step = (now) => {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.round(target * eased) + suffix;
+      if (t < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) { run(entry.target); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.6 });
+  counters.forEach((el) => observer.observe(el));
+}
+
+function initMarquee() {
+  const track = document.getElementById("marquee-track");
+  if (!track) return;
+  // Duplicate the items so translating by -50% loops seamlessly
+  track.innerHTML += track.innerHTML;
+}
+
+function initSpotlight() {
+  const cards = document.querySelectorAll(
+    ".stat-card, .skill-category, .project-card, .service-card, .step-card, .contact-card, .timeline-card, .highlights-box"
+  );
+  cards.forEach((card) => {
+    card.addEventListener("pointermove", (e) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+      card.style.setProperty("--my", `${e.clientY - rect.top}px`);
+    });
+  });
 }
