@@ -2243,3 +2243,7 @@ img { height: auto; }
 :root[data-theme="light"] .prose pre { background: #14172a; }
 .prose .check-list { margin-left: 0; }
 .post-note { margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.92rem !important; }
+
+/* Hero terminal: wrap long lines instead of showing a scrollbar */
+.terminal-body { overflow-x: hidden; }
+.terminal-body pre, .terminal-body code { white-space: pre-wrap; overflow-wrap: anywhere; }
