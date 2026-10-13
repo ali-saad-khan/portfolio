@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Handle Payment Webhooks in Laravel Without Double-Processing | Saad Ali Khan</title>
+  <meta name="description" content="Payment gateways retry webhooks, so handlers must be idempotent. Verify signatures, store event IDs under a unique index and process inside one transaction.">
+  <meta name="author" content="Saad Ali Khan">
+  <meta name="theme-color" content="#07080D">
+  <link rel="canonical" href="https://saadconsulting.tech/blog/idempotent-payment-webhooks-laravel">
+  <meta name="google-site-verification" content="9KDuOrVRG-VaSCaI2UogYvvNn2mkYmluYzR9lXaMEKY" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:locale" content="en_US">
+  <link rel="alternate" hreflang="en" href="https://saadconsulting.tech/blog/idempotent-payment-webhooks-laravel">
+  <link rel="alternate" hreflang="x-default" href="https://saadconsulting.tech/blog/idempotent-payment-webhooks-laravel">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="me" href="https://github.com/ali-saad-khan">
+  <link rel="me" href="https://www.linkedin.com/in/saad-ali-khan-01976124a/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Saad Ali Khan">
+  <meta property="og:title" content="How to Handle Payment Webhooks in Laravel Without Double-Processing | Saad Ali Khan">
+  <meta property="og:description" content="Payment gateways retry webhooks, so handlers must be idempotent. Verify signatures, store event IDs under a unique index and process inside one transaction.">
+  <meta property="og:url" content="https://saadconsulting.tech/blog/idempotent-payment-webhooks-laravel">
+  <meta property="og:image" content="https://saadconsulting.tech/assets/images/og/blog-idempotent-payment-webhooks-laravel.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="How to Handle Payment Webhooks in Laravel Without Double-Processing | Saad Ali Khan">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image:alt" content="How to Handle Payment Webhooks in Laravel Without Double-Processing | Saad Ali Khan">
+  <meta name="twitter:title" content="How to Handle Payment Webhooks in Laravel Without Double-Processing | Saad Ali Khan">
+  <meta name="twitter:description" content="Payment gateways retry webhooks, so handlers must be idempotent. Verify signatures, store event IDs under a unique index and process inside one transaction.">
+  <meta name="twitter:image" content="https://saadconsulting.tech/assets/images/og/blog-idempotent-payment-webhooks-laravel.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://saadconsulting.tech/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://saadconsulting.tech/blog"}, {"@type": "ListItem", "position": 3, "name": "How to Handle Payment Webhooks in Laravel Without Double-Processing", "item": "https://saadconsulting.tech/blog/idempotent-payment-webhooks-laravel"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "How to Handle Payment Webhooks in Laravel Without Double-Processing", "description": "Payment gateways retry webhooks, so handlers must be idempotent. Verify signatures, store event IDs under a unique index and process inside one transaction.", "url": "https://saadconsulting.tech/blog/idempotent-payment-webhooks-laravel", "mainEntityOfPage": "https://saadconsulting.tech/blog/idempotent-payment-webhooks-laravel", "image": "https://saadconsulting.tech/assets/images/og/blog-idempotent-payment-webhooks-laravel.png", "inLanguage": "en", "datePublished": "2026-10-13", "dateModified": "2026-10-13", "author": {"@type": "Person", "@id": "https://saadconsulting.tech/#person", "name": "Saad Ali Khan", "url": "https://saadconsulting.tech/", "jobTitle": "Software Engineer", "worksFor": {"@type": "Organization", "name": "Technyx"}, "email": "saadalikhan0210@gmail.com", "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"}, "sameAs": ["https://github.com/ali-saad-khan", "https://www.linkedin.com/in/saad-ali-khan-01976124a/"], "knowsAbout": ["Laravel", "PHP", "MySQL", "REST APIs", "Payment integrations", "WordPress", "Shopify", "Next.js"]}, "publisher": {"@id": "https://saadconsulting.tech/#person"}, "copyrightHolder": {"@id": "https://saadconsulting.tech/#person"}, "copyrightYear": 2026, "isPartOf": {"@type": "Blog", "url": "https://saadconsulting.tech/blog"}}</script>
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="nav-brand" aria-label="Saad Ali Khan Portfolio Home"><span class="brand-tag">&lt;</span>SAAD<span class="brand-tag">/&gt;</span><span class="brand-dot"></span></a>
+      <div class="nav-right">
+        <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation"><a href="/" class="nav-link">Home</a><a href="/about" class="nav-link">About</a><a href="/services" class="nav-link">Services</a><a href="/projects" class="nav-link">Projects</a><a href="/blog" class="nav-link active">Blog</a><a href="/contact" class="nav-link">Contact</a></nav>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Light and Dark Mode">
+          <svg class="icon-svg icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg class="icon-svg icon-sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zM2 13h2a1 1 0 100-2H2a1 1 0 100 2zm18 0h2a1 1 0 100-2h-2a1 1 0 100 2zm-9 8h2a1 1 0 100-2h-2a1 1 0 100 2zm0-18h2a1 1 0 100-2h-2a1 1 0 100 2zM5.636 19.778l1.414-1.414a1 1 0 10-1.414-1.414L4.222 18.364a1 1 0 101.414 1.414zm14.142-14.142l-1.414 1.414a1 1 0 001.414 1.414l1.414-1.414a1 1 0 00-1.414-1.414zM4.222 5.636l1.414 1.414a1 1 0 001.414-1.414L5.636 4.222a1 1 0 00-1.414 1.414zm14.142 14.142l1.414-1.414a1 1 0 00-1.414-1.414l-1.414 1.414a1 1 0 001.414 1.414z"/></svg>
+        </button>
+        <a href="/contact" class="btn btn-primary btn-sm nav-cta">Hire Me</a>
+        <button class="mobile-toggle" aria-label="Toggle Mobile Navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog">Blog</a><span class="sep">/</span><span aria-current="page">Payments article</span></nav>
+        <div class="page-hero-grid">
+          <div class="page-hero-text">
+            <span class="section-tag">// PAYMENTS</span>
+            <h1 class="page-title">How to Handle Payment Webhooks in Laravel Without Double-Processing</h1>
+            <p class="page-lead">Payment gateways deliver webhooks at least once, not exactly once. If your handler credits an order every time it is called, a retry means a double credit. Here is a pattern that stays correct.</p>
+            <div class="chip-row"><span class="badge badge-cyan">6 min read</span><span class="badge badge-cyan">By Saad Ali Khan</span><span class="badge badge-cyan">Oct 2026</span></div>
+            
+          </div>
+          <figure class="cover-frame reveal"><img src="/assets/images/covers/payment-gateways.svg" width="1200" height="675" alt="How to Handle Payment Webhooks in Laravel Without Double-Processing" fetchpriority="high"></figure>
+        </div>
+      </div>
+    </section>
+    <section class="section tight">
+      <div class="container article-grid">
+        <article class="prose">
+
+<h2>Why webhooks arrive more than once</h2>
+<p>Most gateways retry a webhook when your server does not answer with a 2xx status quickly enough. Network timeouts, a deploy in the middle of a request, or a slow database can all make a successful delivery look like a failure to the sender. The sender then tries again, so your code sees the same event two or three times. Treat duplicates as normal, not as an edge case.</p>
+<h2>Step 1: verify the signature</h2>
+<p>Never trust a webhook just because it hits your URL. Compute the HMAC of the <strong>raw</strong> request body with your signing secret and compare it in constant time. Read the raw body, not re-encoded JSON, because re-encoding can change the bytes.</p>
+<pre><code>$payload   = $request-&gt;getContent();
+$signature = (string) $request-&gt;header('X-Signature');
+$expected  = hash_hmac('sha256', $payload, config('services.gateway.secret'));
+
+abort_unless(hash_equals($expected, $signature), 401);</code></pre>
+<p>The header name and hashing scheme differ per gateway, so follow your provider's documentation. The shape of the check stays the same.</p>
+<h2>Step 2: record the event ID under a unique index</h2>
+<p>Create a table that stores every processed event ID and put a <strong>unique index</strong> on it. The database, not your application code, then guarantees that an event is only accepted once, even when two requests arrive at the same moment.</p>
+<pre><code>Schema::create('webhook_events', function (Blueprint $table) {
+    $table-&gt;id();
+    $table-&gt;string('provider_event_id')-&gt;unique();
+    $table-&gt;string('type');
+    $table-&gt;timestamps();
+});</code></pre>
+<p>A check like "if the event exists, skip it" followed by an insert is not safe on its own. Two parallel requests can both pass the check. The unique index closes that gap.</p>
+<h2>Step 3: process and record in one transaction</h2>
+<pre><code>try {
+    DB::transaction(function () use ($event) {
+        WebhookEvent::create([
+            'provider_event_id' =&gt; $event['id'],
+            'type'              =&gt; $event['type'],
+        ]);
+
+        $this-&gt;applyEvent($event); // mark order paid, credit wallet, etc.
+    });
+} catch (UniqueConstraintViolationException $e) {
+    // Already handled. Fall through and return 2xx.
+}
+
+return response()-&gt;noContent();</code></pre>
+<p><code>UniqueConstraintViolationException</code> is available in current Laravel versions. On older ones, catch <code>QueryException</code> and check the error code. Because the event row and the business change commit together, a crash halfway through leaves neither behind, and the gateway's next retry processes the event cleanly.</p>
+<h2>Step 4: answer fast, work later if needed</h2>
+<p>Return a 2xx response as soon as the event is safely stored. If the real work is slow, such as sending emails or calling other APIs, dispatch a queued job from inside the handler and let the queue worker do it. Make that job idempotent too, since queues can also run a job twice.</p>
+<h2>Also handle out-of-order events</h2>
+<p>Events can arrive in a different order than they happened. Do not assume <code>payment.succeeded</code> always arrives after <code>payment.created</code>. Compare the state you hold with the state the event implies, and ignore events that would move an order backwards.</p>
+<h2>Checklist</h2>
+<ul class="check-list">
+<li>Signature verified against the raw body, with a constant-time compare</li>
+<li>Event ID stored under a unique database index</li>
+<li>Business change and event record committed in one transaction</li>
+<li>2xx returned quickly, slow work moved to idempotent queued jobs</li>
+<li>A test that sends the same event twice and asserts a single credit</li>
+</ul>
+<p>That last test is the cheapest insurance you can buy. If you want payment flows built and tested this way, see my <a href="/services/payment-gateway-integration">payment gateway integration service</a> or the <a href="/projects/payment-gateway-integrations">payment integrations case study</a>.</p>
+
+          <p class="post-note">Original article written by Saad Ali Khan. Code samples are illustrative and free to adapt in your own projects.</p>
+        </article>
+        <aside class="side-card-wrap">
+          <div class="side-card side-cta"><h3>Need help with this?</h3><p>Freelance Laravel &amp; PHP development, remote and worldwide.</p><a href="/contact" class="btn btn-primary btn-sm">Start a Project</a></div>
+          <div class="side-card"><h3>Related</h3><ul class="link-list"><li><a href="/services/payment-gateway-integration">Payment Gateway Integration</a></li><li><a href="/projects/payment-gateway-integrations">Case study: Payment Integrations</a></li></ul></div>
+          <div class="side-card"><h3>More articles</h3><ul class="link-list"><li><a href="/blog/wallet-ledger-design-mysql-laravel">Designing a Wallet Ledger in MySQL and Laravel: Integers, Transactions and Locks</a></li><li><a href="/blog/laravel-rest-api-design-checklist">A Practical Checklist for Designing a Laravel REST API</a></li><li><a href="/blog/fix-n-plus-one-queries-laravel">How to Find and Fix N+1 Queries in Laravel</a></li><li><a href="/blog/how-to-hire-a-laravel-developer">How to Hire a Freelance Laravel Developer: What to Check Before You Commit</a></li></ul></div>
+        </aside>
+      </div>
+    </section>
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Want this done right in your project?</h2>
+          <p>Send a short description and I&#x27;ll reply by email with questions or a suggested approach.</p>
+          <div class="hero-actions" style="justify-content:center">
+            <a href="/contact" class="btn btn-primary">Start a Project</a>
+            <a href="mailto:saadalikhan0210@gmail.com?subject=Project%20inquiry" class="btn btn-secondary">Email Me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <div class="footer-brand">&lt;SAAD ALI KHAN /&gt;</div>
+          <p>Laravel &amp; PHP engineer in Karachi, Pakistan. I build secure backends, REST APIs, payment systems and e-commerce platforms for clients worldwide.</p>
+          <a href="mailto:saadalikhan0210@gmail.com" class="footer-link">saadalikhan0210@gmail.com</a>
+        </div>
+        <div><h4 class="footer-heading">Pages</h4><ul><li><a href="/">Home</a></li><li><a href="/about">About</a></li><li><a href="/services">Services</a></li><li><a href="/projects">Projects</a></li><li><a href="/blog">Blog</a></li><li><a href="/contact">Contact</a></li></ul></div>
+        <div><h4 class="footer-heading">Services</h4><ul><li><a href="/services/laravel-development">Laravel Development</a></li><li><a href="/services/rest-api-development">REST API Development</a></li><li><a href="/services/payment-gateway-integration">Payment Gateway Integration</a></li><li><a href="/services/database-engineering">Database Engineering</a></li><li><a href="/services/wordpress-development">WordPress Development</a></li><li><a href="/services/ecommerce-development">E-commerce Development</a></li><li><a href="/services/production-debugging">Production Debugging &amp; Maintenance</a></li></ul></div>
+        <div><h4 class="footer-heading">Case studies</h4><ul><li><a href="/projects/fincore-wallet-ledger-api">FinCore</a></li><li><a href="/projects/my-store-ecommerce-platform">my-store</a></li><li><a href="/projects/practical-meal-subscription-backend">PractiCal</a></li><li><a href="/projects/enterprise-wordpress-revamp">WordPress Revamp</a></li><li><a href="/projects/shopify-store-customization">Shopify Store</a></li><li><a href="/projects/payment-gateway-integrations">Payment Integrations</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="copyright">&copy; <span id="current-year">2026</span> Saad Ali Khan. All rights reserved.</div>
+        <div class="footer-links">
+          <a href="https://github.com/ali-saad-khan" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+          <a href="https://www.linkedin.com/in/saad-ali-khan-01976124a/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>

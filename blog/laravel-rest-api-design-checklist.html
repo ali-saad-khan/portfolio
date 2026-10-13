@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Practical Checklist for Designing a Laravel REST API | Saad Ali Khan</title>
+  <meta name="description" content="A practical Laravel REST API checklist: versioning, validation, consistent errors, pagination, rate limiting, authentication, idempotency and tests.">
+  <meta name="author" content="Saad Ali Khan">
+  <meta name="theme-color" content="#07080D">
+  <link rel="canonical" href="https://saadconsulting.tech/blog/laravel-rest-api-design-checklist">
+  <meta name="google-site-verification" content="9KDuOrVRG-VaSCaI2UogYvvNn2mkYmluYzR9lXaMEKY" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:locale" content="en_US">
+  <link rel="alternate" hreflang="en" href="https://saadconsulting.tech/blog/laravel-rest-api-design-checklist">
+  <link rel="alternate" hreflang="x-default" href="https://saadconsulting.tech/blog/laravel-rest-api-design-checklist">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="me" href="https://github.com/ali-saad-khan">
+  <link rel="me" href="https://www.linkedin.com/in/saad-ali-khan-01976124a/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Saad Ali Khan">
+  <meta property="og:title" content="A Practical Checklist for Designing a Laravel REST API | Saad Ali Khan">
+  <meta property="og:description" content="A practical Laravel REST API checklist: versioning, validation, consistent errors, pagination, rate limiting, authentication, idempotency and tests.">
+  <meta property="og:url" content="https://saadconsulting.tech/blog/laravel-rest-api-design-checklist">
+  <meta property="og:image" content="https://saadconsulting.tech/assets/images/og/blog-laravel-rest-api-design-checklist.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A Practical Checklist for Designing a Laravel REST API | Saad Ali Khan">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image:alt" content="A Practical Checklist for Designing a Laravel REST API | Saad Ali Khan">
+  <meta name="twitter:title" content="A Practical Checklist for Designing a Laravel REST API | Saad Ali Khan">
+  <meta name="twitter:description" content="A practical Laravel REST API checklist: versioning, validation, consistent errors, pagination, rate limiting, authentication, idempotency and tests.">
+  <meta name="twitter:image" content="https://saadconsulting.tech/assets/images/og/blog-laravel-rest-api-design-checklist.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://saadconsulting.tech/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://saadconsulting.tech/blog"}, {"@type": "ListItem", "position": 3, "name": "A Practical Checklist for Designing a Laravel REST API", "item": "https://saadconsulting.tech/blog/laravel-rest-api-design-checklist"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "A Practical Checklist for Designing a Laravel REST API", "description": "A practical Laravel REST API checklist: versioning, validation, consistent errors, pagination, rate limiting, authentication, idempotency and tests.", "url": "https://saadconsulting.tech/blog/laravel-rest-api-design-checklist", "mainEntityOfPage": "https://saadconsulting.tech/blog/laravel-rest-api-design-checklist", "image": "https://saadconsulting.tech/assets/images/og/blog-laravel-rest-api-design-checklist.png", "inLanguage": "en", "datePublished": "2026-10-13", "dateModified": "2026-10-13", "author": {"@type": "Person", "@id": "https://saadconsulting.tech/#person", "name": "Saad Ali Khan", "url": "https://saadconsulting.tech/", "jobTitle": "Software Engineer", "worksFor": {"@type": "Organization", "name": "Technyx"}, "email": "saadalikhan0210@gmail.com", "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"}, "sameAs": ["https://github.com/ali-saad-khan", "https://www.linkedin.com/in/saad-ali-khan-01976124a/"], "knowsAbout": ["Laravel", "PHP", "MySQL", "REST APIs", "Payment integrations", "WordPress", "Shopify", "Next.js"]}, "publisher": {"@id": "https://saadconsulting.tech/#person"}, "copyrightHolder": {"@id": "https://saadconsulting.tech/#person"}, "copyrightYear": 2026, "isPartOf": {"@type": "Blog", "url": "https://saadconsulting.tech/blog"}}</script>
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="nav-brand" aria-label="Saad Ali Khan Portfolio Home"><span class="brand-tag">&lt;</span>SAAD<span class="brand-tag">/&gt;</span><span class="brand-dot"></span></a>
+      <div class="nav-right">
+        <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation"><a href="/" class="nav-link">Home</a><a href="/about" class="nav-link">About</a><a href="/services" class="nav-link">Services</a><a href="/projects" class="nav-link">Projects</a><a href="/blog" class="nav-link active">Blog</a><a href="/contact" class="nav-link">Contact</a></nav>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Light and Dark Mode">
+          <svg class="icon-svg icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg class="icon-svg icon-sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zM2 13h2a1 1 0 100-2H2a1 1 0 100 2zm18 0h2a1 1 0 100-2h-2a1 1 0 100 2zm-9 8h2a1 1 0 100-2h-2a1 1 0 100 2zm0-18h2a1 1 0 100-2h-2a1 1 0 100 2zM5.636 19.778l1.414-1.414a1 1 0 10-1.414-1.414L4.222 18.364a1 1 0 101.414 1.414zm14.142-14.142l-1.414 1.414a1 1 0 001.414 1.414l1.414-1.414a1 1 0 00-1.414-1.414zM4.222 5.636l1.414 1.414a1 1 0 001.414-1.414L5.636 4.222a1 1 0 00-1.414 1.414zm14.142 14.142l1.414-1.414a1 1 0 00-1.414-1.414l-1.414 1.414a1 1 0 001.414 1.414z"/></svg>
+        </button>
+        <a href="/contact" class="btn btn-primary btn-sm nav-cta">Hire Me</a>
+        <button class="mobile-toggle" aria-label="Toggle Mobile Navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog">Blog</a><span class="sep">/</span><span aria-current="page">APIs article</span></nav>
+        <div class="page-hero-grid">
+          <div class="page-hero-text">
+            <span class="section-tag">// APIS</span>
+            <h1 class="page-title">A Practical Checklist for Designing a Laravel REST API</h1>
+            <p class="page-lead">Good APIs feel boring to use: predictable URLs, predictable errors, predictable pagination. This is the checklist I run through before an API goes to production.</p>
+            <div class="chip-row"><span class="badge badge-cyan">6 min read</span><span class="badge badge-cyan">By Saad Ali Khan</span><span class="badge badge-cyan">Oct 2026</span></div>
+            
+          </div>
+          <figure class="cover-frame reveal"><img src="/assets/images/covers/rest-api.svg" width="1200" height="675" alt="A Practical Checklist for Designing a Laravel REST API" fetchpriority="high"></figure>
+        </div>
+      </div>
+    </section>
+    <section class="section tight">
+      <div class="container article-grid">
+        <article class="prose">
+
+<h2>1. Version from day one</h2>
+<p>Put the version in the path, such as <code>/api/v1/orders</code>. Changing a response shape later is painful for existing clients, and a version prefix gives you room to do it without breaking anyone.</p>
+<h2>2. Validate input with Form Requests</h2>
+<p>Keep validation out of controllers. A Form Request class holds the rules, authorizes the caller, and returns a 422 response with field-level errors automatically.</p>
+<pre><code>public function rules(): array
+{
+    return [
+        'email'  =&gt; ['required', 'email'],
+        'amount' =&gt; ['required', 'integer', 'min:1'],
+    ];
+}</code></pre>
+<h2>3. Shape output with API Resources</h2>
+<p>Return data through Eloquent API Resources rather than raw models. You control exactly which fields are exposed, so adding a column to a table never leaks it into the API by accident.</p>
+<h2>4. Use one error format everywhere</h2>
+<p>Clients should not have to guess how errors look. Pick a single structure and use it for validation errors, authentication failures and server errors alike, with correct HTTP status codes: 400 or 422 for bad input, 401 for unauthenticated, 403 for forbidden, 404 for missing, 409 for conflicts, 429 for rate limits.</p>
+<pre><code>{
+  "message": "The given data was invalid.",
+  "errors": { "amount": ["The amount must be at least 1."] }
+}</code></pre>
+<h2>5. Paginate every list</h2>
+<p>An endpoint that returns "all orders" works in development and falls over in production. Use <code>paginate()</code> or cursor pagination for large, fast-changing data, and cap the page size on the server.</p>
+<h2>6. Authenticate and authorize deliberately</h2>
+<p>Laravel Sanctum covers token authentication for most first-party and mobile clients. Authentication says who the caller is; policies decide what they may do. Check ownership on every resource lookup so one user can never fetch another user's record by changing an ID.</p>
+<h2>7. Rate limit</h2>
+<p>Apply the built-in throttle middleware, with stricter limits on login and other sensitive endpoints. Return the standard 429 status so clients can back off.</p>
+<h2>8. Make unsafe retries safe</h2>
+<p>For operations that create things or move money, accept an <code>Idempotency-Key</code> header and store it under a unique index, so a client retry returns the first result instead of repeating the action. The same idea is covered in my post on <a href="/blog/idempotent-payment-webhooks-laravel">payment webhooks</a>.</p>
+<h2>9. Avoid N+1 queries in resources</h2>
+<p>Resources that touch relationships can trigger one query per row. Eager load with <code>with()</code> in the controller. See <a href="/blog/fix-n-plus-one-queries-laravel">how to find and fix N+1 queries</a>.</p>
+<h2>10. Write feature tests for the contract</h2>
+<ul class="check-list">
+<li>Happy path returns the documented status and JSON shape</li>
+<li>Invalid input returns 422 with field errors</li>
+<li>Unauthenticated and unauthorized calls are rejected</li>
+<li>Another user's resource returns 403 or 404</li>
+</ul>
+<p>Need an API built to this standard? Have a look at the <a href="/services/rest-api-development">REST API development service</a>.</p>
+
+          <p class="post-note">Original article written by Saad Ali Khan. Code samples are illustrative and free to adapt in your own projects.</p>
+        </article>
+        <aside class="side-card-wrap">
+          <div class="side-card side-cta"><h3>Need help with this?</h3><p>Freelance Laravel &amp; PHP development, remote and worldwide.</p><a href="/contact" class="btn btn-primary btn-sm">Start a Project</a></div>
+          <div class="side-card"><h3>Related</h3><ul class="link-list"><li><a href="/services/rest-api-development">REST API Development</a></li><li><a href="/projects/fincore-wallet-ledger-api">Case study: FinCore</a></li></ul></div>
+          <div class="side-card"><h3>More articles</h3><ul class="link-list"><li><a href="/blog/idempotent-payment-webhooks-laravel">How to Handle Payment Webhooks in Laravel Without Double-Processing</a></li><li><a href="/blog/wallet-ledger-design-mysql-laravel">Designing a Wallet Ledger in MySQL and Laravel: Integers, Transactions and Locks</a></li><li><a href="/blog/fix-n-plus-one-queries-laravel">How to Find and Fix N+1 Queries in Laravel</a></li><li><a href="/blog/how-to-hire-a-laravel-developer">How to Hire a Freelance Laravel Developer: What to Check Before You Commit</a></li></ul></div>
+        </aside>
+      </div>
+    </section>
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Want this done right in your project?</h2>
+          <p>Send a short description and I&#x27;ll reply by email with questions or a suggested approach.</p>
+          <div class="hero-actions" style="justify-content:center">
+            <a href="/contact" class="btn btn-primary">Start a Project</a>
+            <a href="mailto:saadalikhan0210@gmail.com?subject=Project%20inquiry" class="btn btn-secondary">Email Me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <div class="footer-brand">&lt;SAAD ALI KHAN /&gt;</div>
+          <p>Laravel &amp; PHP engineer in Karachi, Pakistan. I build secure backends, REST APIs, payment systems and e-commerce platforms for clients worldwide.</p>
+          <a href="mailto:saadalikhan0210@gmail.com" class="footer-link">saadalikhan0210@gmail.com</a>
+        </div>
+        <div><h4 class="footer-heading">Pages</h4><ul><li><a href="/">Home</a></li><li><a href="/about">About</a></li><li><a href="/services">Services</a></li><li><a href="/projects">Projects</a></li><li><a href="/blog">Blog</a></li><li><a href="/contact">Contact</a></li></ul></div>
+        <div><h4 class="footer-heading">Services</h4><ul><li><a href="/services/laravel-development">Laravel Development</a></li><li><a href="/services/rest-api-development">REST API Development</a></li><li><a href="/services/payment-gateway-integration">Payment Gateway Integration</a></li><li><a href="/services/database-engineering">Database Engineering</a></li><li><a href="/services/wordpress-development">WordPress Development</a></li><li><a href="/services/ecommerce-development">E-commerce Development</a></li><li><a href="/services/production-debugging">Production Debugging &amp; Maintenance</a></li></ul></div>
+        <div><h4 class="footer-heading">Case studies</h4><ul><li><a href="/projects/fincore-wallet-ledger-api">FinCore</a></li><li><a href="/projects/my-store-ecommerce-platform">my-store</a></li><li><a href="/projects/practical-meal-subscription-backend">PractiCal</a></li><li><a href="/projects/enterprise-wordpress-revamp">WordPress Revamp</a></li><li><a href="/projects/shopify-store-customization">Shopify Store</a></li><li><a href="/projects/payment-gateway-integrations">Payment Integrations</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="copyright">&copy; <span id="current-year">2026</span> Saad Ali Khan. All rights reserved.</div>
+        <div class="footer-links">
+          <a href="https://github.com/ali-saad-khan" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+          <a href="https://www.linkedin.com/in/saad-ali-khan-01976124a/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>

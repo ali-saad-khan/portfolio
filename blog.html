@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laravel &amp; API Engineering Blog | Saad Ali Khan</title>
+  <meta name="description" content="Original articles by a Laravel &amp; PHP developer on payment webhooks, wallet ledgers, REST API design, performance and hiring a Laravel developer.">
+  <meta name="author" content="Saad Ali Khan">
+  <meta name="theme-color" content="#07080D">
+  <link rel="canonical" href="https://saadconsulting.tech/blog">
+  <meta name="google-site-verification" content="9KDuOrVRG-VaSCaI2UogYvvNn2mkYmluYzR9lXaMEKY" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:locale" content="en_US">
+  <link rel="alternate" hreflang="en" href="https://saadconsulting.tech/blog">
+  <link rel="alternate" hreflang="x-default" href="https://saadconsulting.tech/blog">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="me" href="https://github.com/ali-saad-khan">
+  <link rel="me" href="https://www.linkedin.com/in/saad-ali-khan-01976124a/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Saad Ali Khan">
+  <meta property="og:title" content="Laravel &amp; API Engineering Blog | Saad Ali Khan">
+  <meta property="og:description" content="Original articles by a Laravel &amp; PHP developer on payment webhooks, wallet ledgers, REST API design, performance and hiring a Laravel developer.">
+  <meta property="og:url" content="https://saadconsulting.tech/blog">
+  <meta property="og:image" content="https://saadconsulting.tech/assets/images/og/blog.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Laravel &amp; API Engineering Blog | Saad Ali Khan">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image:alt" content="Laravel &amp; API Engineering Blog | Saad Ali Khan">
+  <meta name="twitter:title" content="Laravel &amp; API Engineering Blog | Saad Ali Khan">
+  <meta name="twitter:description" content="Original articles by a Laravel &amp; PHP developer on payment webhooks, wallet ledgers, REST API design, performance and hiring a Laravel developer.">
+  <meta name="twitter:image" content="https://saadconsulting.tech/assets/images/og/blog.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://saadconsulting.tech/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://saadconsulting.tech/blog"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Blog", "name": "Saad Ali Khan: Laravel & API Engineering Blog", "url": "https://saadconsulting.tech/blog", "author": {"@id": "https://saadconsulting.tech/#person"}, "inLanguage": "en", "blogPost": [{"@type": "BlogPosting", "headline": "How to Handle Payment Webhooks in Laravel Without Double-Processing", "url": "https://saadconsulting.tech/blog/idempotent-payment-webhooks-laravel"}, {"@type": "BlogPosting", "headline": "Designing a Wallet Ledger in MySQL and Laravel: Integers, Transactions and Locks", "url": "https://saadconsulting.tech/blog/wallet-ledger-design-mysql-laravel"}, {"@type": "BlogPosting", "headline": "A Practical Checklist for Designing a Laravel REST API", "url": "https://saadconsulting.tech/blog/laravel-rest-api-design-checklist"}, {"@type": "BlogPosting", "headline": "How to Find and Fix N+1 Queries in Laravel", "url": "https://saadconsulting.tech/blog/fix-n-plus-one-queries-laravel"}, {"@type": "BlogPosting", "headline": "How to Hire a Freelance Laravel Developer: What to Check Before You Commit", "url": "https://saadconsulting.tech/blog/how-to-hire-a-laravel-developer"}]}</script>
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="nav-brand" aria-label="Saad Ali Khan Portfolio Home"><span class="brand-tag">&lt;</span>SAAD<span class="brand-tag">/&gt;</span><span class="brand-dot"></span></a>
+      <div class="nav-right">
+        <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation"><a href="/" class="nav-link">Home</a><a href="/about" class="nav-link">About</a><a href="/services" class="nav-link">Services</a><a href="/projects" class="nav-link">Projects</a><a href="/blog" class="nav-link active">Blog</a><a href="/contact" class="nav-link">Contact</a></nav>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Light and Dark Mode">
+          <svg class="icon-svg icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg class="icon-svg icon-sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zM2 13h2a1 1 0 100-2H2a1 1 0 100 2zm18 0h2a1 1 0 100-2h-2a1 1 0 100 2zm-9 8h2a1 1 0 100-2h-2a1 1 0 100 2zm0-18h2a1 1 0 100-2h-2a1 1 0 100 2zM5.636 19.778l1.414-1.414a1 1 0 10-1.414-1.414L4.222 18.364a1 1 0 101.414 1.414zm14.142-14.142l-1.414 1.414a1 1 0 001.414 1.414l1.414-1.414a1 1 0 00-1.414-1.414zM4.222 5.636l1.414 1.414a1 1 0 001.414-1.414L5.636 4.222a1 1 0 00-1.414 1.414zm14.142 14.142l1.414-1.414a1 1 0 00-1.414-1.414l-1.414 1.414a1 1 0 001.414 1.414z"/></svg>
+        </button>
+        <a href="/contact" class="btn btn-primary btn-sm nav-cta">Hire Me</a>
+        <button class="mobile-toggle" aria-label="Toggle Mobile Navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><span aria-current="page">Blog</span></nav>
+        <div class="page-hero-grid no-art">
+          <div class="page-hero-text">
+            <span class="section-tag">// BLOG</span>
+            <h1 class="page-title">Laravel, API and Payments Engineering Notes</h1>
+            <p class="page-lead">Practical, original write-ups on building secure Laravel backends: payment webhooks, wallet ledgers, REST API design and performance. Written by me, from how I build software.</p>
+            
+            
+          </div>
+          
+        </div>
+      </div>
+    </section>
+    <section class="section tight">
+      <div class="container"><div class="projects-grid"><article class="project-card media-card reveal">
+  <a class="card-media" href="/blog/idempotent-payment-webhooks-laravel" tabindex="-1" aria-hidden="true"><img src="/assets/images/covers/payment-gateways.svg" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
+  <div class="project-top">
+    <div class="project-meta"><span class="project-category">Payments</span><span class="badge badge-cyan">6 min read</span></div>
+    <h3 class="project-title"><a href="/blog/idempotent-payment-webhooks-laravel">How to Handle Payment Webhooks in Laravel Without Double-Processing</a></h3>
+    <p class="project-description">Payment gateways deliver webhooks at least once, not exactly once. If your handler credits an order every time it is called, a retry means a double credit. Here is a pattern that stays correct.</p>
+  </div>
+  <div class="project-bottom"><a href="/blog/idempotent-payment-webhooks-laravel" class="btn btn-primary btn-sm">Read article</a></div>
+</article><article class="project-card media-card reveal">
+  <a class="card-media" href="/blog/wallet-ledger-design-mysql-laravel" tabindex="-1" aria-hidden="true"><img src="/assets/images/covers/database-schema.svg" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
+  <div class="project-top">
+    <div class="project-meta"><span class="project-category">Database</span><span class="badge badge-cyan">7 min read</span></div>
+    <h3 class="project-title"><a href="/blog/wallet-ledger-design-mysql-laravel">Designing a Wallet Ledger in MySQL and Laravel: Integers, Transactions and Locks</a></h3>
+    <p class="project-description">A wallet is a ledger problem, not a CRUD problem. The rules that keep it correct are simple, but skipping any one of them leads to lost or duplicated money.</p>
+  </div>
+  <div class="project-bottom"><a href="/blog/wallet-ledger-design-mysql-laravel" class="btn btn-primary btn-sm">Read article</a></div>
+</article><article class="project-card media-card reveal">
+  <a class="card-media" href="/blog/laravel-rest-api-design-checklist" tabindex="-1" aria-hidden="true"><img src="/assets/images/covers/rest-api.svg" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
+  <div class="project-top">
+    <div class="project-meta"><span class="project-category">APIs</span><span class="badge badge-cyan">6 min read</span></div>
+    <h3 class="project-title"><a href="/blog/laravel-rest-api-design-checklist">A Practical Checklist for Designing a Laravel REST API</a></h3>
+    <p class="project-description">Good APIs feel boring to use: predictable URLs, predictable errors, predictable pagination. This is the checklist I run through before an API goes to production.</p>
+  </div>
+  <div class="project-bottom"><a href="/blog/laravel-rest-api-design-checklist" class="btn btn-primary btn-sm">Read article</a></div>
+</article><article class="project-card media-card reveal">
+  <a class="card-media" href="/blog/fix-n-plus-one-queries-laravel" tabindex="-1" aria-hidden="true"><img src="/assets/images/covers/laravel-code.svg" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
+  <div class="project-top">
+    <div class="project-meta"><span class="project-category">Performance</span><span class="badge badge-cyan">5 min read</span></div>
+    <h3 class="project-title"><a href="/blog/fix-n-plus-one-queries-laravel">How to Find and Fix N+1 Queries in Laravel</a></h3>
+    <p class="project-description">A page that runs fine with ten rows and crawls with ten thousand is often an N+1 problem. It is one of the most common causes of slow Laravel pages, and one of the easiest to fix.</p>
+  </div>
+  <div class="project-bottom"><a href="/blog/fix-n-plus-one-queries-laravel" class="btn btn-primary btn-sm">Read article</a></div>
+</article><article class="project-card media-card reveal">
+  <a class="card-media" href="/blog/how-to-hire-a-laravel-developer" tabindex="-1" aria-hidden="true"><img src="/assets/images/covers/about.svg" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
+  <div class="project-top">
+    <div class="project-meta"><span class="project-category">Hiring</span><span class="badge badge-cyan">5 min read</span></div>
+    <h3 class="project-title"><a href="/blog/how-to-hire-a-laravel-developer">How to Hire a Freelance Laravel Developer: What to Check Before You Commit</a></h3>
+    <p class="project-description">Plenty of developers can make a Laravel page work. Fewer can build something that stays correct as it grows. These are the checks that separate the two.</p>
+  </div>
+  <div class="project-bottom"><a href="/blog/how-to-hire-a-laravel-developer" class="btn btn-primary btn-sm">Read article</a></div>
+</article></div></div>
+    </section>
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Need this built properly?</h2>
+          <p>If one of these topics is what your project needs, send me a short description and I&#x27;ll reply by email.</p>
+          <div class="hero-actions" style="justify-content:center">
+            <a href="/contact" class="btn btn-primary">Start a Project</a>
+            <a href="mailto:saadalikhan0210@gmail.com?subject=Project%20inquiry" class="btn btn-secondary">Email Me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <div class="footer-brand">&lt;SAAD ALI KHAN /&gt;</div>
+          <p>Laravel &amp; PHP engineer in Karachi, Pakistan. I build secure backends, REST APIs, payment systems and e-commerce platforms for clients worldwide.</p>
+          <a href="mailto:saadalikhan0210@gmail.com" class="footer-link">saadalikhan0210@gmail.com</a>
+        </div>
+        <div><h4 class="footer-heading">Pages</h4><ul><li><a href="/">Home</a></li><li><a href="/about">About</a></li><li><a href="/services">Services</a></li><li><a href="/projects">Projects</a></li><li><a href="/blog">Blog</a></li><li><a href="/contact">Contact</a></li></ul></div>
+        <div><h4 class="footer-heading">Services</h4><ul><li><a href="/services/laravel-development">Laravel Development</a></li><li><a href="/services/rest-api-development">REST API Development</a></li><li><a href="/services/payment-gateway-integration">Payment Gateway Integration</a></li><li><a href="/services/database-engineering">Database Engineering</a></li><li><a href="/services/wordpress-development">WordPress Development</a></li><li><a href="/services/ecommerce-development">E-commerce Development</a></li><li><a href="/services/production-debugging">Production Debugging &amp; Maintenance</a></li></ul></div>
+        <div><h4 class="footer-heading">Case studies</h4><ul><li><a href="/projects/fincore-wallet-ledger-api">FinCore</a></li><li><a href="/projects/my-store-ecommerce-platform">my-store</a></li><li><a href="/projects/practical-meal-subscription-backend">PractiCal</a></li><li><a href="/projects/enterprise-wordpress-revamp">WordPress Revamp</a></li><li><a href="/projects/shopify-store-customization">Shopify Store</a></li><li><a href="/projects/payment-gateway-integrations">Payment Integrations</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="copyright">&copy; <span id="current-year">2026</span> Saad Ali Khan. All rights reserved.</div>
+        <div class="footer-links">
+          <a href="https://github.com/ali-saad-khan" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+          <a href="https://www.linkedin.com/in/saad-ali-khan-01976124a/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>

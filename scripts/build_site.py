@@ -4,6 +4,7 @@ sitemap.xml and per-page social images. Run: python3 scripts/make_images.py && p
 Pass --og to (re)render the 1200x630 social images with headless Chrome."""
 import html as _html, json, os, re, shutil, subprocess, sys, tempfile
 from content import *  # noqa
+from blog_content import POSTS
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 TODAY = "2026-10-13"
@@ -41,7 +42,7 @@ PERSON = {"@type": "Person", "@id": SITE + "/#person", "name": BRAND, "url": SIT
           "sameAs": [GITHUB, LINKEDIN],
           "knowsAbout": ["Laravel", "PHP", "MySQL", "REST APIs", "Payment integrations", "WordPress", "Shopify", "Next.js"]}
 
-NAV = [("Home", "/"), ("About", "/about"), ("Services", "/services"), ("Projects", "/projects"), ("Contact", "/contact")]
+NAV = [("Home", "/"), ("About", "/about"), ("Services", "/services"), ("Projects", "/projects"), ("Blog", "/blog"), ("Contact", "/contact")]
 
 
 def page(path, title, desc, body, active, schema=(), og=None, robots=None):
@@ -459,6 +460,69 @@ def build_contact():
                       body, "Contact", schema, og="contact")
 
 
+def post_card(b):
+    return f'''<article class="project-card media-card reveal">
+  <a class="card-media" href="/blog/{b["slug"]}" tabindex="-1" aria-hidden="true"><img src="/assets/images/covers/{b["cover"]}.svg" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
+  <div class="project-top">
+    <div class="project-meta"><span class="project-category">{e(b["tag"])}</span><span class="badge badge-cyan">{b["read"]} min read</span></div>
+    <h3 class="project-title"><a href="/blog/{b["slug"]}">{e(b["title"])}</a></h3>
+    <p class="project-description">{h(b["lead"])}</p>
+  </div>
+  <div class="project-bottom"><a href="/blog/{b["slug"]}" class="btn btn-primary btn-sm">Read article</a></div>
+</article>'''
+
+
+def build_blog_index():
+    path = "/blog"
+    items = [("Home", "/"), ("Blog", path)]
+    body = hero(items, "// BLOG", "Laravel, API and Payments Engineering Notes",
+                "Practical, original write-ups on building secure Laravel backends: payment webhooks, wallet ledgers, REST API design and performance. Written by me, from how I build software.", None)
+    body += f'''
+    <section class="section tight">
+      <div class="container"><div class="projects-grid">{"".join(post_card(b) for b in POSTS)}</div></div>
+    </section>
+{cta("Need this built properly?", "If one of these topics is what your project needs, send me a short description and I'll reply by email.")}'''
+    schema = [crumbs(items),
+              {"@context": "https://schema.org", "@type": "Blog", "name": "Saad Ali Khan: Laravel & API Engineering Blog", "url": SITE + path,
+               "author": {"@id": SITE + "/#person"}, "inLanguage": "en",
+               "blogPost": [{"@type": "BlogPosting", "headline": b["title"], "url": f"{SITE}/blog/{b['slug']}"} for b in POSTS]}]
+    return path, page(path, "Laravel & API Engineering Blog",
+                      "Original articles by a Laravel & PHP developer on payment webhooks, wallet ledgers, REST API design, performance and hiring a Laravel developer.",
+                      body, "Blog", schema, og="blog")
+
+
+def build_post(b):
+    path = f"/blog/{b['slug']}"
+    items = [("Home", "/"), ("Blog", "/blog"), (b["tag"], path)]
+    items[2] = (b["title"], path)
+    body = hero(items[:2] + [(b["tag"] + " article", path)], "// " + b["tag"].upper(), b["title"], b["lead"], b["cover"], b["title"],
+                "", meta_chips=(f"{b['read']} min read", "By Saad Ali Khan", "Oct 2026"))
+    svc, case = SMAP[b["related_service"]], PMAP[b["related_case"]]
+    others = "".join(f'<li><a href="/blog/{o["slug"]}">{e(o["title"])}</a></li>' for o in POSTS if o["slug"] != b["slug"])
+    body += f'''
+    <section class="section tight">
+      <div class="container article-grid">
+        <article class="prose">
+{b["body"]}
+          <p class="post-note">Original article written by Saad Ali Khan. Code samples are illustrative and free to adapt in your own projects.</p>
+        </article>
+        <aside class="side-card-wrap">
+          <div class="side-card side-cta"><h3>Need help with this?</h3><p>Freelance Laravel &amp; PHP development, remote and worldwide.</p><a href="/contact" class="btn btn-primary btn-sm">Start a Project</a></div>
+          <div class="side-card"><h3>Related</h3><ul class="link-list"><li><a href="/services/{svc["slug"]}">{e(svc["name"])}</a></li><li><a href="/projects/{case["slug"]}">Case study: {e(case["short"])}</a></li></ul></div>
+          <div class="side-card"><h3>More articles</h3><ul class="link-list">{others}</ul></div>
+        </aside>
+      </div>
+    </section>
+{cta("Want this done right in your project?", "Send a short description and I'll reply by email with questions or a suggested approach.")}'''
+    img = f"{SITE}/assets/images/og/blog-{b['slug']}.png"
+    schema = [crumbs(items),
+              {"@context": "https://schema.org", "@type": "BlogPosting", "headline": b["title"], "description": b["meta"],
+               "url": SITE + path, "mainEntityOfPage": SITE + path, "image": img, "inLanguage": "en",
+               "datePublished": TODAY, "dateModified": TODAY, "author": PERSON, "publisher": {"@id": SITE + "/#person"},
+               "copyrightHolder": {"@id": SITE + "/#person"}, "copyrightYear": 2026, "isPartOf": {"@type": "Blog", "url": SITE + "/blog"}}]
+    return path, page(path, b["title"], b["meta"], body, "Blog", schema, og="blog-" + b["slug"])
+
+
 # ---------------------------------------------------------------- output
 def write(path, content):
     f = os.path.join(ROOT, path.lstrip("/") + ".html")
@@ -469,7 +533,7 @@ def write(path, content):
 
 
 def sitemap(paths):
-    prio = {"/": "1.0", "/about": "0.8", "/projects": "0.9", "/services": "0.9", "/contact": "0.7"}
+    prio = {"/": "1.0", "/about": "0.8", "/projects": "0.9", "/services": "0.9", "/contact": "0.7", "/blog": "0.8"}
     rows = "".join(f"  <url>\n    <loc>{SITE}{p if p != '/' else '/'}</loc>\n    <lastmod>{TODAY}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>{prio.get(p, '0.8')}</priority>\n  </url>\n" for p in paths)
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.w3.org/2000/svg">\n'.replace("http://www.w3.org/2000/svg", "http://www.sitemaps.org/schemas/sitemap/0.9") + rows + "</urlset>\n"
 
@@ -493,7 +557,8 @@ def render_og(slug, title, cover):
 
 
 def main():
-    pages = [build_about(), build_projects_index(), build_services_index(), build_contact()]
+    pages = [build_about(), build_projects_index(), build_services_index(), build_contact(), build_blog_index()]
+    pages += [build_post(b) for b in POSTS]
     pages += [build_case_study(p) for p in PROJECTS] + [build_service(s) for s in SERVICES]
     for path, content in pages:
         write(path, content)
@@ -503,6 +568,7 @@ def main():
     if "--og" in sys.argv:
         jobs = [("about", "About Saad Ali Khan", "about"), ("projects", "Projects & Case Studies", "fincore-ledger"),
                 ("services", "Laravel, API & E-commerce Services", "rest-api"), ("contact", "Hire a Laravel & PHP Developer", "laravel-code")]
+        jobs += [("blog", "Laravel & API Engineering Blog", "laravel-code")] + [("blog-" + b["slug"], b["title"], b["cover"]) for b in POSTS]
         jobs += [(p["slug"], p["title"], p["cover"]) for p in PROJECTS] + [(s["slug"], s["title"], s["cover"]) for s in SERVICES]
         for j in jobs:
             render_og(*j)
