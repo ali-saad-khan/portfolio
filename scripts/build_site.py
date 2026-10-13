@@ -59,8 +59,16 @@ def page(path, title, desc, body, active, schema=(), og=None, robots=None):
   <title>{e(full)}</title>
   <meta name="description" content="{e(desc)}">
   <meta name="author" content="{BRAND}">
-  <meta name="theme-color" content="#07080D">{('<meta name="robots" content="%s">' % robots) if robots else ''}
+  <meta name="theme-color" content="#07080D">
   <link rel="canonical" href="{url}">
+  <meta name="google-site-verification" content="9KDuOrVRG-VaSCaI2UogYvvNn2mkYmluYzR9lXaMEKY" />
+  <meta name="robots" content="{robots or 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}">
+  <meta property="og:locale" content="en_US">
+  <link rel="alternate" hreflang="en" href="{url}">
+  <link rel="alternate" hreflang="x-default" href="{url}">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="me" href="https://github.com/ali-saad-khan">
+  <link rel="me" href="https://www.linkedin.com/in/saad-ali-khan-01976124a/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="{BRAND}">
   <meta property="og:title" content="{e(full)}">
@@ -69,7 +77,9 @@ def page(path, title, desc, body, active, schema=(), og=None, robots=None):
   <meta property="og:image" content="{og_img}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{e(full)}">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image:alt" content="{e(full)}">
   <meta name="twitter:title" content="{e(full)}">
   <meta name="twitter:description" content="{e(desc)}">
   <meta name="twitter:image" content="{og_img}">

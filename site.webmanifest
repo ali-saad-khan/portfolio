@@ -1,0 +1,9 @@
+{
+  "name": "Saad Ali Khan - Laravel & PHP Developer",
+  "short_name": "Saad Ali Khan",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#07080D",
+  "theme_color": "#07080D",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

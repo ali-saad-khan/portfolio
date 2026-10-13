@@ -1,0 +1,15 @@
+# Saad Ali Khan
+
+> Freelance Laravel & PHP developer based in Karachi, Pakistan. Builds secure backends, REST APIs, payment and wallet systems, and e-commerce platforms.
+
+## Pages
+- [Home](https://saadconsulting.tech/): overview, skills, experience
+- [About](https://saadconsulting.tech/about)
+- [Services](https://saadconsulting.tech/services)
+- [Projects and case studies](https://saadconsulting.tech/projects)
+- [Contact](https://saadconsulting.tech/contact)
+
+## Contact
+- Email: saadalikhan0210@gmail.com
+- GitHub: https://github.com/ali-saad-khan
+- LinkedIn: https://www.linkedin.com/in/saad-ali-khan-01976124a/
