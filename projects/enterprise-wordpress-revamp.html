@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enterprise WordPress Website Revamp | Saad Ali Khan</title>
+  <meta name="description" content="Case study: restructuring an enterprise WordPress site of 800+ pages into custom post types and ACF, with SEO-safe permalinks and faster TTFB.">
+  <meta name="author" content="Saad Ali Khan">
+  <meta name="theme-color" content="#07080D">
+  <link rel="canonical" href="https://saadconsulting.tech/projects/enterprise-wordpress-revamp">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Saad Ali Khan">
+  <meta property="og:title" content="Enterprise WordPress Website Revamp | Saad Ali Khan">
+  <meta property="og:description" content="Case study: restructuring an enterprise WordPress site of 800+ pages into custom post types and ACF, with SEO-safe permalinks and faster TTFB.">
+  <meta property="og:url" content="https://saadconsulting.tech/projects/enterprise-wordpress-revamp">
+  <meta property="og:image" content="https://saadconsulting.tech/assets/images/og/enterprise-wordpress-revamp.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Enterprise WordPress Website Revamp | Saad Ali Khan">
+  <meta name="twitter:description" content="Case study: restructuring an enterprise WordPress site of 800+ pages into custom post types and ACF, with SEO-safe permalinks and faster TTFB.">
+  <meta name="twitter:image" content="https://saadconsulting.tech/assets/images/og/enterprise-wordpress-revamp.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://saadconsulting.tech/"}, {"@type": "ListItem", "position": 2, "name": "Projects", "item": "https://saadconsulting.tech/projects"}, {"@type": "ListItem", "position": 3, "name": "WordPress Revamp", "item": "https://saadconsulting.tech/projects/enterprise-wordpress-revamp"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Enterprise WordPress Website Revamp", "description": "Case study: restructuring an enterprise WordPress site of 800+ pages into custom post types and ACF, with SEO-safe permalinks and faster TTFB.", "image": "https://saadconsulting.tech/assets/images/og/enterprise-wordpress-revamp.png", "author": {"@type": "Person", "@id": "https://saadconsulting.tech/#person", "name": "Saad Ali Khan", "url": "https://saadconsulting.tech/", "jobTitle": "Software Engineer", "worksFor": {"@type": "Organization", "name": "Technyx"}, "email": "saadalikhan0210@gmail.com", "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"}, "sameAs": ["https://github.com/ali-saad-khan", "https://www.linkedin.com/in/saad-ali-khan-01976124a/"], "knowsAbout": ["Laravel", "PHP", "MySQL", "REST APIs", "Payment integrations", "WordPress", "Shopify", "Next.js"]}, "datePublished": "2026-10-13", "dateModified": "2026-10-13", "mainEntityOfPage": "https://saadconsulting.tech/projects/enterprise-wordpress-revamp", "publisher": {"@type": "Person", "@id": "https://saadconsulting.tech/#person", "name": "Saad Ali Khan", "url": "https://saadconsulting.tech/", "jobTitle": "Software Engineer", "worksFor": {"@type": "Organization", "name": "Technyx"}, "email": "saadalikhan0210@gmail.com", "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"}, "sameAs": ["https://github.com/ali-saad-khan", "https://www.linkedin.com/in/saad-ali-khan-01976124a/"], "knowsAbout": ["Laravel", "PHP", "MySQL", "REST APIs", "Payment integrations", "WordPress", "Shopify", "Next.js"]}}</script>
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="nav-brand" aria-label="Saad Ali Khan Portfolio Home"><span class="brand-tag">&lt;</span>SAAD<span class="brand-tag">/&gt;</span><span class="brand-dot"></span></a>
+      <div class="nav-right">
+        <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation"><a href="/" class="nav-link">Home</a><a href="/about" class="nav-link">About</a><a href="/services" class="nav-link">Services</a><a href="/projects" class="nav-link active">Projects</a><a href="/contact" class="nav-link">Contact</a></nav>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Light and Dark Mode">
+          <svg class="icon-svg icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg class="icon-svg icon-sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zM2 13h2a1 1 0 100-2H2a1 1 0 100 2zm18 0h2a1 1 0 100-2h-2a1 1 0 100 2zm-9 8h2a1 1 0 100-2h-2a1 1 0 100 2zm0-18h2a1 1 0 100-2h-2a1 1 0 100 2zM5.636 19.778l1.414-1.414a1 1 0 10-1.414-1.414L4.222 18.364a1 1 0 101.414 1.414zm14.142-14.142l-1.414 1.414a1 1 0 001.414 1.414l1.414-1.414a1 1 0 00-1.414-1.414zM4.222 5.636l1.414 1.414a1 1 0 001.414-1.414L5.636 4.222a1 1 0 00-1.414 1.414zm14.142 14.142l1.414-1.414a1 1 0 00-1.414-1.414l-1.414 1.414a1 1 0 001.414 1.414z"/></svg>
+        </button>
+        <a href="/contact" class="btn btn-primary btn-sm nav-cta">Hire Me</a>
+        <button class="mobile-toggle" aria-label="Toggle Mobile Navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/projects">Projects</a><span class="sep">/</span><span aria-current="page">WordPress Revamp</span></nav>
+        <div class="page-hero-grid">
+          <div class="page-hero-text">
+            <span class="section-tag">// CASE STUDY</span>
+            <h1 class="page-title">Enterprise WordPress Website Revamp</h1>
+            <p class="page-lead">A large-scale restructuring and modernization of an enterprise WordPress site with 800+ pages of multilingual, dynamic content, moving hardcoded blocks into custom post types, ACF field groups and clean templates.</p>
+            <div class="chip-row"><span class="badge badge-cyan">Production work (private code)</span><span class="badge badge-cyan">WordPress</span></div>
+            <div class="hero-actions"><a href="/contact" class="btn btn-primary">Start a Project</a><a href="/projects" class="btn btn-secondary">All case studies</a></div>
+          </div>
+          <figure class="cover-frame reveal"><img src="/assets/images/covers/wordpress-revamp.svg" width="1200" height="675" alt="Illustration of the WordPress Revamp project" fetchpriority="high"></figure>
+        </div>
+      </div>
+    </section>
+    <section class="section tight">
+      <div class="container">
+        <div class="fact-grid reveal"><div class="stat-card"><div class="stat-number" style="font-size:1.6rem">800+</div><div class="stat-label">pages restructured</div></div><div class="stat-card"><div class="stat-number" style="font-size:1.6rem">ACF Pro</div><div class="stat-label">field groups and CPTs</div></div><div class="stat-card"><div class="stat-number" style="font-size:1.6rem">Multilingual</div><div class="stat-label">content preserved</div></div><div class="stat-card"><div class="stat-number" style="font-size:1.6rem">SEO-safe</div><div class="stat-label">permalinks kept</div></div></div>
+      </div>
+    </section>
+    <section class="section tight">
+      <div class="container article-grid">
+        <article class="prose">
+          <h2>The challenge</h2>
+          <p>The installation had slow database queries, plugin bloat, broken page hierarchies and hardcoded content blocks repeated across hundreds of pages. Every change was slow and risky, and the site was getting slower.</p><p>The constraint that matters most on a site this size: the migration couldn't lose rankings. Permalinks and content had to survive the restructure.</p>
+          <h2>How I approached it</h2>
+          <ol class="approach-list"><li class="approach-item"><span class="approach-num">01</span><div><h3>Content modelling first</h3><p>Repeated page patterns were turned into custom post types, custom taxonomies and ACF field groups, so editors manage structured fields instead of hand-editing blocks on hundreds of pages.</p></div></li><li class="approach-item"><span class="approach-num">02</span><div><h3>Lighter templates</h3><p>Elementor templates were streamlined and heavy plugin dependencies were replaced with small custom PHP snippets where that was safer and faster.</p></div></li><li class="approach-item"><span class="approach-num">03</span><div><h3>Migration that preserves SEO</h3><p>Database content was migrated with scripts rather than by hand, keeping permalink structures intact so existing search rankings weren't disrupted.</p></div></li><li class="approach-item"><span class="approach-num">04</span><div><h3>Database and cache tuning</h3><p>Autoloaded options and transient caches were cleaned up, which reduced Time to First Byte.</p></div></li></ol>
+          
+          <h2>What I built</h2>
+          <ul class="check-list"><li>Restructured 800+ legacy pages into maintainable custom post types and ACF field groups.</li><li>Developed custom PHP snippets to bypass heavy plugin dependencies and improve server response times.</li><li>Migrated large amounts of database content while preserving SEO permalink structures.</li><li>Optimized database autoload options and transient caches to reduce TTFB.</li></ul>
+          <div class="callout">This is private production work at Technyx for an enterprise client, so I can't name the site or share its code.</div>
+          <h2>What this project demonstrates</h2>
+          <ul class="check-list"><li>Planning a content migration at hundreds-of-pages scale</li><li>Custom post types and ACF as a maintainable content model</li><li>Performance work on a live WordPress database</li></ul>
+        </article>
+        <aside class="side-card-wrap">
+          <div class="side-card"><h3>Tech stack</h3><div class="project-tags"><span class="project-tag">WordPress</span><span class="project-tag">PHP</span><span class="project-tag">ACF Pro</span><span class="project-tag">Elementor</span><span class="project-tag">Custom Post Types</span><span class="project-tag">MySQL</span><span class="project-tag">PHP-FPM</span><span class="project-tag">Nginx</span></div></div>
+          <div class="side-card"><h3>Related services</h3><ul class="link-list"><li><a href="/services/wordpress-development">WordPress Development</a></li><li><a href="/services/production-debugging">Production Debugging &amp; Maintenance</a></li><li><a href="/services/database-engineering">Database Engineering</a></li></ul></div>
+          <div class="side-card side-cta"><h3>Need something similar?</h3><p>I take on freelance and contract projects.</p><a href="/contact" class="btn btn-primary btn-sm">Get in touch</a></div>
+        </aside>
+      </div>
+    </section>
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-header reveal"><span class="section-tag">// MORE WORK</span><h2 class="section-title">Related case studies</h2></div>
+        <div class="projects-grid"><article class="project-card media-card reveal">
+  <a class="card-media" href="/projects/shopify-store-customization" tabindex="-1" aria-hidden="true"><img src="/assets/images/covers/shopify-store.svg" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
+  <div class="project-top">
+    <div class="project-meta"><span class="project-category">Shopify / Liquid / JavaScript</span><span class="badge badge-cyan">Production · Private</span></div>
+    <h3 class="project-title"><a href="/projects/shopify-store-customization">Shopify E-commerce Customization</a></h3>
+    <p class="project-description">Theme-level development for a high-traffic production Shopify store: custom Liquid templates and sections, a bundle selector, and a lightweight cart drawer built on Shopify's AJAX Cart API.</p>
+  </div>
+  <div class="project-bottom">
+    <a href="/projects/shopify-store-customization" class="btn btn-primary btn-sm">Read case study</a>
+    
+  </div>
+</article><article class="project-card media-card reveal">
+  <a class="card-media" href="/projects/my-store-ecommerce-platform" tabindex="-1" aria-hidden="true"><img src="/assets/images/covers/my-store-ecommerce.svg" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
+  <div class="project-top">
+    <div class="project-meta"><span class="project-category">Next.js / TypeScript / PostgreSQL</span><span class="badge badge-green">Open Source</span></div>
+    <h3 class="project-title"><a href="/projects/my-store-ecommerce-platform">my-store: Production E-commerce Platform</a></h3>
+    <p class="project-description">A complete e-commerce platform for the Pakistan market that can extend to other markets without a rewrite: storefront, customer accounts and a full admin area, with the checkout and inventory logic built to stay correct when real people use it.</p>
+  </div>
+  <div class="project-bottom">
+    <a href="/projects/my-store-ecommerce-platform" class="btn btn-primary btn-sm">Read case study</a>
+    <a href="https://github.com/ali-saad-khan/my-store" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">View code</a>
+  </div>
+</article></div>
+      </div>
+    </section>
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Have a project like this in mind?</h2>
+          <p>Tell me what you&#x27;re building. I&#x27;ll reply by email with questions or a suggested approach.</p>
+          <div class="hero-actions" style="justify-content:center">
+            <a href="/contact" class="btn btn-primary">Start a Project</a>
+            <a href="mailto:saadalikhan0210@gmail.com?subject=Project%20inquiry" class="btn btn-secondary">Email Me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <div class="footer-brand">&lt;SAAD ALI KHAN /&gt;</div>
+          <p>Laravel &amp; PHP engineer in Karachi, Pakistan. I build secure backends, REST APIs, payment systems and e-commerce platforms for clients worldwide.</p>
+          <a href="mailto:saadalikhan0210@gmail.com" class="footer-link">saadalikhan0210@gmail.com</a>
+        </div>
+        <div><h4 class="footer-heading">Pages</h4><ul><li><a href="/">Home</a></li><li><a href="/about">About</a></li><li><a href="/services">Services</a></li><li><a href="/projects">Projects</a></li><li><a href="/contact">Contact</a></li></ul></div>
+        <div><h4 class="footer-heading">Services</h4><ul><li><a href="/services/laravel-development">Laravel Development</a></li><li><a href="/services/rest-api-development">REST API Development</a></li><li><a href="/services/payment-gateway-integration">Payment Gateway Integration</a></li><li><a href="/services/database-engineering">Database Engineering</a></li><li><a href="/services/wordpress-development">WordPress Development</a></li><li><a href="/services/ecommerce-development">E-commerce Development</a></li><li><a href="/services/production-debugging">Production Debugging &amp; Maintenance</a></li></ul></div>
+        <div><h4 class="footer-heading">Case studies</h4><ul><li><a href="/projects/fincore-wallet-ledger-api">FinCore</a></li><li><a href="/projects/my-store-ecommerce-platform">my-store</a></li><li><a href="/projects/practical-meal-subscription-backend">PractiCal</a></li><li><a href="/projects/enterprise-wordpress-revamp">WordPress Revamp</a></li><li><a href="/projects/shopify-store-customization">Shopify Store</a></li><li><a href="/projects/payment-gateway-integrations">Payment Integrations</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="copyright">&copy; <span id="current-year">2026</span> Saad Ali Khan. All rights reserved.</div>
+        <div class="footer-links">
+          <a href="https://github.com/ali-saad-khan" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+          <a href="https://www.linkedin.com/in/saad-ali-khan-01976124a/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>
