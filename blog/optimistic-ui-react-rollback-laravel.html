@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Optimistic UI in React With Rollback (Against a Laravel API) | Saad Ali Khan</title>
+  <meta name="description" content="Make a React Kanban board feel instant: apply changes optimistically with a reducer, keep a snapshot and roll back when the Laravel API rejects the request.">
+  <meta name="author" content="Saad Ali Khan">
+  <meta name="theme-color" content="#07080D">
+  <link rel="canonical" href="https://saadconsulting.tech/blog/optimistic-ui-react-rollback-laravel">
+  <meta name="google-site-verification" content="9KDuOrVRG-VaSCaI2UogYvvNn2mkYmluYzR9lXaMEKY" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:locale" content="en_US">
+  <link rel="alternate" hreflang="en" href="https://saadconsulting.tech/blog/optimistic-ui-react-rollback-laravel">
+  <link rel="alternate" hreflang="x-default" href="https://saadconsulting.tech/blog/optimistic-ui-react-rollback-laravel">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="me" href="https://github.com/ali-saad-khan">
+  <link rel="me" href="https://www.linkedin.com/in/saad-ali-khan-01976124a/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Saad Ali Khan">
+  <meta property="og:title" content="Optimistic UI in React With Rollback (Against a Laravel API) | Saad Ali Khan">
+  <meta property="og:description" content="Make a React Kanban board feel instant: apply changes optimistically with a reducer, keep a snapshot and roll back when the Laravel API rejects the request.">
+  <meta property="og:url" content="https://saadconsulting.tech/blog/optimistic-ui-react-rollback-laravel">
+  <meta property="og:image" content="https://saadconsulting.tech/assets/images/og/blog-optimistic-ui-react-rollback-laravel.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Optimistic UI in React With Rollback (Against a Laravel API) | Saad Ali Khan">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image:alt" content="Optimistic UI in React With Rollback (Against a Laravel API) | Saad Ali Khan">
+  <meta name="twitter:title" content="Optimistic UI in React With Rollback (Against a Laravel API) | Saad Ali Khan">
+  <meta name="twitter:description" content="Make a React Kanban board feel instant: apply changes optimistically with a reducer, keep a snapshot and roll back when the Laravel API rejects the request.">
+  <meta name="twitter:image" content="https://saadconsulting.tech/assets/images/og/blog-optimistic-ui-react-rollback-laravel.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://saadconsulting.tech/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://saadconsulting.tech/blog"}, {"@type": "ListItem", "position": 3, "name": "Optimistic UI in React With Rollback (Against a Laravel API)", "item": "https://saadconsulting.tech/blog/optimistic-ui-react-rollback-laravel"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Optimistic UI in React With Rollback (Against a Laravel API)", "description": "Make a React Kanban board feel instant: apply changes optimistically with a reducer, keep a snapshot and roll back when the Laravel API rejects the request.", "url": "https://saadconsulting.tech/blog/optimistic-ui-react-rollback-laravel", "mainEntityOfPage": "https://saadconsulting.tech/blog/optimistic-ui-react-rollback-laravel", "image": "https://saadconsulting.tech/assets/images/og/blog-optimistic-ui-react-rollback-laravel.png", "inLanguage": "en", "datePublished": "2026-10-30", "dateModified": "2026-10-30", "author": {"@type": "Person", "@id": "https://saadconsulting.tech/#person", "name": "Saad Ali Khan", "url": "https://saadconsulting.tech/", "jobTitle": "Full Stack Software Engineer", "worksFor": {"@type": "Organization", "name": "Technyx"}, "email": "saadalikhan0210@gmail.com", "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"}, "sameAs": ["https://github.com/ali-saad-khan", "https://www.linkedin.com/in/saad-ali-khan-01976124a/"], "knowsAbout": ["Laravel", "PHP", "MySQL", "REST APIs", "Payment integrations", "WordPress", "Shopify", "Next.js", "React", "TypeScript", "Tailwind CSS", "n8n", "Workflow automation"]}, "publisher": {"@id": "https://saadconsulting.tech/#person"}, "copyrightHolder": {"@id": "https://saadconsulting.tech/#person"}, "copyrightYear": 2026, "isPartOf": {"@type": "Blog", "url": "https://saadconsulting.tech/blog"}}</script>
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="nav-brand" aria-label="Saad Ali Khan Portfolio Home"><span class="brand-tag">&lt;</span>SAAD<span class="brand-tag">/&gt;</span><span class="brand-dot"></span></a>
+      <div class="nav-right">
+        <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation"><a href="/" class="nav-link">Home</a><a href="/about" class="nav-link">About</a><a href="/services" class="nav-link">Services</a><a href="/projects" class="nav-link">Projects</a><a href="/blog" class="nav-link active">Blog</a><a href="/contact" class="nav-link">Contact</a></nav>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Light and Dark Mode">
+          <svg class="icon-svg icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg class="icon-svg icon-sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zM2 13h2a1 1 0 100-2H2a1 1 0 100 2zm18 0h2a1 1 0 100-2h-2a1 1 0 100 2zm-9 8h2a1 1 0 100-2h-2a1 1 0 100 2zm0-18h2a1 1 0 100-2h-2a1 1 0 100 2zM5.636 19.778l1.414-1.414a1 1 0 10-1.414-1.414L4.222 18.364a1 1 0 101.414 1.414zm14.142-14.142l-1.414 1.414a1 1 0 001.414 1.414l1.414-1.414a1 1 0 00-1.414-1.414zM4.222 5.636l1.414 1.414a1 1 0 001.414-1.414L5.636 4.222a1 1 0 00-1.414 1.414zm14.142 14.142l1.414-1.414a1 1 0 00-1.414-1.414l-1.414 1.414a1 1 0 001.414 1.414z"/></svg>
+        </button>
+        <a href="/contact" class="btn btn-primary btn-sm nav-cta">Hire Me</a>
+        <button class="mobile-toggle" aria-label="Toggle Mobile Navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog">Blog</a><span class="sep">/</span><span aria-current="page">React article</span></nav>
+        <div class="page-hero-grid">
+          <div class="page-hero-text">
+            <span class="section-tag">// REACT</span>
+            <h1 class="page-title">Optimistic UI in React With Rollback (Against a Laravel API)</h1>
+            <p class="page-lead">Waiting for a server round trip before a card moves makes an app feel broken. Optimistic updates fix that, but only if failure is handled properly. Here is the pattern I use, taken from a real React and Laravel project.</p>
+            <div class="chip-row"><span class="badge badge-cyan">7 min read</span><span class="badge badge-cyan">By Saad Ali Khan</span><span class="badge badge-cyan">Oct 2026</span></div>
+            
+          </div>
+          <figure class="cover-frame reveal"><img src="/assets/images/covers/taskflow.svg" width="1200" height="675" alt="Optimistic UI in React With Rollback (Against a Laravel API)" fetchpriority="high"></figure>
+        </div>
+      </div>
+    </section>
+    <section class="section tight">
+      <div class="container article-grid">
+        <article class="prose">
+
+<h2>The idea in one paragraph</h2>
+<p>When the user drags a card, update the screen immediately, then send the request. If the server says no, put the screen back the way it was and tell the user why. The hard part is not the happy path. It is making the rollback reliable, and making sure the request is actually sent.</p>
+<h2>Step 1: make board state a pure reducer</h2>
+<p>Optimistic updates are much easier when every change is a plain action applied by a reducer, because the same function that moves a card on screen is easy to unit test. In TaskFlow the board state and actions look like this:</p>
+<pre><code>export interface BoardState {
+  phase: "loading" | "ready" | "error";
+  error: string | null;
+  tasks: Task[];
+}
+
+export type BoardAction =
+  | { type: "move"; id: number; status: TaskStatus; position: number }
+  | { type: "add_pending"; task: Task }
+  | { type: "add_confirmed"; tempId: number; task: Task }
+  | { type: "remove"; id: number }
+  /** Restore a snapshot taken before an optimistic update that the server rejected. */
+  | { type: "rollback"; tasks: Task[] };</code></pre>
+<p>Note the <code>rollback</code> action. It does not try to reverse the change; it simply puts a saved copy of the task list back. Reversing changes one by one is how rollback bugs are born.</p>
+<h2>Step 2: one helper for every optimistic call</h2>
+<p>Rather than repeat the try/catch in every handler, wrap it once. It takes a snapshot, dispatches the optimistic action, calls the server and restores the snapshot if anything throws:</p>
+<pre><code>async function optimistic&lt;T&gt;(action: BoardAction, call: () =&gt; Promise&lt;T&gt;, onOk?: (result: T) =&gt; void) {
+  const snapshot = stateRef.current.tasks;
+  setNotice(null);
+  dispatch(action);
+  try {
+    const result = await call();
+    onOk?.(result);
+  } catch (e) {
+    dispatch({ type: "rollback", tasks: snapshot });
+    setNotice(messageOf(e));
+  }
+}</code></pre>
+<p>That one-line <code>await call()</code> on its own line is deliberate. My first version wrote <code>onOk?.(await call())</code>. When no callback was passed, optional chaining short-circuited and the server call never ran. The UI moved the card, nothing was saved, and no error appeared. A test caught it, which is a good argument for testing the failure and no-callback paths, not just the success path.</p>
+<h2>Step 3: temporary ids for new items</h2>
+<p>For creates, the item does not have a server id yet. Add it with a negative temporary id (<code>add_pending</code>), then swap it for the real record when the response arrives (<code>add_confirmed</code>). If the request fails, the same snapshot rollback removes it.</p>
+<h2>Step 4: make the failure visible</h2>
+<p>A silent rollback looks like a glitch. Show a notice with the server's message. The Laravel API returns one consistent error shape, so the front end can map every failure the same way:</p>
+<pre><code>// Laravel returns: { "message": "...", "code": "validation_failed", "errors": { "title": ["..."] } }
+export class ApiError extends Error {
+  readonly status: number;
+  readonly code: string;
+  readonly fieldErrors: Record&lt;string, string[]&gt;;
+}</code></pre>
+<h2>Step 5: test the rollback</h2>
+<p>Because the server layer is behind an interface, a test can make the call fail on demand and assert the board returns to its original order. The demo of this project even has a "Simulate network failure" switch so you can watch the rollback happen.</p>
+<h2>Limits to be honest about</h2>
+<ul>
+<li><strong>Overlapping edits.</strong> A snapshot restores the whole list, so if two requests are in flight and the first fails, rolling back can undo the second change too. For heavy concurrent editing you need per-item versions or a queue.</li>
+<li><strong>The server stays the source of truth.</strong> The optimistic state is a prediction. When a response arrives, prefer the server's record.</li>
+<li><strong>Dialogs that close early.</strong> If the edit dialog closes before the server answers, field-level errors can only appear as a banner. That is a trade-off I documented in the repository.</li>
+</ul>
+<h2>When not to use it</h2>
+<p>Skip optimism for actions that are expensive to undo or that the user must see confirmed, such as payments. For moving a card, reordering a list or toggling a checkbox, it is exactly right.</p>
+<p>The full code, including the Laravel API this talks to, is open source in the <a href="/projects/taskflow-laravel-react-app">TaskFlow case study</a>.</p>
+
+          <p class="post-note">Original article written by Saad Ali Khan. Code samples are illustrative and free to adapt in your own projects.</p>
+        </article>
+        <aside class="side-card-wrap">
+          <div class="side-card side-cta"><h3>Need help with this?</h3><p>Freelance full stack development (React, Laravel and PHP), remote and worldwide.</p><a href="/contact" class="btn btn-primary btn-sm">Start a Project</a></div>
+          <div class="side-card"><h3>Related</h3><ul class="link-list"><li><a href="/services/frontend-development">Frontend Development</a></li><li><a href="/projects/taskflow-laravel-react-app">Case study: TaskFlow</a></li></ul></div>
+          <div class="side-card"><h3>More articles</h3><ul class="link-list"><li><a href="/blog/idempotent-payment-webhooks-laravel">How to Handle Payment Webhooks in Laravel Without Double-Processing</a></li><li><a href="/blog/wallet-ledger-design-mysql-laravel">Designing a Wallet Ledger in MySQL and Laravel: Integers, Transactions and Locks</a></li><li><a href="/blog/laravel-rest-api-design-checklist">A Practical Checklist for Designing a Laravel REST API</a></li><li><a href="/blog/fix-n-plus-one-queries-laravel">How to Find and Fix N+1 Queries in Laravel</a></li><li><a href="/blog/how-to-hire-a-laravel-developer">How to Hire a Freelance Laravel Developer: What to Check Before You Commit</a></li><li><a href="/blog/kanban-ordering-laravel-transactions">Keeping Kanban Card Positions Consistent in Laravel</a></li><li><a href="/blog/accessible-sortable-table-react">Building an Accessible, Sortable Data Table in React</a></li><li><a href="/blog/react-api-adapters-mock-laravel">One Typed API Interface, Two Adapters: Developing React Against a Mock or Laravel</a></li></ul></div>
+        </aside>
+      </div>
+    </section>
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Want this done right in your project?</h2>
+          <p>Send a short description and I&#x27;ll reply by email with questions or a suggested approach.</p>
+          <div class="hero-actions" style="justify-content:center">
+            <a href="/contact" class="btn btn-primary">Start a Project</a>
+            <a href="mailto:saadalikhan0210@gmail.com?subject=Project%20inquiry" class="btn btn-secondary">Email Me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <div class="footer-brand">&lt;SAAD ALI KHAN /&gt;</div>
+          <p>Laravel &amp; PHP engineer in Karachi, Pakistan. I build secure backends, REST APIs, payment systems and e-commerce platforms for clients worldwide.</p>
+          <a href="mailto:saadalikhan0210@gmail.com" class="footer-link">saadalikhan0210@gmail.com</a>
+        </div>
+        <div><h4 class="footer-heading">Pages</h4><ul><li><a href="/">Home</a></li><li><a href="/about">About</a></li><li><a href="/services">Services</a></li><li><a href="/projects">Projects</a></li><li><a href="/blog">Blog</a></li><li><a href="/contact">Contact</a></li></ul></div>
+        <div><h4 class="footer-heading">Services</h4><ul><li><a href="/services/laravel-development">Laravel Development</a></li><li><a href="/services/frontend-development">Frontend Development</a></li><li><a href="/services/workflow-automation">n8n Workflow Automation</a></li><li><a href="/services/rest-api-development">REST API Development</a></li><li><a href="/services/payment-gateway-integration">Payment Gateway Integration</a></li><li><a href="/services/database-engineering">Database Engineering</a></li><li><a href="/services/wordpress-development">WordPress Development</a></li><li><a href="/services/ecommerce-development">E-commerce Development</a></li><li><a href="/services/production-debugging">Production Debugging &amp; Maintenance</a></li></ul></div>
+        <div><h4 class="footer-heading">Case studies</h4><ul><li><a href="/projects/fincore-wallet-ledger-api">FinCore</a></li><li><a href="/projects/my-store-ecommerce-platform">my-store</a></li><li><a href="/projects/pulseboard-react-dashboard">Pulseboard</a></li><li><a href="/projects/taskflow-laravel-react-app">TaskFlow</a></li><li><a href="/projects/n8n-automation-showcase">n8n Workflows</a></li><li><a href="/projects/launchpad-nextjs-saas">Launchpad</a></li><li><a href="/projects/practical-meal-subscription-backend">PractiCal</a></li><li><a href="/projects/enterprise-wordpress-revamp">WordPress Revamp</a></li><li><a href="/projects/shopify-store-customization">Shopify Store</a></li><li><a href="/projects/payment-gateway-integrations">Payment Integrations</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="copyright">&copy; <span id="current-year">2026</span> Saad Ali Khan. All rights reserved.</div>
+        <div class="footer-links">
+          <a href="https://github.com/ali-saad-khan" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+          <a href="https://www.linkedin.com/in/saad-ali-khan-01976124a/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>

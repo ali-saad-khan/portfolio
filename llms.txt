@@ -7,7 +7,7 @@
 - [About](https://saadconsulting.tech/about)
 - [Services](https://saadconsulting.tech/services)
 - [Projects and case studies](https://saadconsulting.tech/projects)
-- [Blog](https://saadconsulting.tech/blog): articles on Laravel, payments, wallet ledgers and API design
+- [Blog](https://saadconsulting.tech/blog): articles on Laravel, React, payments, wallet ledgers, API design and accessibility
 - [Contact](https://saadconsulting.tech/contact)
 
 ## Projects

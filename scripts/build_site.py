@@ -510,7 +510,7 @@ def build_post(b):
           <p class="post-note">Original article written by Saad Ali Khan. Code samples are illustrative and free to adapt in your own projects.</p>
         </article>
         <aside class="side-card-wrap">
-          <div class="side-card side-cta"><h3>Need help with this?</h3><p>Freelance Laravel &amp; PHP development, remote and worldwide.</p><a href="/contact" class="btn btn-primary btn-sm">Start a Project</a></div>
+          <div class="side-card side-cta"><h3>Need help with this?</h3><p>Freelance full stack development (React, Laravel and PHP), remote and worldwide.</p><a href="/contact" class="btn btn-primary btn-sm">Start a Project</a></div>
           <div class="side-card"><h3>Related</h3><ul class="link-list"><li><a href="/services/{svc["slug"]}">{e(svc["name"])}</a></li><li><a href="/projects/{case["slug"]}">Case study: {e(case["short"])}</a></li></ul></div>
           <div class="side-card"><h3>More articles</h3><ul class="link-list">{others}</ul></div>
         </aside>

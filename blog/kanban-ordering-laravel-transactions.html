@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keeping Kanban Card Positions Consistent in Laravel | Saad Ali Khan</title>
+  <meta name="description" content="How to reorder cards across columns in Laravel without gaps or duplicates: a TaskOrdering service, contiguous positions, a database transaction and a rollback test.">
+  <meta name="author" content="Saad Ali Khan">
+  <meta name="theme-color" content="#07080D">
+  <link rel="canonical" href="https://saadconsulting.tech/blog/kanban-ordering-laravel-transactions">
+  <meta name="google-site-verification" content="9KDuOrVRG-VaSCaI2UogYvvNn2mkYmluYzR9lXaMEKY" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:locale" content="en_US">
+  <link rel="alternate" hreflang="en" href="https://saadconsulting.tech/blog/kanban-ordering-laravel-transactions">
+  <link rel="alternate" hreflang="x-default" href="https://saadconsulting.tech/blog/kanban-ordering-laravel-transactions">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="me" href="https://github.com/ali-saad-khan">
+  <link rel="me" href="https://www.linkedin.com/in/saad-ali-khan-01976124a/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Saad Ali Khan">
+  <meta property="og:title" content="Keeping Kanban Card Positions Consistent in Laravel | Saad Ali Khan">
+  <meta property="og:description" content="How to reorder cards across columns in Laravel without gaps or duplicates: a TaskOrdering service, contiguous positions, a database transaction and a rollback test.">
+  <meta property="og:url" content="https://saadconsulting.tech/blog/kanban-ordering-laravel-transactions">
+  <meta property="og:image" content="https://saadconsulting.tech/assets/images/og/blog-kanban-ordering-laravel-transactions.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Keeping Kanban Card Positions Consistent in Laravel | Saad Ali Khan">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image:alt" content="Keeping Kanban Card Positions Consistent in Laravel | Saad Ali Khan">
+  <meta name="twitter:title" content="Keeping Kanban Card Positions Consistent in Laravel | Saad Ali Khan">
+  <meta name="twitter:description" content="How to reorder cards across columns in Laravel without gaps or duplicates: a TaskOrdering service, contiguous positions, a database transaction and a rollback test.">
+  <meta name="twitter:image" content="https://saadconsulting.tech/assets/images/og/blog-kanban-ordering-laravel-transactions.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://saadconsulting.tech/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://saadconsulting.tech/blog"}, {"@type": "ListItem", "position": 3, "name": "Keeping Kanban Card Positions Consistent in Laravel", "item": "https://saadconsulting.tech/blog/kanban-ordering-laravel-transactions"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Keeping Kanban Card Positions Consistent in Laravel", "description": "How to reorder cards across columns in Laravel without gaps or duplicates: a TaskOrdering service, contiguous positions, a database transaction and a rollback test.", "url": "https://saadconsulting.tech/blog/kanban-ordering-laravel-transactions", "mainEntityOfPage": "https://saadconsulting.tech/blog/kanban-ordering-laravel-transactions", "image": "https://saadconsulting.tech/assets/images/og/blog-kanban-ordering-laravel-transactions.png", "inLanguage": "en", "datePublished": "2026-10-30", "dateModified": "2026-10-30", "author": {"@type": "Person", "@id": "https://saadconsulting.tech/#person", "name": "Saad Ali Khan", "url": "https://saadconsulting.tech/", "jobTitle": "Full Stack Software Engineer", "worksFor": {"@type": "Organization", "name": "Technyx"}, "email": "saadalikhan0210@gmail.com", "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"}, "sameAs": ["https://github.com/ali-saad-khan", "https://www.linkedin.com/in/saad-ali-khan-01976124a/"], "knowsAbout": ["Laravel", "PHP", "MySQL", "REST APIs", "Payment integrations", "WordPress", "Shopify", "Next.js", "React", "TypeScript", "Tailwind CSS", "n8n", "Workflow automation"]}, "publisher": {"@id": "https://saadconsulting.tech/#person"}, "copyrightHolder": {"@id": "https://saadconsulting.tech/#person"}, "copyrightYear": 2026, "isPartOf": {"@type": "Blog", "url": "https://saadconsulting.tech/blog"}}</script>
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="nav-brand" aria-label="Saad Ali Khan Portfolio Home"><span class="brand-tag">&lt;</span>SAAD<span class="brand-tag">/&gt;</span><span class="brand-dot"></span></a>
+      <div class="nav-right">
+        <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation"><a href="/" class="nav-link">Home</a><a href="/about" class="nav-link">About</a><a href="/services" class="nav-link">Services</a><a href="/projects" class="nav-link">Projects</a><a href="/blog" class="nav-link active">Blog</a><a href="/contact" class="nav-link">Contact</a></nav>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Light and Dark Mode">
+          <svg class="icon-svg icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg class="icon-svg icon-sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zM2 13h2a1 1 0 100-2H2a1 1 0 100 2zm18 0h2a1 1 0 100-2h-2a1 1 0 100 2zm-9 8h2a1 1 0 100-2h-2a1 1 0 100 2zm0-18h2a1 1 0 100-2h-2a1 1 0 100 2zM5.636 19.778l1.414-1.414a1 1 0 10-1.414-1.414L4.222 18.364a1 1 0 101.414 1.414zm14.142-14.142l-1.414 1.414a1 1 0 001.414 1.414l1.414-1.414a1 1 0 00-1.414-1.414zM4.222 5.636l1.414 1.414a1 1 0 001.414-1.414L5.636 4.222a1 1 0 00-1.414 1.414zm14.142 14.142l1.414-1.414a1 1 0 00-1.414-1.414l-1.414 1.414a1 1 0 001.414 1.414z"/></svg>
+        </button>
+        <a href="/contact" class="btn btn-primary btn-sm nav-cta">Hire Me</a>
+        <button class="mobile-toggle" aria-label="Toggle Mobile Navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog">Blog</a><span class="sep">/</span><span aria-current="page">Laravel article</span></nav>
+        <div class="page-hero-grid">
+          <div class="page-hero-text">
+            <span class="section-tag">// LARAVEL</span>
+            <h1 class="page-title">Keeping Kanban Card Positions Consistent in Laravel</h1>
+            <p class="page-lead">Moving a card between columns looks trivial until two columns need renumbering at once and something fails halfway. This is how I keep positions contiguous in Laravel and prove it with a test.</p>
+            <div class="chip-row"><span class="badge badge-cyan">7 min read</span><span class="badge badge-cyan">By Saad Ali Khan</span><span class="badge badge-cyan">Oct 2026</span></div>
+            
+          </div>
+          <figure class="cover-frame reveal"><img src="/assets/images/covers/taskflow.svg" width="1200" height="675" alt="Keeping Kanban Card Positions Consistent in Laravel" fetchpriority="high"></figure>
+        </div>
+      </div>
+    </section>
+    <section class="section tight">
+      <div class="container article-grid">
+        <article class="prose">
+
+<h2>The problem</h2>
+<p>A Kanban board stores each task with a <code>status</code> (its column) and a <code>position</code> (its place in the column). Dragging a card to a new column and index means: put it in the new column at that index, shift the cards after it down by one, and close the gap it left behind in the old column. That is several writes, and they must succeed or fail together.</p>
+<p>If they do not, you get duplicate positions, gaps, or a card that exists in neither column, and the board looks randomly shuffled after a refresh.</p>
+<h2>The rule: positions are always 0 to n-1 per column</h2>
+<p>Instead of storing fractional positions or trying to patch numbers, I keep a simple invariant: inside every project and status column, positions are contiguous, starting at zero. To keep it, rebuild the column's order as a list of ids and renumber from that list.</p>
+<h2>A small service owns the logic</h2>
+<pre><code>class TaskOrdering
+{
+    /** Move a task to a column and index. Index is clamped to the column size. */
+    public function move(Task $task, TaskStatus $status, int $position): Task
+    {
+        return DB::transaction(function () use ($task, $status, $position) {
+            $oldStatus = $task-&gt;status;
+
+            $ids = Task::where('project_id', $task-&gt;project_id)
+                -&gt;where('status', $status-&gt;value)
+                -&gt;where('id', '!=', $task-&gt;id)
+                -&gt;orderBy('position')-&gt;orderBy('id')
+                -&gt;pluck('id')-&gt;all();
+
+            $position = max(0, min($position, count($ids)));
+            array_splice($ids, $position, 0, [$task-&gt;id]);
+
+            $task-&gt;status = $status;
+            $task-&gt;save();
+            $this-&gt;renumber($ids);
+
+            if ($oldStatus !== $status) {
+                $old = Task::where('project_id', $task-&gt;project_id)
+                    -&gt;where('status', $oldStatus-&gt;value)
+                    -&gt;orderBy('position')-&gt;orderBy('id')
+                    -&gt;pluck('id')-&gt;all();
+                $this-&gt;renumber($old);
+            }
+
+            return $task-&gt;refresh();
+        });
+    }
+}</code></pre>
+<p>Three details matter:</p>
+<ul>
+<li><strong>The whole move is one transaction.</strong> Either both columns are renumbered or neither is.</li>
+<li><strong>The index is clamped.</strong> A client that sends position 999 puts the card at the end instead of creating a gap.</li>
+<li><strong>Ties are broken by id.</strong> Ordering by <code>position</code> then <code>id</code> keeps the result deterministic even if old data had duplicates.</li>
+</ul>
+<h2>Validate and authorize before you reorder</h2>
+<p>The controller is thin. A Form Request validates <code>status</code> against the enum and <code>position</code> as a non-negative integer, and a Policy makes sure the task belongs to the current user. Bad input returns a 422 with field errors, and someone else's task returns 403, before the service runs.</p>
+<h2>Prove the rollback with a test</h2>
+<p>The interesting test is the failure case. This one makes the third UPDATE throw, in the middle of renumbering, and asserts that every row is exactly as it was:</p>
+<pre><code>public function test_failed_move_rolls_back_in_a_transaction(): void
+{
+    $todo = $this-&gt;column('todo', 3);
+    $this-&gt;column('doing', 2);
+
+    // Let the first two UPDATEs succeed, then blow up mid-renumbering.
+    $updates = 0;
+    DB::listen(function ($query) use (&amp;$updates) {
+        if (str_starts_with($query-&gt;sql, 'update "tasks"') &amp;&amp; ++$updates === 3) {
+            throw new \RuntimeException('boom');
+        }
+    });
+
+    $before = Task::orderBy('id')-&gt;get(['id', 'status', 'position'])-&gt;toArray();
+
+    try {
+        app(TaskOrdering::class)-&gt;move($todo[0], TaskStatus::Doing, 0);
+        $this-&gt;fail('expected exception');
+    } catch (\RuntimeException $e) {
+        $this-&gt;assertSame('boom', $e-&gt;getMessage());
+    }
+
+    $this-&gt;assertSame($before, Task::orderBy('id')-&gt;get(['id', 'status', 'position'])-&gt;toArray());
+}</code></pre>
+<p>Using <code>DB::listen</code> to inject a failure is a handy trick: it proves the transaction boundary really wraps all the writes, without mocking the database.</p>
+<h2>Trade-offs</h2>
+<ul>
+<li><strong>It rewrites rows.</strong> Renumbering updates every card in the affected columns. That is fine for boards with dozens or hundreds of cards. For very large lists, use fractional or lexicographic ranks (as some tools do) and rebalance occasionally.</li>
+<li><strong>Concurrent moves.</strong> Two users moving cards in the same column at once can interleave. If that matters, lock the project's tasks with <code>lockForUpdate()</code> inside the transaction.</li>
+</ul>
+<p>The whole API, 36 feature tests and a React front end are in the open-source <a href="/projects/taskflow-laravel-react-app">TaskFlow case study</a>.</p>
+
+          <p class="post-note">Original article written by Saad Ali Khan. Code samples are illustrative and free to adapt in your own projects.</p>
+        </article>
+        <aside class="side-card-wrap">
+          <div class="side-card side-cta"><h3>Need help with this?</h3><p>Freelance full stack development (React, Laravel and PHP), remote and worldwide.</p><a href="/contact" class="btn btn-primary btn-sm">Start a Project</a></div>
+          <div class="side-card"><h3>Related</h3><ul class="link-list"><li><a href="/services/rest-api-development">REST API Development</a></li><li><a href="/projects/taskflow-laravel-react-app">Case study: TaskFlow</a></li></ul></div>
+          <div class="side-card"><h3>More articles</h3><ul class="link-list"><li><a href="/blog/idempotent-payment-webhooks-laravel">How to Handle Payment Webhooks in Laravel Without Double-Processing</a></li><li><a href="/blog/wallet-ledger-design-mysql-laravel">Designing a Wallet Ledger in MySQL and Laravel: Integers, Transactions and Locks</a></li><li><a href="/blog/laravel-rest-api-design-checklist">A Practical Checklist for Designing a Laravel REST API</a></li><li><a href="/blog/fix-n-plus-one-queries-laravel">How to Find and Fix N+1 Queries in Laravel</a></li><li><a href="/blog/how-to-hire-a-laravel-developer">How to Hire a Freelance Laravel Developer: What to Check Before You Commit</a></li><li><a href="/blog/optimistic-ui-react-rollback-laravel">Optimistic UI in React With Rollback (Against a Laravel API)</a></li><li><a href="/blog/accessible-sortable-table-react">Building an Accessible, Sortable Data Table in React</a></li><li><a href="/blog/react-api-adapters-mock-laravel">One Typed API Interface, Two Adapters: Developing React Against a Mock or Laravel</a></li></ul></div>
+        </aside>
+      </div>
+    </section>
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Want this done right in your project?</h2>
+          <p>Send a short description and I&#x27;ll reply by email with questions or a suggested approach.</p>
+          <div class="hero-actions" style="justify-content:center">
+            <a href="/contact" class="btn btn-primary">Start a Project</a>
+            <a href="mailto:saadalikhan0210@gmail.com?subject=Project%20inquiry" class="btn btn-secondary">Email Me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <div class="footer-brand">&lt;SAAD ALI KHAN /&gt;</div>
+          <p>Laravel &amp; PHP engineer in Karachi, Pakistan. I build secure backends, REST APIs, payment systems and e-commerce platforms for clients worldwide.</p>
+          <a href="mailto:saadalikhan0210@gmail.com" class="footer-link">saadalikhan0210@gmail.com</a>
+        </div>
+        <div><h4 class="footer-heading">Pages</h4><ul><li><a href="/">Home</a></li><li><a href="/about">About</a></li><li><a href="/services">Services</a></li><li><a href="/projects">Projects</a></li><li><a href="/blog">Blog</a></li><li><a href="/contact">Contact</a></li></ul></div>
+        <div><h4 class="footer-heading">Services</h4><ul><li><a href="/services/laravel-development">Laravel Development</a></li><li><a href="/services/frontend-development">Frontend Development</a></li><li><a href="/services/workflow-automation">n8n Workflow Automation</a></li><li><a href="/services/rest-api-development">REST API Development</a></li><li><a href="/services/payment-gateway-integration">Payment Gateway Integration</a></li><li><a href="/services/database-engineering">Database Engineering</a></li><li><a href="/services/wordpress-development">WordPress Development</a></li><li><a href="/services/ecommerce-development">E-commerce Development</a></li><li><a href="/services/production-debugging">Production Debugging &amp; Maintenance</a></li></ul></div>
+        <div><h4 class="footer-heading">Case studies</h4><ul><li><a href="/projects/fincore-wallet-ledger-api">FinCore</a></li><li><a href="/projects/my-store-ecommerce-platform">my-store</a></li><li><a href="/projects/pulseboard-react-dashboard">Pulseboard</a></li><li><a href="/projects/taskflow-laravel-react-app">TaskFlow</a></li><li><a href="/projects/n8n-automation-showcase">n8n Workflows</a></li><li><a href="/projects/launchpad-nextjs-saas">Launchpad</a></li><li><a href="/projects/practical-meal-subscription-backend">PractiCal</a></li><li><a href="/projects/enterprise-wordpress-revamp">WordPress Revamp</a></li><li><a href="/projects/shopify-store-customization">Shopify Store</a></li><li><a href="/projects/payment-gateway-integrations">Payment Integrations</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="copyright">&copy; <span id="current-year">2026</span> Saad Ali Khan. All rights reserved.</div>
+        <div class="footer-links">
+          <a href="https://github.com/ali-saad-khan" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+          <a href="https://www.linkedin.com/in/saad-ali-khan-01976124a/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>

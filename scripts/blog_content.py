@@ -228,3 +228,6 @@ Model::preventLazyLoading(! $this-&gt;app-&gt;isProduction());</code></pre>
 """
 },
 ]
+
+from blog_fullstack import POSTS as _FULLSTACK  # noqa: E402
+POSTS += _FULLSTACK

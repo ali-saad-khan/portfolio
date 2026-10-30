@@ -31,7 +31,7 @@
   <meta name="twitter:description" content="Original articles by a full stack developer on payment webhooks, wallet ledgers, REST API design, performance and hiring a Laravel developer.">
   <meta name="twitter:image" content="https://saadconsulting.tech/assets/images/og/blog.png">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://saadconsulting.tech/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://saadconsulting.tech/blog"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Blog", "name": "Saad Ali Khan: Full Stack Engineering Blog", "url": "https://saadconsulting.tech/blog", "author": {"@id": "https://saadconsulting.tech/#person"}, "inLanguage": "en", "blogPost": [{"@type": "BlogPosting", "headline": "How to Handle Payment Webhooks in Laravel Without Double-Processing", "url": "https://saadconsulting.tech/blog/idempotent-payment-webhooks-laravel"}, {"@type": "BlogPosting", "headline": "Designing a Wallet Ledger in MySQL and Laravel: Integers, Transactions and Locks", "url": "https://saadconsulting.tech/blog/wallet-ledger-design-mysql-laravel"}, {"@type": "BlogPosting", "headline": "A Practical Checklist for Designing a Laravel REST API", "url": "https://saadconsulting.tech/blog/laravel-rest-api-design-checklist"}, {"@type": "BlogPosting", "headline": "How to Find and Fix N+1 Queries in Laravel", "url": "https://saadconsulting.tech/blog/fix-n-plus-one-queries-laravel"}, {"@type": "BlogPosting", "headline": "How to Hire a Freelance Laravel Developer: What to Check Before You Commit", "url": "https://saadconsulting.tech/blog/how-to-hire-a-laravel-developer"}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://saadconsulting.tech/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://saadconsulting.tech/blog"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Blog", "name": "Saad Ali Khan: Full Stack Engineering Blog", "url": "https://saadconsulting.tech/blog", "author": {"@id": "https://saadconsulting.tech/#person"}, "inLanguage": "en", "blogPost": [{"@type": "BlogPosting", "headline": "How to Handle Payment Webhooks in Laravel Without Double-Processing", "url": "https://saadconsulting.tech/blog/idempotent-payment-webhooks-laravel"}, {"@type": "BlogPosting", "headline": "Designing a Wallet Ledger in MySQL and Laravel: Integers, Transactions and Locks", "url": "https://saadconsulting.tech/blog/wallet-ledger-design-mysql-laravel"}, {"@type": "BlogPosting", "headline": "A Practical Checklist for Designing a Laravel REST API", "url": "https://saadconsulting.tech/blog/laravel-rest-api-design-checklist"}, {"@type": "BlogPosting", "headline": "How to Find and Fix N+1 Queries in Laravel", "url": "https://saadconsulting.tech/blog/fix-n-plus-one-queries-laravel"}, {"@type": "BlogPosting", "headline": "How to Hire a Freelance Laravel Developer: What to Check Before You Commit", "url": "https://saadconsulting.tech/blog/how-to-hire-a-laravel-developer"}, {"@type": "BlogPosting", "headline": "Optimistic UI in React With Rollback (Against a Laravel API)", "url": "https://saadconsulting.tech/blog/optimistic-ui-react-rollback-laravel"}, {"@type": "BlogPosting", "headline": "Keeping Kanban Card Positions Consistent in Laravel", "url": "https://saadconsulting.tech/blog/kanban-ordering-laravel-transactions"}, {"@type": "BlogPosting", "headline": "Building an Accessible, Sortable Data Table in React", "url": "https://saadconsulting.tech/blog/accessible-sortable-table-react"}, {"@type": "BlogPosting", "headline": "One Typed API Interface, Two Adapters: Developing React Against a Mock or Laravel", "url": "https://saadconsulting.tech/blog/react-api-adapters-mock-laravel"}]}</script>
   <script src="/js/theme-init.js"></script>
   <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -112,6 +112,38 @@
     <p class="project-description">Plenty of developers can make a Laravel page work. Fewer can build something that stays correct as it grows. These are the checks that separate the two.</p>
   </div>
   <div class="project-bottom"><a href="/blog/how-to-hire-a-laravel-developer" class="btn btn-primary btn-sm">Read article</a></div>
+</article><article class="project-card media-card reveal">
+  <a class="card-media" href="/blog/optimistic-ui-react-rollback-laravel" tabindex="-1" aria-hidden="true"><img src="/assets/images/covers/taskflow.svg" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
+  <div class="project-top">
+    <div class="project-meta"><span class="project-category">React</span><span class="badge badge-cyan">7 min read</span></div>
+    <h3 class="project-title"><a href="/blog/optimistic-ui-react-rollback-laravel">Optimistic UI in React With Rollback (Against a Laravel API)</a></h3>
+    <p class="project-description">Waiting for a server round trip before a card moves makes an app feel broken. Optimistic updates fix that, but only if failure is handled properly. Here is the pattern I use, taken from a real React and Laravel project.</p>
+  </div>
+  <div class="project-bottom"><a href="/blog/optimistic-ui-react-rollback-laravel" class="btn btn-primary btn-sm">Read article</a></div>
+</article><article class="project-card media-card reveal">
+  <a class="card-media" href="/blog/kanban-ordering-laravel-transactions" tabindex="-1" aria-hidden="true"><img src="/assets/images/covers/taskflow.svg" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
+  <div class="project-top">
+    <div class="project-meta"><span class="project-category">Laravel</span><span class="badge badge-cyan">7 min read</span></div>
+    <h3 class="project-title"><a href="/blog/kanban-ordering-laravel-transactions">Keeping Kanban Card Positions Consistent in Laravel</a></h3>
+    <p class="project-description">Moving a card between columns looks trivial until two columns need renumbering at once and something fails halfway. This is how I keep positions contiguous in Laravel and prove it with a test.</p>
+  </div>
+  <div class="project-bottom"><a href="/blog/kanban-ordering-laravel-transactions" class="btn btn-primary btn-sm">Read article</a></div>
+</article><article class="project-card media-card reveal">
+  <a class="card-media" href="/blog/accessible-sortable-table-react" tabindex="-1" aria-hidden="true"><img src="/assets/images/covers/pulseboard.svg" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
+  <div class="project-top">
+    <div class="project-meta"><span class="project-category">React</span><span class="badge badge-cyan">6 min read</span></div>
+    <h3 class="project-title"><a href="/blog/accessible-sortable-table-react">Building an Accessible, Sortable Data Table in React</a></h3>
+    <p class="project-description">Most dashboards ship a sortable table that works with a mouse and little else. Here are the specific details I use to make one that works with a keyboard and assistive technology, with the code from my Pulseboard dashboard.</p>
+  </div>
+  <div class="project-bottom"><a href="/blog/accessible-sortable-table-react" class="btn btn-primary btn-sm">Read article</a></div>
+</article><article class="project-card media-card reveal">
+  <a class="card-media" href="/blog/react-api-adapters-mock-laravel" tabindex="-1" aria-hidden="true"><img src="/assets/images/covers/taskflow.svg" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
+  <div class="project-top">
+    <div class="project-meta"><span class="project-category">Architecture</span><span class="badge badge-cyan">7 min read</span></div>
+    <h3 class="project-title"><a href="/blog/react-api-adapters-mock-laravel">One Typed API Interface, Two Adapters: Developing React Against a Mock or Laravel</a></h3>
+    <p class="project-description">If your React components call fetch directly, you cannot demo the app without a server and you cannot test it without mocking the network. A typed interface with swappable adapters solves both. Here is the structure from my TaskFlow project.</p>
+  </div>
+  <div class="project-bottom"><a href="/blog/react-api-adapters-mock-laravel" class="btn btn-primary btn-sm">Read article</a></div>
 </article></div></div>
     </section>
     <section class="section cta-section">

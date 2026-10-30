@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One Typed API Interface, Two Adapters: Developing React Against a Mock or Laravel | Saad Ali Khan</title>
+  <meta name="description" content="Define a single TypeScript Api interface with an HTTP adapter for Laravel and an in-memory mock, run one contract test suite against both, and ship a static demo.">
+  <meta name="author" content="Saad Ali Khan">
+  <meta name="theme-color" content="#07080D">
+  <link rel="canonical" href="https://saadconsulting.tech/blog/react-api-adapters-mock-laravel">
+  <meta name="google-site-verification" content="9KDuOrVRG-VaSCaI2UogYvvNn2mkYmluYzR9lXaMEKY" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:locale" content="en_US">
+  <link rel="alternate" hreflang="en" href="https://saadconsulting.tech/blog/react-api-adapters-mock-laravel">
+  <link rel="alternate" hreflang="x-default" href="https://saadconsulting.tech/blog/react-api-adapters-mock-laravel">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="me" href="https://github.com/ali-saad-khan">
+  <link rel="me" href="https://www.linkedin.com/in/saad-ali-khan-01976124a/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Saad Ali Khan">
+  <meta property="og:title" content="One Typed API Interface, Two Adapters: Developing React Against a Mock or Laravel | Saad Ali Khan">
+  <meta property="og:description" content="Define a single TypeScript Api interface with an HTTP adapter for Laravel and an in-memory mock, run one contract test suite against both, and ship a static demo.">
+  <meta property="og:url" content="https://saadconsulting.tech/blog/react-api-adapters-mock-laravel">
+  <meta property="og:image" content="https://saadconsulting.tech/assets/images/og/blog-react-api-adapters-mock-laravel.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="One Typed API Interface, Two Adapters: Developing React Against a Mock or Laravel | Saad Ali Khan">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image:alt" content="One Typed API Interface, Two Adapters: Developing React Against a Mock or Laravel | Saad Ali Khan">
+  <meta name="twitter:title" content="One Typed API Interface, Two Adapters: Developing React Against a Mock or Laravel | Saad Ali Khan">
+  <meta name="twitter:description" content="Define a single TypeScript Api interface with an HTTP adapter for Laravel and an in-memory mock, run one contract test suite against both, and ship a static demo.">
+  <meta name="twitter:image" content="https://saadconsulting.tech/assets/images/og/blog-react-api-adapters-mock-laravel.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://saadconsulting.tech/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://saadconsulting.tech/blog"}, {"@type": "ListItem", "position": 3, "name": "One Typed API Interface, Two Adapters: Developing React Against a Mock or Laravel", "item": "https://saadconsulting.tech/blog/react-api-adapters-mock-laravel"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "One Typed API Interface, Two Adapters: Developing React Against a Mock or Laravel", "description": "Define a single TypeScript Api interface with an HTTP adapter for Laravel and an in-memory mock, run one contract test suite against both, and ship a static demo.", "url": "https://saadconsulting.tech/blog/react-api-adapters-mock-laravel", "mainEntityOfPage": "https://saadconsulting.tech/blog/react-api-adapters-mock-laravel", "image": "https://saadconsulting.tech/assets/images/og/blog-react-api-adapters-mock-laravel.png", "inLanguage": "en", "datePublished": "2026-10-30", "dateModified": "2026-10-30", "author": {"@type": "Person", "@id": "https://saadconsulting.tech/#person", "name": "Saad Ali Khan", "url": "https://saadconsulting.tech/", "jobTitle": "Full Stack Software Engineer", "worksFor": {"@type": "Organization", "name": "Technyx"}, "email": "saadalikhan0210@gmail.com", "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"}, "sameAs": ["https://github.com/ali-saad-khan", "https://www.linkedin.com/in/saad-ali-khan-01976124a/"], "knowsAbout": ["Laravel", "PHP", "MySQL", "REST APIs", "Payment integrations", "WordPress", "Shopify", "Next.js", "React", "TypeScript", "Tailwind CSS", "n8n", "Workflow automation"]}, "publisher": {"@id": "https://saadconsulting.tech/#person"}, "copyrightHolder": {"@id": "https://saadconsulting.tech/#person"}, "copyrightYear": 2026, "isPartOf": {"@type": "Blog", "url": "https://saadconsulting.tech/blog"}}</script>
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="nav-brand" aria-label="Saad Ali Khan Portfolio Home"><span class="brand-tag">&lt;</span>SAAD<span class="brand-tag">/&gt;</span><span class="brand-dot"></span></a>
+      <div class="nav-right">
+        <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation"><a href="/" class="nav-link">Home</a><a href="/about" class="nav-link">About</a><a href="/services" class="nav-link">Services</a><a href="/projects" class="nav-link">Projects</a><a href="/blog" class="nav-link active">Blog</a><a href="/contact" class="nav-link">Contact</a></nav>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Light and Dark Mode">
+          <svg class="icon-svg icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg class="icon-svg icon-sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zM2 13h2a1 1 0 100-2H2a1 1 0 100 2zm18 0h2a1 1 0 100-2h-2a1 1 0 100 2zm-9 8h2a1 1 0 100-2h-2a1 1 0 100 2zm0-18h2a1 1 0 100-2h-2a1 1 0 100 2zM5.636 19.778l1.414-1.414a1 1 0 10-1.414-1.414L4.222 18.364a1 1 0 101.414 1.414zm14.142-14.142l-1.414 1.414a1 1 0 001.414 1.414l1.414-1.414a1 1 0 00-1.414-1.414zM4.222 5.636l1.414 1.414a1 1 0 001.414-1.414L5.636 4.222a1 1 0 00-1.414 1.414zm14.142 14.142l1.414-1.414a1 1 0 00-1.414-1.414l-1.414 1.414a1 1 0 001.414 1.414z"/></svg>
+        </button>
+        <a href="/contact" class="btn btn-primary btn-sm nav-cta">Hire Me</a>
+        <button class="mobile-toggle" aria-label="Toggle Mobile Navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog">Blog</a><span class="sep">/</span><span aria-current="page">Architecture article</span></nav>
+        <div class="page-hero-grid">
+          <div class="page-hero-text">
+            <span class="section-tag">// ARCHITECTURE</span>
+            <h1 class="page-title">One Typed API Interface, Two Adapters: Developing React Against a Mock or Laravel</h1>
+            <p class="page-lead">If your React components call fetch directly, you cannot demo the app without a server and you cannot test it without mocking the network. A typed interface with swappable adapters solves both. Here is the structure from my TaskFlow project.</p>
+            <div class="chip-row"><span class="badge badge-cyan">7 min read</span><span class="badge badge-cyan">By Saad Ali Khan</span><span class="badge badge-cyan">Oct 2026</span></div>
+            
+          </div>
+          <figure class="cover-frame reveal"><img src="/assets/images/covers/taskflow.svg" width="1200" height="675" alt="One Typed API Interface, Two Adapters: Developing React Against a Mock or Laravel" fetchpriority="high"></figure>
+        </div>
+      </div>
+    </section>
+    <section class="section tight">
+      <div class="container article-grid">
+        <article class="prose">
+
+<h2>The problem with calling fetch in components</h2>
+<p>When components talk to the network directly, three things get hard: running the UI without a backend (for demos, design work or CI), testing it without mocking <code>fetch</code> everywhere, and keeping the front end's idea of the API in sync with the real one.</p>
+<h2>Step 1: define the surface once</h2>
+<p>Describe everything the UI needs from the server as one TypeScript interface. The components only ever import this interface:</p>
+<pre><code>export interface Api {
+  readonly mode: "http" | "mock";
+  auth: {
+    login(input: LoginInput): Promise&lt;AuthResult&gt;;
+    logout(): Promise&lt;void&gt;;
+    me(): Promise&lt;User&gt;;
+  };
+  projects: {
+    list(): Promise&lt;Project[]&gt;;
+    create(input: ProjectInput): Promise&lt;Project&gt;;
+    remove(id: number): Promise&lt;void&gt;;
+  };
+  tasks: {
+    list(projectId: number): Promise&lt;Task[]&gt;;
+    create(projectId: number, input: TaskInput): Promise&lt;Task&gt;;
+    move(id: number, input: MoveInput): Promise&lt;Task&gt;;
+  };
+}</code></pre>
+<h2>Step 2: two implementations</h2>
+<p>The <strong>HTTP adapter</strong> talks to the real Laravel API and turns its uniform error shape into a typed <code>ApiError</code>. The <strong>mock adapter</strong> keeps everything in memory (and in <code>localStorage</code> for a demo), simulates latency, and enforces the same rules: 401 when not signed in, 422 with field errors for bad input, 404 for missing records.</p>
+<h2>Step 3: choose at build time</h2>
+<p>A build-time environment variable picks the adapter. Because it is a direct comparison, the bundler removes the one you did not select:</p>
+<pre><code>export const api: Api =
+  import.meta.env.VITE_API_MODE === "mock"
+    ? createMockAdapter()
+    : createHttpAdapter({ baseUrl: import.meta.env.VITE_API_URL ?? "http://localhost:8000/api/v1" });</code></pre>
+<p>That is how the same React code produces a static demo (mock adapter, no server needed) and a production build (HTTP adapter, real Laravel API).</p>
+<h2>Step 4: one contract test suite, run against every adapter</h2>
+<p>The risk with a mock is that it drifts from the real thing. To limit that, write the behaviour you expect once, as a function that takes an adapter factory, and run it against each implementation:</p>
+<pre><code>export function runApiContract(name: string, factory: () =&gt; Api) {
+  describe(`Api contract: ${name}`, () =&gt; {
+    it("rejects unauthenticated calls with 401", async () =&gt; {
+      expect((await rejects(api.projects.list())).status).toBe(401);
+    });
+    // login, validation errors, ownership, move/reorder behaviour ...
+  });
+}
+
+runApiContract("mockAdapter", () =&gt; createMockAdapter());</code></pre>
+<p>The same file can be pointed at the HTTP adapter against a running test server. In this project the HTTP adapter has its own tests with a stubbed <code>fetch</code>, and I only smoke-tested it by hand against a live Laravel server. I would not claim more than that.</p>
+<h2>What you gain</h2>
+<ul>
+<li><strong>A deployable demo with no backend.</strong> Useful for a portfolio, a design review or a quick stakeholder preview.</li>
+<li><strong>Fast, deterministic UI tests.</strong> No network, no flaky timing.</li>
+<li><strong>A written contract.</strong> The interface and its shared tests document what the API promises.</li>
+<li><strong>Room to change backends.</strong> Swapping Laravel for another service means writing one adapter.</li>
+</ul>
+<h2>What it costs</h2>
+<p>You maintain a mock. Keep it small, keep it honest about errors, and make the contract tests the thing that stops it drifting. Do not let the mock become a second implementation of your business rules; if it needs complex logic, that logic probably belongs behind the real API.</p>
+<p>The complete project, a Laravel 12 API plus the React app, is in the <a href="/projects/taskflow-laravel-react-app">TaskFlow case study</a>, with a live demo running on the mock adapter.</p>
+
+          <p class="post-note">Original article written by Saad Ali Khan. Code samples are illustrative and free to adapt in your own projects.</p>
+        </article>
+        <aside class="side-card-wrap">
+          <div class="side-card side-cta"><h3>Need help with this?</h3><p>Freelance full stack development (React, Laravel and PHP), remote and worldwide.</p><a href="/contact" class="btn btn-primary btn-sm">Start a Project</a></div>
+          <div class="side-card"><h3>Related</h3><ul class="link-list"><li><a href="/services/frontend-development">Frontend Development</a></li><li><a href="/projects/taskflow-laravel-react-app">Case study: TaskFlow</a></li></ul></div>
+          <div class="side-card"><h3>More articles</h3><ul class="link-list"><li><a href="/blog/idempotent-payment-webhooks-laravel">How to Handle Payment Webhooks in Laravel Without Double-Processing</a></li><li><a href="/blog/wallet-ledger-design-mysql-laravel">Designing a Wallet Ledger in MySQL and Laravel: Integers, Transactions and Locks</a></li><li><a href="/blog/laravel-rest-api-design-checklist">A Practical Checklist for Designing a Laravel REST API</a></li><li><a href="/blog/fix-n-plus-one-queries-laravel">How to Find and Fix N+1 Queries in Laravel</a></li><li><a href="/blog/how-to-hire-a-laravel-developer">How to Hire a Freelance Laravel Developer: What to Check Before You Commit</a></li><li><a href="/blog/optimistic-ui-react-rollback-laravel">Optimistic UI in React With Rollback (Against a Laravel API)</a></li><li><a href="/blog/kanban-ordering-laravel-transactions">Keeping Kanban Card Positions Consistent in Laravel</a></li><li><a href="/blog/accessible-sortable-table-react">Building an Accessible, Sortable Data Table in React</a></li></ul></div>
+        </aside>
+      </div>
+    </section>
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Want this done right in your project?</h2>
+          <p>Send a short description and I&#x27;ll reply by email with questions or a suggested approach.</p>
+          <div class="hero-actions" style="justify-content:center">
+            <a href="/contact" class="btn btn-primary">Start a Project</a>
+            <a href="mailto:saadalikhan0210@gmail.com?subject=Project%20inquiry" class="btn btn-secondary">Email Me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <div class="footer-brand">&lt;SAAD ALI KHAN /&gt;</div>
+          <p>Laravel &amp; PHP engineer in Karachi, Pakistan. I build secure backends, REST APIs, payment systems and e-commerce platforms for clients worldwide.</p>
+          <a href="mailto:saadalikhan0210@gmail.com" class="footer-link">saadalikhan0210@gmail.com</a>
+        </div>
+        <div><h4 class="footer-heading">Pages</h4><ul><li><a href="/">Home</a></li><li><a href="/about">About</a></li><li><a href="/services">Services</a></li><li><a href="/projects">Projects</a></li><li><a href="/blog">Blog</a></li><li><a href="/contact">Contact</a></li></ul></div>
+        <div><h4 class="footer-heading">Services</h4><ul><li><a href="/services/laravel-development">Laravel Development</a></li><li><a href="/services/frontend-development">Frontend Development</a></li><li><a href="/services/workflow-automation">n8n Workflow Automation</a></li><li><a href="/services/rest-api-development">REST API Development</a></li><li><a href="/services/payment-gateway-integration">Payment Gateway Integration</a></li><li><a href="/services/database-engineering">Database Engineering</a></li><li><a href="/services/wordpress-development">WordPress Development</a></li><li><a href="/services/ecommerce-development">E-commerce Development</a></li><li><a href="/services/production-debugging">Production Debugging &amp; Maintenance</a></li></ul></div>
+        <div><h4 class="footer-heading">Case studies</h4><ul><li><a href="/projects/fincore-wallet-ledger-api">FinCore</a></li><li><a href="/projects/my-store-ecommerce-platform">my-store</a></li><li><a href="/projects/pulseboard-react-dashboard">Pulseboard</a></li><li><a href="/projects/taskflow-laravel-react-app">TaskFlow</a></li><li><a href="/projects/n8n-automation-showcase">n8n Workflows</a></li><li><a href="/projects/launchpad-nextjs-saas">Launchpad</a></li><li><a href="/projects/practical-meal-subscription-backend">PractiCal</a></li><li><a href="/projects/enterprise-wordpress-revamp">WordPress Revamp</a></li><li><a href="/projects/shopify-store-customization">Shopify Store</a></li><li><a href="/projects/payment-gateway-integrations">Payment Integrations</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="copyright">&copy; <span id="current-year">2026</span> Saad Ali Khan. All rights reserved.</div>
+        <div class="footer-links">
+          <a href="https://github.com/ali-saad-khan" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+          <a href="https://www.linkedin.com/in/saad-ali-khan-01976124a/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>
