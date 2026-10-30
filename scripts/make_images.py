@@ -269,10 +269,48 @@ def pulseboard(u):
     return base(s, u)
 
 
+def taskflow(u):
+    s = win(70, 80, 1060, 520, "taskflow / board")
+    cols = [("To do", V, 4), ("Doing", C, 3), ("Done", G, 2)]
+    for i, (name, col, n) in enumerate(cols):
+        x = 100 + i * 342
+        s += rect(x, 140, 322, 430, "#fff", 0.04, 14, "#fff") + t(x + 20, 176, name, 16, col, 700)
+        for j in range(n):
+            y = 200 + j * 88
+            s += rect(x + 14, y, 294, 74, "#fff", 0.08, 12, "#fff") + bar(x + 30, y + 16, 160, TXT, 0.5, 10) + bar(x + 30, y + 38, 100, DIM, 0.5, 8)
+            s += chip(x + 214, y + 14, ["high", "med", "low", "med"][j % 4], [P, Y, G, Y][j % 4], 11, 56)
+    s += chip(880, 36, "Laravel API + React", C, 15)
+    return base(s, u)
+
+
+def n8nflow(u):
+    s = win(70, 80, 1060, 520, "n8n / workflow")
+    nodes = [(130, 300, "Webhook", V), (370, 220, "IF auth", Y), (370, 390, "401", P), (620, 220, "Sub-workflow", C), (860, 220, "Data Table", G), (860, 390, "Respond", G)]
+    for i, (x, y, lab, col) in enumerate(nodes):
+        s += rect(x, y, 190, 76, "#fff", 0.07, 14, col, 0.6) + t(x + 95, y + 44, lab, 18, col, 700, True, "middle")
+    for a, b in [((320, 338), (370, 258)), ((320, 338), (370, 428)), ((560, 258), (620, 258)), ((810, 258), (860, 258)), ((955, 296), (955, 390))]:
+        s += arrow(a[0], a[1], b[0], b[1], C)
+    s += chip(860, 36, "n8n · 6 workflows", G, 15)
+    return base(s, u)
+
+
+def launchpad(u):
+    s = win(70, 80, 1060, 520, "launchpad / pricing")
+    s += t(600, 190, "Ship release notes", 40, TXT, 800, False, "middle") + t(600, 236, "that people actually read", 28, DIM, 500, False, "middle")
+    s += f'<rect x="500" y="262" width="200" height="46" rx="23" fill="{grad(u)}"/>' + t(600, 292, "Start free", 18, "#fff", 700, False, "middle")
+    for i, (nm, col) in enumerate([("Free", DIM), ("Team", V), ("Scale", C)]):
+        x = 150 + i * 330
+        s += rect(x, 350, 300, 220, "#fff", 0.08 if i == 1 else 0.04, 16, col, 0.7)
+        s += t(x + 24, 390, nm, 18, col, 700) + t(x + 24, 438, ["$0", "$29", "$99"][i], 40, TXT, 800)
+        s += bar(x + 24, 470, 200, DIM, 0.4, 8) + bar(x + 24, 494, 150, DIM, 0.4, 8) + bar(x + 24, 518, 180, DIM, 0.4, 8)
+    s += chip(860, 36, "Next.js 16 + TypeScript", C, 15)
+    return base(s, u)
+
+
 IMAGES = {
     "fincore-ledger": ledger, "my-store-ecommerce": store, "practical-subscriptions": practical,
     "wordpress-revamp": wordpress, "shopify-store": shopify, "payment-gateways": payments,
-    "laravel-code": code, "rest-api": api, "database-schema": db, "pulseboard": pulseboard, "about": about,
+    "laravel-code": code, "rest-api": api, "database-schema": db, "pulseboard": pulseboard, "taskflow": taskflow, "n8n-flow": n8nflow, "launchpad": launchpad, "about": about,
 }
 
 if __name__ == "__main__":

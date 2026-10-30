@@ -85,6 +85,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://saadconsulting.tech/projects/taskflow-laravel-react-app</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://saadconsulting.tech/projects/n8n-automation-showcase</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://saadconsulting.tech/projects/launchpad-nextjs-saas</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://saadconsulting.tech/projects/practical-meal-subscription-backend</loc>
     <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
@@ -116,6 +134,12 @@
   </url>
   <url>
     <loc>https://saadconsulting.tech/services/frontend-development</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://saadconsulting.tech/services/workflow-automation</loc>
     <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

@@ -322,7 +322,7 @@ def build_projects_index():
     openp = "".join(project_card(p) for p in PROJECTS if p["kind"] == "open")
     priv = "".join(project_card(p) for p in PROJECTS if p["kind"] != "open")
     body = hero(items, "// PROJECTS & CASE STUDIES", "Full Stack Case Studies: React, Laravel & E-commerce",
-                "Three open-source builds you can read line by line (React, Next.js and Laravel), and four pieces of production work delivered at Technyx. Each case study explains the problem, the decisions and the result.",
+                "Six open-source builds you can read line by line (React, Next.js, Laravel and n8n), and four pieces of production work delivered at Technyx. Each case study explains the problem, the decisions and the result.",
                 None)
     body += f'''
     <section class="section tight">
@@ -411,11 +411,11 @@ def build_about():
           <h2>Experience</h2>
           <p><strong>Software Engineer, Technyx (Karachi, Pakistan), August 2023 to present.</strong> Developing and maintaining Laravel and PHP backends for production applications; designing MySQL schemas including user accounts, meal plans and transactional ledgers; building REST APIs for web, mobile and external integrations; integrating payment gateways with request signing and webhook verification; restructuring a 800+ page WordPress site; customizing Shopify themes; and troubleshooting production servers.</p>
           {certs}<h2>Don't take my word for it</h2>
-          <p>Three of my projects are public with tests and docs: <a href="/projects/fincore-wallet-ledger-api">FinCore</a>, a double-entry wallet ledger API, <a href="/projects/my-store-ecommerce-platform">my-store</a>, a Next.js e-commerce platform, and <a href="/projects/pulseboard-react-dashboard">Pulseboard</a>, a React dashboard with a live demo. Read the code before you decide to hire me.</p>
+          <p>Six of my projects are public with tests and docs, and four have live demos: <a href="/projects/fincore-wallet-ledger-api">FinCore</a> (Laravel ledger API), <a href="/projects/my-store-ecommerce-platform">my-store</a> (Next.js store), <a href="/projects/taskflow-laravel-react-app">TaskFlow</a> (Laravel + React), <a href="/projects/pulseboard-react-dashboard">Pulseboard</a> (React dashboard), <a href="/projects/launchpad-nextjs-saas">Launchpad</a> (Next.js SaaS) and the <a href="/projects/n8n-automation-showcase">n8n workflows</a>. Read the code before you decide to hire me.</p>
         </article>
         <aside class="side-card-wrap">
           <div class="side-card"><h3>At a glance</h3>
-            <ul class="link-list plain"><li><strong>3+</strong> years professional experience</li><li><strong>800+</strong> WordPress pages restructured</li><li><strong>50+</strong> automated tests in public projects</li><li><strong>3</strong> open-source case studies</li><li><strong>4</strong> n8n Academy certificates</li></ul></div>
+            <ul class="link-list plain"><li><strong>3+</strong> years professional experience</li><li><strong>800+</strong> WordPress pages restructured</li><li><strong>150+</strong> automated tests in public projects</li><li><strong>6</strong> open-source case studies</li><li><strong>4</strong> n8n Academy certificates</li></ul></div>
           <div class="side-card"><h3>Core stack</h3><div class="project-tags">{''.join(f'<span class="project-tag">{x}</span>' for x in ["React", "Next.js", "TypeScript", "Tailwind CSS", "PHP", "Laravel", "MySQL", "REST APIs", "PostgreSQL", "n8n", "WordPress", "Shopify", "Linux", "Nginx"])}</div></div>
           <div class="side-card"><h3>Services</h3><ul class="link-list">{''.join(f'<li><a href="/services/{s["slug"]}">{e(s["name"])}</a></li>' for s in SERVICES)}</ul></div>
           <div class="side-card side-cta"><h3>Let's work together</h3><p>Freelance and contract projects, remote.</p><a href="/contact" class="btn btn-primary btn-sm">Contact me</a></div>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow: Laravel API + React Kanban App | Saad Ali Khan</title>
+  <meta name="description" content="Case study: TaskFlow, a full stack Kanban app with a Laravel 12 Sanctum API, policies and transactional reordering, and a React 19 TypeScript front end.">
+  <meta name="author" content="Saad Ali Khan">
+  <meta name="theme-color" content="#07080D">
+  <link rel="canonical" href="https://saadconsulting.tech/projects/taskflow-laravel-react-app">
+  <meta name="google-site-verification" content="9KDuOrVRG-VaSCaI2UogYvvNn2mkYmluYzR9lXaMEKY" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:locale" content="en_US">
+  <link rel="alternate" hreflang="en" href="https://saadconsulting.tech/projects/taskflow-laravel-react-app">
+  <link rel="alternate" hreflang="x-default" href="https://saadconsulting.tech/projects/taskflow-laravel-react-app">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="me" href="https://github.com/ali-saad-khan">
+  <link rel="me" href="https://www.linkedin.com/in/saad-ali-khan-01976124a/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Saad Ali Khan">
+  <meta property="og:title" content="TaskFlow: Laravel API + React Kanban App | Saad Ali Khan">
+  <meta property="og:description" content="Case study: TaskFlow, a full stack Kanban app with a Laravel 12 Sanctum API, policies and transactional reordering, and a React 19 TypeScript front end.">
+  <meta property="og:url" content="https://saadconsulting.tech/projects/taskflow-laravel-react-app">
+  <meta property="og:image" content="https://saadconsulting.tech/assets/images/og/taskflow-laravel-react-app.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="TaskFlow: Laravel API + React Kanban App | Saad Ali Khan">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image:alt" content="TaskFlow: Laravel API + React Kanban App | Saad Ali Khan">
+  <meta name="twitter:title" content="TaskFlow: Laravel API + React Kanban App | Saad Ali Khan">
+  <meta name="twitter:description" content="Case study: TaskFlow, a full stack Kanban app with a Laravel 12 Sanctum API, policies and transactional reordering, and a React 19 TypeScript front end.">
+  <meta name="twitter:image" content="https://saadconsulting.tech/assets/images/og/taskflow-laravel-react-app.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://saadconsulting.tech/"}, {"@type": "ListItem", "position": 2, "name": "Projects", "item": "https://saadconsulting.tech/projects"}, {"@type": "ListItem", "position": 3, "name": "TaskFlow", "item": "https://saadconsulting.tech/projects/taskflow-laravel-react-app"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "TaskFlow: Laravel API + React Kanban App", "description": "Case study: TaskFlow, a full stack Kanban app with a Laravel 12 Sanctum API, policies and transactional reordering, and a React 19 TypeScript front end.", "image": "https://saadconsulting.tech/assets/images/og/taskflow-laravel-react-app.png", "author": {"@type": "Person", "@id": "https://saadconsulting.tech/#person", "name": "Saad Ali Khan", "url": "https://saadconsulting.tech/", "jobTitle": "Full Stack Software Engineer", "worksFor": {"@type": "Organization", "name": "Technyx"}, "email": "saadalikhan0210@gmail.com", "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"}, "sameAs": ["https://github.com/ali-saad-khan", "https://www.linkedin.com/in/saad-ali-khan-01976124a/"], "knowsAbout": ["Laravel", "PHP", "MySQL", "REST APIs", "Payment integrations", "WordPress", "Shopify", "Next.js", "React", "TypeScript", "Tailwind CSS", "n8n", "Workflow automation"]}, "datePublished": "2026-10-30", "dateModified": "2026-10-30", "mainEntityOfPage": "https://saadconsulting.tech/projects/taskflow-laravel-react-app", "publisher": {"@type": "Person", "@id": "https://saadconsulting.tech/#person", "name": "Saad Ali Khan", "url": "https://saadconsulting.tech/", "jobTitle": "Full Stack Software Engineer", "worksFor": {"@type": "Organization", "name": "Technyx"}, "email": "saadalikhan0210@gmail.com", "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"}, "sameAs": ["https://github.com/ali-saad-khan", "https://www.linkedin.com/in/saad-ali-khan-01976124a/"], "knowsAbout": ["Laravel", "PHP", "MySQL", "REST APIs", "Payment integrations", "WordPress", "Shopify", "Next.js", "React", "TypeScript", "Tailwind CSS", "n8n", "Workflow automation"]}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareSourceCode", "name": "TaskFlow", "codeRepository": "https://github.com/ali-saad-khan/taskflow-fullstack", "author": {"@type": "Person", "@id": "https://saadconsulting.tech/#person", "name": "Saad Ali Khan", "url": "https://saadconsulting.tech/", "jobTitle": "Full Stack Software Engineer", "worksFor": {"@type": "Organization", "name": "Technyx"}, "email": "saadalikhan0210@gmail.com", "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"}, "sameAs": ["https://github.com/ali-saad-khan", "https://www.linkedin.com/in/saad-ali-khan-01976124a/"], "knowsAbout": ["Laravel", "PHP", "MySQL", "REST APIs", "Payment integrations", "WordPress", "Shopify", "Next.js", "React", "TypeScript", "Tailwind CSS", "n8n", "Workflow automation"]}, "description": "A complete full stack app in one repository: a tested Laravel 12 REST API and a React and TypeScript Kanban board that talks to it. The live demo runs the same front end against an in-browser mock of the API.", "programmingLanguage": "Laravel 12", "url": "https://saadconsulting.tech/projects/taskflow-laravel-react-app"}</script>
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="nav-brand" aria-label="Saad Ali Khan Portfolio Home"><span class="brand-tag">&lt;</span>SAAD<span class="brand-tag">/&gt;</span><span class="brand-dot"></span></a>
+      <div class="nav-right">
+        <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation"><a href="/" class="nav-link">Home</a><a href="/about" class="nav-link">About</a><a href="/services" class="nav-link">Services</a><a href="/projects" class="nav-link active">Projects</a><a href="/blog" class="nav-link">Blog</a><a href="/contact" class="nav-link">Contact</a></nav>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Light and Dark Mode">
+          <svg class="icon-svg icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg class="icon-svg icon-sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zM2 13h2a1 1 0 100-2H2a1 1 0 100 2zm18 0h2a1 1 0 100-2h-2a1 1 0 100 2zm-9 8h2a1 1 0 100-2h-2a1 1 0 100 2zm0-18h2a1 1 0 100-2h-2a1 1 0 100 2zM5.636 19.778l1.414-1.414a1 1 0 10-1.414-1.414L4.222 18.364a1 1 0 101.414 1.414zm14.142-14.142l-1.414 1.414a1 1 0 001.414 1.414l1.414-1.414a1 1 0 00-1.414-1.414zM4.222 5.636l1.414 1.414a1 1 0 001.414-1.414L5.636 4.222a1 1 0 00-1.414 1.414zm14.142 14.142l1.414-1.414a1 1 0 00-1.414-1.414l-1.414 1.414a1 1 0 001.414 1.414z"/></svg>
+        </button>
+        <a href="/contact" class="btn btn-primary btn-sm nav-cta">Hire Me</a>
+        <button class="mobile-toggle" aria-label="Toggle Mobile Navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/projects">Projects</a><span class="sep">/</span><span aria-current="page">TaskFlow</span></nav>
+        <div class="page-hero-grid">
+          <div class="page-hero-text">
+            <span class="section-tag">// CASE STUDY</span>
+            <h1 class="page-title">TaskFlow: Laravel API + React Kanban App</h1>
+            <p class="page-lead">A complete full stack app in one repository: a tested Laravel 12 REST API and a React and TypeScript Kanban board that talks to it. The live demo runs the same front end against an in-browser mock of the API.</p>
+            <div class="chip-row"><span class="badge badge-cyan">Open source</span><span class="badge badge-cyan">Laravel</span></div>
+            <div class="hero-actions"><a href="/demos/taskflow/" class="btn btn-primary">Live demo</a><a href="https://github.com/ali-saad-khan/taskflow-fullstack" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View code on GitHub</a><a href="/contact" class="btn btn-secondary">Start a Project</a></div>
+          </div>
+          <figure class="cover-frame reveal"><img src="/assets/images/covers/taskflow.svg" width="1200" height="675" alt="Illustration of the TaskFlow project" fetchpriority="high"></figure>
+        </div>
+      </div>
+    </section>
+    <section class="section tight">
+      <div class="container">
+        <div class="fact-grid reveal"><div class="stat-card"><div class="stat-number" style="font-size:1.6rem">36</div><div class="stat-label">API feature tests</div></div><div class="stat-card"><div class="stat-number" style="font-size:1.6rem">46</div><div class="stat-label">front-end tests</div></div><div class="stat-card"><div class="stat-number" style="font-size:1.6rem">Laravel 12</div><div class="stat-label">Sanctum auth + Policies</div></div><div class="stat-card"><div class="stat-number" style="font-size:1.6rem">React 19</div><div class="stat-label">TypeScript, strict</div></div></div>
+      </div>
+    </section>
+    <section class="section tight">
+      <div class="container article-grid">
+        <article class="prose">
+          <h2>The challenge</h2>
+          <p>A Kanban board looks simple until you make it correct: cards move between columns while positions stay contiguous, users can only touch their own data, and the UI feels instant even when the server is slow or fails.</p><p>I wanted one codebase that shows both halves done properly, and that a reviewer can run, test and read.</p>
+          <h2>How I approached it</h2>
+          <ol class="approach-list"><li class="approach-item"><span class="approach-num">01</span><div><h3>A versioned API with a uniform error envelope</h3><p>Everything lives under <code>/api/v1</code> with Form Request validation, API Resources and one JSON error shape. Auth routes are rate limited, and unauthenticated calls return a JSON 401 even without an Accept header (a bug the tests caught).</p></div></li><li class="approach-item"><span class="approach-num">02</span><div><h3>Authorization in Policies, not controllers</h3><p>Projects and tasks are protected by ownership Policies, with tests that assert 403 for other users' records and 404 for missing ones.</p></div></li><li class="approach-item"><span class="approach-num">03</span><div><h3>Reordering inside a transaction</h3><p>Moving a card within or across columns rewrites positions in a single database transaction, keeping them contiguous. A test proves the whole move rolls back if a write fails midway.</p></div></li><li class="approach-item"><span class="approach-num">04</span><div><h3>Optimistic UI with rollback</h3><p>Board state is a pure reducer. Moves apply instantly, and if the request fails the board rolls back to a snapshot. The demo has a 'Simulate network failure' switch so you can watch it happen.</p></div></li><li class="approach-item"><span class="approach-num">05</span><div><h3>One typed API interface, two adapters</h3><p>The front end depends on a single <code>Api</code> interface with an <code>httpAdapter</code> (real Laravel) and a <code>mockAdapter</code> (in-memory, localStorage). A shared contract test suite runs against the mock, and the unused adapter is tree-shaken out of each build.</p></div></li><li class="approach-item"><span class="approach-num">06</span><div><h3>Drag and drop that works with a keyboard</h3><p>Cards use HTML5 drag and drop plus labelled move buttons and live-region announcements, and the task editor is a native accessible <code>&amp;lt;dialog&amp;gt;</code>.</p></div></li></ol>
+          <h2>Deliberate trade-offs</h2><ul class="check-list"><li>The hosted demo uses the mock adapter, because the portfolio is a static site. The real HTTP adapter is unit tested with a stubbed fetch and smoke-tested by hand against a local Laravel server, but it has no automated browser test against a live API.</li><li>Tokens are kept in localStorage for simplicity, and rollback uses a snapshot, so overlapping in-flight edits could interact badly. Both are documented in the README.</li></ul>
+          <h2>What I built</h2>
+          <ul class="check-list"><li>Designed the REST API, policies, validation and the transactional reorder endpoint.</li><li>Wrote 36 PHPUnit feature tests covering auth, token revocation, rate limiting, 422/403/404 cases and reorder rollback.</li><li>Built the Kanban board, task dialog, due-date highlighting, priority badges, light/dark mode and responsive layout.</li><li>Wrote 46 Vitest tests: adapter contract, board reducer, components and app-level flows including keyboard moves and rollback.</li><li>Added a CI workflow and a README with an API table, architecture notes and run instructions.</li></ul>
+          <div class="callout">Personal showcase project with demo data, not client work. The live demo runs on an in-browser mock of the API; the full Laravel API is in the repository.</div>
+          <h2>What this project demonstrates</h2>
+          <ul class="check-list"><li>Laravel and React built together, with one contract between them</li><li>Policies, validation and transactions on the back end</li><li>Optimistic UI, rollback and accessible drag and drop on the front end</li><li>82 automated tests across both halves</li></ul>
+        </article>
+        <aside class="side-card-wrap">
+          <div class="side-card"><h3>Tech stack</h3><div class="project-tags"><span class="project-tag">Laravel 12</span><span class="project-tag">PHP</span><span class="project-tag">Sanctum</span><span class="project-tag">PHPUnit</span><span class="project-tag">React 19</span><span class="project-tag">TypeScript</span><span class="project-tag">Vite</span><span class="project-tag">Tailwind CSS v4</span><span class="project-tag">Vitest</span><span class="project-tag">GitHub Actions</span></div></div>
+          <div class="side-card"><h3>Related services</h3><ul class="link-list"><li><a href="/services/frontend-development">Frontend Development</a></li><li><a href="/services/rest-api-development">REST API Development</a></li><li><a href="/services/laravel-development">Laravel Development</a></li></ul></div>
+          <div class="side-card side-cta"><h3>Need something similar?</h3><p>I take on freelance and contract projects.</p><a href="/contact" class="btn btn-primary btn-sm">Get in touch</a></div>
+        </aside>
+      </div>
+    </section>
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-header reveal"><span class="section-tag">// MORE WORK</span><h2 class="section-title">Related case studies</h2></div>
+        <div class="projects-grid"><article class="project-card media-card reveal">
+  <a class="card-media" href="/projects/pulseboard-react-dashboard" tabindex="-1" aria-hidden="true"><img src="/assets/images/covers/pulseboard.svg" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
+  <div class="project-top">
+    <div class="project-meta"><span class="project-category">React / TypeScript / Tailwind CSS</span><span class="badge badge-green">Open Source</span></div>
+    <h3 class="project-title"><a href="/projects/pulseboard-react-dashboard">Pulseboard: React + TypeScript Analytics Dashboard</a></h3>
+    <p class="project-description">A front-end showcase I built to show how I approach UI work: a fast, accessible analytics dashboard where the filtering, sorting and number crunching are plain tested functions and the interface is a thin, readable React layer on top. Try the live demo.</p>
+  </div>
+  <div class="project-bottom">
+    <a href="/projects/pulseboard-react-dashboard" class="btn btn-primary btn-sm">Read case study</a>
+    <a href="https://github.com/ali-saad-khan/pulseboard" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">View code</a>
+    <a href="/demos/pulseboard/" class="btn btn-secondary btn-sm">Live demo</a>
+  </div>
+</article><article class="project-card media-card reveal">
+  <a class="card-media" href="/projects/fincore-wallet-ledger-api" tabindex="-1" aria-hidden="true"><img src="/assets/images/covers/fincore-ledger.svg" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
+  <div class="project-top">
+    <div class="project-meta"><span class="project-category">Laravel 12 / MySQL 8 / Redis / REST API</span><span class="badge badge-green">Open Source</span></div>
+    <h3 class="project-title"><a href="/projects/fincore-wallet-ledger-api">FinCore: Wallet &amp; Double-Entry Ledger API</a></h3>
+    <p class="project-description">A versioned REST API for digital wallets where every credit, debit, transfer and reversal produces balanced ledger entries and a full audit trail. Built to show how money-handling code should behave when requests are retried, concurrent or malicious.</p>
+  </div>
+  <div class="project-bottom">
+    <a href="/projects/fincore-wallet-ledger-api" class="btn btn-primary btn-sm">Read case study</a>
+    <a href="https://github.com/ali-saad-khan/fincore" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">View code</a>
+    
+  </div>
+</article></div>
+      </div>
+    </section>
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Have a project like this in mind?</h2>
+          <p>Tell me what you&#x27;re building. I&#x27;ll reply by email with questions or a suggested approach.</p>
+          <div class="hero-actions" style="justify-content:center">
+            <a href="/contact" class="btn btn-primary">Start a Project</a>
+            <a href="mailto:saadalikhan0210@gmail.com?subject=Project%20inquiry" class="btn btn-secondary">Email Me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <div class="footer-brand">&lt;SAAD ALI KHAN /&gt;</div>
+          <p>Laravel &amp; PHP engineer in Karachi, Pakistan. I build secure backends, REST APIs, payment systems and e-commerce platforms for clients worldwide.</p>
+          <a href="mailto:saadalikhan0210@gmail.com" class="footer-link">saadalikhan0210@gmail.com</a>
+        </div>
+        <div><h4 class="footer-heading">Pages</h4><ul><li><a href="/">Home</a></li><li><a href="/about">About</a></li><li><a href="/services">Services</a></li><li><a href="/projects">Projects</a></li><li><a href="/blog">Blog</a></li><li><a href="/contact">Contact</a></li></ul></div>
+        <div><h4 class="footer-heading">Services</h4><ul><li><a href="/services/laravel-development">Laravel Development</a></li><li><a href="/services/frontend-development">Frontend Development</a></li><li><a href="/services/workflow-automation">n8n Workflow Automation</a></li><li><a href="/services/rest-api-development">REST API Development</a></li><li><a href="/services/payment-gateway-integration">Payment Gateway Integration</a></li><li><a href="/services/database-engineering">Database Engineering</a></li><li><a href="/services/wordpress-development">WordPress Development</a></li><li><a href="/services/ecommerce-development">E-commerce Development</a></li><li><a href="/services/production-debugging">Production Debugging &amp; Maintenance</a></li></ul></div>
+        <div><h4 class="footer-heading">Case studies</h4><ul><li><a href="/projects/fincore-wallet-ledger-api">FinCore</a></li><li><a href="/projects/my-store-ecommerce-platform">my-store</a></li><li><a href="/projects/pulseboard-react-dashboard">Pulseboard</a></li><li><a href="/projects/taskflow-laravel-react-app">TaskFlow</a></li><li><a href="/projects/n8n-automation-showcase">n8n Workflows</a></li><li><a href="/projects/launchpad-nextjs-saas">Launchpad</a></li><li><a href="/projects/practical-meal-subscription-backend">PractiCal</a></li><li><a href="/projects/enterprise-wordpress-revamp">WordPress Revamp</a></li><li><a href="/projects/shopify-store-customization">Shopify Store</a></li><li><a href="/projects/payment-gateway-integrations">Payment Integrations</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="copyright">&copy; <span id="current-year">2026</span> Saad Ali Khan. All rights reserved.</div>
+        <div class="footer-links">
+          <a href="https://github.com/ali-saad-khan" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+          <a href="https://www.linkedin.com/in/saad-ali-khan-01976124a/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>
