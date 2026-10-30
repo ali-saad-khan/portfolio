@@ -7,7 +7,7 @@ from content import *  # noqa
 from blog_content import POSTS
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-TODAY = "2026-10-13"
+TODAY = "2026-10-30"
 PMAP = {p["slug"]: p for p in PROJECTS}
 SMAP = {s["slug"]: s for s in SERVICES}
 BRAND = "Saad Ali Khan"
@@ -321,8 +321,8 @@ def build_projects_index():
     items = [("Home", "/"), ("Projects", path)]
     openp = "".join(project_card(p) for p in PROJECTS if p["kind"] == "open")
     priv = "".join(project_card(p) for p in PROJECTS if p["kind"] != "open")
-    body = hero(items, "// PROJECTS & CASE STUDIES", "Laravel, API and E-commerce Case Studies",
-                "Two open-source builds you can read line by line, and four pieces of production work delivered at Technyx. Each case study explains the problem, the decisions and the result.",
+    body = hero(items, "// PROJECTS & CASE STUDIES", "Full Stack Case Studies: React, Laravel & E-commerce",
+                "Three open-source builds you can read line by line (React, Next.js and Laravel), and four pieces of production work delivered at Technyx. Each case study explains the problem, the decisions and the result.",
                 None)
     body += f'''
     <section class="section tight">
@@ -342,16 +342,16 @@ def build_projects_index():
               {"@context": "https://schema.org", "@type": "CollectionPage", "name": "Projects and case studies", "url": SITE + path,
                "mainEntity": {"@type": "ItemList", "itemListElement": [
                    {"@type": "ListItem", "position": i + 1, "url": f"{SITE}/projects/{p['slug']}", "name": p["title"]} for i, p in enumerate(PROJECTS)]}}]
-    return path, page(path, "Laravel & API Case Studies",
-                      "Case studies from a Laravel & PHP developer: open-source wallet ledger API, Next.js store, subscription backend, WordPress and payment integrations.",
+    return path, page(path, "Full Stack Case Studies: React, Next.js & Laravel",
+                      "Full stack case studies: a React and TypeScript dashboard, a Next.js store, an open-source Laravel wallet ledger API, WordPress, Shopify and payment integrations.",
                       body, "Projects", schema, og="projects")
 
 
 def build_services_index():
     path = "/services"
     items = [("Home", "/"), ("Services", path)]
-    body = hero(items, "// SERVICES", "Laravel, API & E-commerce Development Services",
-                "Backend engineering for businesses that need software to stay correct: Laravel applications, REST APIs, payment integrations, database work, WordPress and e-commerce.", None)
+    body = hero(items, "// SERVICES", "Full Stack Development Services: React, Laravel & APIs",
+                "End-to-end engineering for businesses that need software to stay correct: React and Next.js front ends, Laravel applications, REST APIs, payment integrations, database work, WordPress and e-commerce.", None)
     body += f'''
     <section class="section tight">
       <div class="container">
@@ -374,8 +374,8 @@ def build_services_index():
     schema = [crumbs(items), {"@context": "https://schema.org", "@type": "ProfessionalService", "name": BRAND, "url": SITE + "/", "email": EMAIL,
               "areaServed": "Worldwide", "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Development services", "itemListElement": [
                   {"@type": "Offer", "itemOffered": {"@type": "Service", "name": s["name"], "url": f"{SITE}/services/{s['slug']}"}} for s in SERVICES]}}]
-    return path, page(path, "Laravel, PHP & API Development Services",
-                      "Freelance Laravel & PHP developer services: Laravel development, REST APIs, payment gateway integration, MySQL, WordPress, Shopify and production debugging.",
+    return path, page(path, "Full Stack Development Services: React, Laravel & APIs",
+                      "Freelance full stack developer services: React and Next.js front ends, Laravel and PHP back ends, REST APIs, payment gateway integration, MySQL, WordPress, Shopify and n8n automation.",
                       body, "Services", schema, og="services")
 
 
@@ -432,7 +432,7 @@ def build_about():
 def build_contact():
     path = "/contact"
     items = [("Home", "/"), ("Contact", path)]
-    body = hero(items, "// CONTACT", "Hire a Laravel & PHP Developer",
+    body = hero(items, "// CONTACT", "Hire a Full Stack Developer (React, Laravel & PHP)",
                 "Tell me about your project: what you're building, the problem you're stuck on, and any deadlines. I reply by email, usually with questions or a suggested approach.", None)
     body += f'''
     <section class="section tight">
@@ -458,8 +458,8 @@ def build_contact():
       </div>
     </section>'''
     schema = [crumbs(items), {"@context": "https://schema.org", "@type": "ContactPage", "url": SITE + path, "mainEntity": PERSON}]
-    return path, page(path, "Hire a Laravel & PHP Developer: Contact",
-                      "Contact Saad Ali Khan to hire a freelance Laravel & PHP developer for APIs, payment integrations, WordPress or e-commerce projects. Remote, based in Karachi.",
+    return path, page(path, "Hire a Full Stack Developer: React, Laravel & PHP",
+                      "Contact Saad Ali Khan to hire a freelance full stack developer: React and Next.js front ends, Laravel and PHP back ends, APIs, payments, WordPress or e-commerce. Remote, based in Karachi.",
                       body, "Contact", schema, og="contact")
 
 
@@ -478,19 +478,19 @@ def post_card(b):
 def build_blog_index():
     path = "/blog"
     items = [("Home", "/"), ("Blog", path)]
-    body = hero(items, "// BLOG", "Laravel, API and Payments Engineering Notes",
-                "Practical, original write-ups on building secure Laravel backends: payment webhooks, wallet ledgers, REST API design and performance. Written by me, from how I build software.", None)
+    body = hero(items, "// BLOG", "Full Stack Engineering Notes: Laravel, APIs & Payments",
+                "Practical, original write-ups from a full stack developer on building secure Laravel backends and the interfaces on top: payment webhooks, wallet ledgers, REST API design and performance. Written by me, from how I build software.", None)
     body += f'''
     <section class="section tight">
       <div class="container"><div class="projects-grid">{"".join(post_card(b) for b in POSTS)}</div></div>
     </section>
 {cta("Need this built properly?", "If one of these topics is what your project needs, send me a short description and I'll reply by email.")}'''
     schema = [crumbs(items),
-              {"@context": "https://schema.org", "@type": "Blog", "name": "Saad Ali Khan: Laravel & API Engineering Blog", "url": SITE + path,
+              {"@context": "https://schema.org", "@type": "Blog", "name": "Saad Ali Khan: Full Stack Engineering Blog", "url": SITE + path,
                "author": {"@id": SITE + "/#person"}, "inLanguage": "en",
                "blogPost": [{"@type": "BlogPosting", "headline": b["title"], "url": f"{SITE}/blog/{b['slug']}"} for b in POSTS]}]
-    return path, page(path, "Laravel & API Engineering Blog",
-                      "Original articles by a Laravel & PHP developer on payment webhooks, wallet ledgers, REST API design, performance and hiring a Laravel developer.",
+    return path, page(path, "Full Stack Engineering Blog: Laravel, APIs & Payments",
+                      "Original articles by a full stack developer on payment webhooks, wallet ledgers, REST API design, performance and hiring a Laravel developer.",
                       body, "Blog", schema, og="blog")
 
 
@@ -571,7 +571,7 @@ def main():
     if "--og" in sys.argv:
         jobs = [("about", "About Saad Ali Khan", "about"), ("projects", "Projects & Case Studies", "fincore-ledger"),
                 ("services", "Laravel, API & E-commerce Services", "rest-api"), ("contact", "Hire a Laravel & PHP Developer", "laravel-code")]
-        jobs += [("blog", "Laravel & API Engineering Blog", "laravel-code")] + [("blog-" + b["slug"], b["title"], b["cover"]) for b in POSTS]
+        jobs += [("blog", "Full Stack Engineering Blog: Laravel, APIs & Payments", "laravel-code")] + [("blog-" + b["slug"], b["title"], b["cover"]) for b in POSTS]
         jobs += [(p["slug"], p["title"], p["cover"]) for p in PROJECTS] + [(s["slug"], s["title"], s["cover"]) for s in SERVICES]
         for j in jobs:
             render_og(*j)

@@ -1,6 +1,6 @@
 # Saad Ali Khan
 
-> Freelance Laravel & PHP developer based in Karachi, Pakistan. Builds secure backends, REST APIs, payment and wallet systems, and e-commerce platforms.
+> Freelance full stack developer based in Karachi, Pakistan. Builds React, Next.js and TypeScript front ends on secure Laravel and PHP backends: REST APIs, payment and wallet systems, e-commerce, and n8n automation.
 
 ## Pages
 - [Home](https://saadconsulting.tech/): overview, skills, experience
