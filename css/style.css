@@ -2247,3 +2247,11 @@ img { height: auto; }
 /* Hero terminal: wrap long lines instead of showing a scrollbar */
 .terminal-body { overflow-x: hidden; }
 .terminal-body pre, .terminal-body code { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* Certifications */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem}
+.cert-card{display:flex;flex-direction:column;gap:.6rem;padding:1.4rem;border-radius:16px;border:1px solid var(--border-color,rgba(255,255,255,.12));background:var(--bg-card,rgba(255,255,255,.04))}
+.cert-card h3{margin:0;font-size:1.1rem}
+.cert-card p{margin:0;flex:1;font-size:.92rem;opacity:.85}
+.cert-card .badge{align-self:flex-start}
+.cert-meta{display:flex;justify-content:space-between;gap:.5rem;flex-wrap:wrap;font-size:.85rem}

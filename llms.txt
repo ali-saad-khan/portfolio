@@ -14,3 +14,6 @@
 - Email: saadalikhan0210@gmail.com
 - GitHub: https://github.com/ali-saad-khan
 - LinkedIn: https://www.linkedin.com/in/saad-ali-khan-01976124a/
+
+## Certifications
+- n8n Academy (October 2026): Quickstart; Essentials: Your First Workflows; Integrations: APIs & Connected Workflows; In Practice: AI, Testing & Best Practices. Listed at https://saadconsulting.tech/about
