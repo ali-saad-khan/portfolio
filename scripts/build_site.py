@@ -36,11 +36,11 @@ def crumbs(items):
         {"@type": "ListItem", "position": i + 1, "name": n, "item": SITE + p} for i, (n, p) in enumerate(items)]}
 
 
-PERSON = {"@type": "Person", "@id": SITE + "/#person", "name": BRAND, "url": SITE + "/", "jobTitle": "Software Engineer",
+PERSON = {"@type": "Person", "@id": SITE + "/#person", "name": BRAND, "url": SITE + "/", "jobTitle": "Full Stack Software Engineer",
           "worksFor": {"@type": "Organization", "name": "Technyx"}, "email": EMAIL,
           "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"},
           "sameAs": [GITHUB, LINKEDIN],
-          "knowsAbout": ["Laravel", "PHP", "MySQL", "REST APIs", "Payment integrations", "WordPress", "Shopify", "Next.js"]}
+          "knowsAbout": ["Laravel", "PHP", "MySQL", "REST APIs", "Payment integrations", "WordPress", "Shopify", "Next.js", "React", "TypeScript", "Tailwind CSS", "n8n", "Workflow automation"]}
 
 NAV = [("Home", "/"), ("About", "/about"), ("Services", "/services"), ("Projects", "/projects"), ("Blog", "/blog"), ("Contact", "/contact")]
 
@@ -195,6 +195,7 @@ def project_card(p, size=""):
   <div class="project-bottom">
     <a href="/projects/{p["slug"]}" class="btn btn-primary btn-sm">Read case study</a>
     {f'<a href="{p["repo"]}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">View code</a>' if p["kind"] == "open" else ''}
+    {f'<a href="{p["demo"]}" class="btn btn-secondary btn-sm">Live demo</a>' if p.get("demo") else ''}
   </div>
 </article>'''
 
@@ -215,7 +216,8 @@ def build_case_study(p):
     badge_text = "Open source" if p["kind"] == "open" else "Production work (private code)"
     actions = ""
     if p["kind"] == "open":
-        actions = f'<div class="hero-actions"><a href="{p["repo"]}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View code on GitHub</a><a href="/contact" class="btn btn-secondary">Start a Project</a></div>'
+        demo = f'<a href="{p["demo"]}" class="btn btn-primary">Live demo</a>' if p.get("demo") else ""
+        actions = f'<div class="hero-actions">{demo}<a href="{p["repo"]}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View code on GitHub</a><a href="/contact" class="btn btn-secondary">Start a Project</a></div>'
     else:
         actions = '<div class="hero-actions"><a href="/contact" class="btn btn-primary">Start a Project</a><a href="/projects" class="btn btn-secondary">All case studies</a></div>'
     facts = "".join(f'<div class="stat-card"><div class="stat-number" style="font-size:1.6rem">{e(a)}</div><div class="stat-label">{e(b)}</div></div>' for a, b in p["facts"])
@@ -380,18 +382,19 @@ def build_services_index():
 def build_about():
     path = "/about"
     items = [("Home", "/"), ("About", path)]
-    body = hero(items, "// ABOUT ME", "Saad Ali Khan: Laravel & PHP Engineer in Karachi",
-                "I build the backend your business depends on: secure APIs, payment flows and wallet systems that stay correct under load. Software Engineer at Technyx, available for freelance and contract projects.",
+    body = hero(items, "// ABOUT ME", "Saad Ali Khan: Full Stack Engineer in Karachi",
+                "I build the whole product: React and Next.js interfaces on top of secure Laravel APIs, payment flows and wallet systems that stay correct under load. Software Engineer at Technyx, available for freelance and contract projects.",
                 "about", "Illustration with the initials SK, stack tags and a developer profile",
                 '<div class="hero-actions"><a href="/contact" class="btn btn-primary">Work With Me</a><a href="/projects" class="btn btn-secondary">See case studies</a></div>',
                 ["Karachi, Pakistan", "Remote · worldwide"])
+    certs = "<h2>Certifications</h2><p>In October 2026 I completed four <strong>n8n Academy</strong> certificates covering workflow automation, API integrations and AI agents, all built on a self-hosted n8n.</p><ul class=\"check-list\">" + "".join(f'<li><a href="{u}" target="_blank" rel="noopener noreferrer">{e(t)}</a>: {e(d)}</li>' for t, d, u in CERTS) + "</ul>"
     body += f'''
     <section class="section tight">
       <div class="container article-grid">
         <article class="prose">
           <h2>Who I am</h2>
-          <p>I'm a <strong>Software Engineer at Technyx</strong> in Karachi, specializing in PHP, Laravel, MySQL and modern web application development. I enjoy building practical software that solves real business requirements rather than over-engineering simple problems.</p>
-          <p><strong>Backend development is my core strength.</strong> I work extensively with PHP and the Laravel framework, modeling relational database schemas, engineering RESTful APIs and implementing business logic for applications with complex user flows, subscription plans, wallets and delivery operations.</p>
+          <p>I'm a <strong>Software Engineer at Technyx</strong> in Karachi, working across the full stack: React, Next.js and TypeScript on the front end, and PHP, Laravel and MySQL on the back end. I enjoy building practical software that solves real business requirements rather than over-engineering simple problems.</p>
+          <p><strong>I'm a full stack developer with a backend core.</strong> On the front end I build responsive, accessible interfaces with React, TypeScript and Tailwind CSS, as in my <a href="/projects/pulseboard-react-dashboard">Pulseboard dashboard</a>. On the back end I work extensively with PHP and the Laravel framework, modeling relational database schemas, engineering RESTful APIs and implementing business logic for applications with complex user flows, subscription plans, wallets and delivery operations.</p>
           <h2>What I work on day to day</h2>
           <p>Beyond custom web applications, I maintain enterprise <strong>WordPress installations</strong> (ACF, Elementor, Custom Post Types) and customize <strong>Shopify</strong> stores. I'm comfortable on Linux servers (Apache, Nginx, PHP-FPM, Caddy), managing deployments and troubleshooting production bugs under pressure.</p>
           <h2>How I think about software</h2>
@@ -407,13 +410,13 @@ def build_about():
           </ul>
           <h2>Experience</h2>
           <p><strong>Software Engineer, Technyx (Karachi, Pakistan), August 2023 to present.</strong> Developing and maintaining Laravel and PHP backends for production applications; designing MySQL schemas including user accounts, meal plans and transactional ledgers; building REST APIs for web, mobile and external integrations; integrating payment gateways with request signing and webhook verification; restructuring a 800+ page WordPress site; customizing Shopify themes; and troubleshooting production servers.</p>
-          <h2>Don't take my word for it</h2>
-          <p>Two of my projects are public with tests and architecture docs: <a href="/projects/fincore-wallet-ledger-api">FinCore</a>, a double-entry wallet ledger API, and <a href="/projects/my-store-ecommerce-platform">my-store</a>, a production e-commerce platform. Read the code before you decide to hire me.</p>
+          {certs}<h2>Don't take my word for it</h2>
+          <p>Three of my projects are public with tests and docs: <a href="/projects/fincore-wallet-ledger-api">FinCore</a>, a double-entry wallet ledger API, <a href="/projects/my-store-ecommerce-platform">my-store</a>, a Next.js e-commerce platform, and <a href="/projects/pulseboard-react-dashboard">Pulseboard</a>, a React dashboard with a live demo. Read the code before you decide to hire me.</p>
         </article>
         <aside class="side-card-wrap">
           <div class="side-card"><h3>At a glance</h3>
-            <ul class="link-list plain"><li><strong>3+</strong> years professional experience</li><li><strong>800+</strong> WordPress pages restructured</li><li><strong>50+</strong> automated tests in public projects</li><li><strong>2</strong> open-source case studies</li></ul></div>
-          <div class="side-card"><h3>Core stack</h3><div class="project-tags">{''.join(f'<span class="project-tag">{x}</span>' for x in ["PHP", "Laravel", "MySQL", "REST APIs", "PostgreSQL", "Next.js", "WordPress", "Shopify", "Linux", "Nginx"])}</div></div>
+            <ul class="link-list plain"><li><strong>3+</strong> years professional experience</li><li><strong>800+</strong> WordPress pages restructured</li><li><strong>50+</strong> automated tests in public projects</li><li><strong>3</strong> open-source case studies</li><li><strong>4</strong> n8n Academy certificates</li></ul></div>
+          <div class="side-card"><h3>Core stack</h3><div class="project-tags">{''.join(f'<span class="project-tag">{x}</span>' for x in ["React", "Next.js", "TypeScript", "Tailwind CSS", "PHP", "Laravel", "MySQL", "REST APIs", "PostgreSQL", "n8n", "WordPress", "Shopify", "Linux", "Nginx"])}</div></div>
           <div class="side-card"><h3>Services</h3><ul class="link-list">{''.join(f'<li><a href="/services/{s["slug"]}">{e(s["name"])}</a></li>' for s in SERVICES)}</ul></div>
           <div class="side-card side-cta"><h3>Let's work together</h3><p>Freelance and contract projects, remote.</p><a href="/contact" class="btn btn-primary btn-sm">Contact me</a></div>
         </aside>
@@ -421,8 +424,8 @@ def build_about():
     </section>
 {cta("Want a backend you can trust?")}'''
     schema = [crumbs(items), {"@context": "https://schema.org", "@type": "ProfilePage", "url": SITE + path, "name": "About Saad Ali Khan", "mainEntity": PERSON}]
-    return path, page(path, "About Saad Ali Khan: Laravel & PHP Engineer",
-                      "Saad Ali Khan is a Software Engineer at Technyx in Karachi with 3+ years of Laravel, PHP and MySQL experience, available for freelance projects.",
+    return path, page(path, "About Saad Ali Khan: Full Stack Engineer",
+                      "Saad Ali Khan is a full stack Software Engineer at Technyx in Karachi: React, Next.js and TypeScript on the front end, Laravel, PHP and MySQL on the back end. Available for freelance projects.",
                       body, "About", schema, og="about")
 
 

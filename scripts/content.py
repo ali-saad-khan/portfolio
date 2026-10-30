@@ -5,6 +5,13 @@ EMAIL = "saadalikhan0210@gmail.com"
 GITHUB = "https://github.com/ali-saad-khan"
 LINKEDIN = "https://www.linkedin.com/in/saad-ali-khan-01976124a/"
 
+CERTS = [
+    ("n8n Quickstart", "Scheduled workflows with filtering, merging and data tables; API reports converted to CSV; error-monitoring alerts; an AI agent with memory and tools on a local LLM (Ollama).", "https://lnkd.in/d6CFXna7"),
+    ("Essentials: Your First Workflows", "Webhook, schedule, polling and chat triggers; data transformation and expressions; IF branching; CSV reports sent to an API with header authentication.", "https://lnkd.in/dWrmwFJj"),
+    ("Integrations: APIs & Connected Workflows", "API pipelines with pagination, merging and routing; authenticated webhook workflows with Data Tables and sub-workflows.", "https://lnkd.in/dpfMNHTs"),
+    ("In Practice: AI, Testing & Best Practices", "AI feedback pipeline with classification and structured output, an AI agent with tools, retry and error workflows, and debugging a broken workflow.", "https://lnkd.in/dYj2ncZD"),
+]
+
 PROJECTS = [
     dict(
         slug="fincore-wallet-ledger-api",
@@ -76,6 +83,45 @@ PROJECTS = [
         proves=["Transactional checkout and inventory that can't oversell", "SEO-aware catalog pages with structured data", "A test pyramid: unit, rollback-safe integration and browser end-to-end"],
         related=["fincore-wallet-ledger-api", "shopify-store-customization", "payment-gateway-integrations"],
         services=["ecommerce-development", "database-engineering", "laravel-development"],
+    ),
+    dict(
+        slug="pulseboard-react-dashboard",
+        cover="pulseboard",
+        short="Pulseboard",
+        title="Pulseboard: React + TypeScript Analytics Dashboard",
+        kind="open", repo=GITHUB + "/pulseboard", demo="/demos/pulseboard/",
+        cat="React / TypeScript / Tailwind CSS",
+        meta="Case study: Pulseboard, a responsive and accessible React and TypeScript sales dashboard with filtering, sorting, an SVG chart, dark mode and tests.",
+        lead="A front-end showcase I built to show how I approach UI work: a fast, accessible analytics dashboard where the filtering, sorting and number crunching are plain tested functions and the interface is a thin, readable React layer on top. Try the live demo.",
+        facts=[("React 19", "TypeScript, strict mode"), ("Tailwind v4", "responsive, light and dark"), ("10", "unit and component tests"), ("0", "chart or UI library dependencies")],
+        challenge=[
+            "Dashboards tend to rot into one giant component where data rules, layout and styling are tangled together. They also tend to be inaccessible: sortable tables with no announced state, charts that are only pictures.",
+            "The goal was a small codebase where the business rules are testable without a browser and the interface is usable with a keyboard and a screen reader.",
+        ],
+        approach=[
+            ("Logic separated from the UI", "Filtering, sorting, weekly bucketing and the KPI maths live in a pure <code>stats.ts</code> module with its own tests. Components only render what those functions return, and memoized derived state keeps typing in the search box cheap."),
+            ("A chart with no chart library", "The weekly revenue chart is a small responsive SVG component with per-bar tooltips and a visually hidden text alternative, so it costs a few hundred bytes instead of a charting dependency and is still readable by assistive tech."),
+            ("Accessibility as a feature, not a pass at the end", "Labelled form controls, <code>aria-sort</code> on sortable headers, a live-region result count, visible focus styles, semantic table, definition-list KPIs and colour-plus-text status badges."),
+            ("Responsive by default", "A mobile-first Tailwind layout: stat cards reflow from four columns to two, the table scrolls inside its own container instead of breaking the page, and filters wrap."),
+            ("Dark mode that respects the user", "The theme follows the system preference on first load and can be toggled, using Tailwind's class-based dark variant."),
+            ("Tested at two levels", "Vitest covers the data logic (filters, sort immutability, revenue rules, empty input) and Testing Library drives the real component: search, empty state, sort toggling and pagination."),
+        ],
+        stack=["React 19", "TypeScript", "Vite", "Tailwind CSS v4", "Vitest", "Testing Library", "SVG", "WCAG-minded markup"],
+        did=[
+            "Designed the component structure, types and state flow for filters, sorting and pagination.",
+            "Wrote a seeded mock-data generator so the demo and tests are deterministic.",
+            "Built the SVG bar chart, stat cards, sortable table and pagination from scratch.",
+            "Added light and dark themes and a responsive layout from phone to desktop.",
+            "Wrote 10 tests and documented setup and scripts in the README.",
+        ],
+        tradeoffs=[
+            "Data is generated in the browser. It is a demo, not a connected product, which keeps it dependency-free and easy to run. The pure data layer is the part that would be swapped for an API client.",
+            "Pagination and filtering are client-side, which is right for hundreds of rows. For large datasets the same function signatures would move to server-side queries.",
+        ],
+        proves=["Strict-typed React with a clean logic and UI split", "Accessible, responsive, theme-aware interfaces", "Component and unit testing, not just visual polish", "Pairs with my Laravel APIs for true full-stack delivery"],
+        related=["my-store-ecommerce-platform", "fincore-wallet-ledger-api"],
+        services=["frontend-development", "rest-api-development", "ecommerce-development"],
+        note="This is a personal showcase project built with mock data, not client work.",
     ),
     dict(
         slug="practical-meal-subscription-backend",
@@ -226,6 +272,25 @@ SERVICES = [
             ("Can you build only the backend and API?", "Yes. I regularly build the backend and REST API for web and mobile clients and work alongside a separate frontend or mobile team."),
             ("How do we get started?", "Send me a short description of the project through the contact page. I'll reply by email with questions or a proposed approach."),
         ],
+    ),
+    dict(
+        slug="frontend-development",
+        cover="pulseboard",
+        name="Frontend Development",
+        title="Frontend Development with React, TypeScript & Tailwind",
+        meta="Freelance full stack developer: React, Next.js and TypeScript interfaces that are fast, accessible and wired to a solid Laravel or PHP backend.",
+        short="React, Next.js and TypeScript interfaces: dashboards, storefronts and admin panels that are responsive, accessible and tested.",
+        lead="I build the interface and the API behind it, so the two fit together. React, Next.js and TypeScript front ends that load fast, work on a phone and are usable with a keyboard.",
+        body=[
+            "Being full stack means fewer hand-offs. I design the data model and API, then build the screens that use them, so there is no gap between what the backend returns and what the UI needs. I work in React and Next.js with strict TypeScript, styled with Tailwind CSS and component kits such as shadcn/ui.",
+            "My <a href=\"/projects/pulseboard-react-dashboard\">Pulseboard dashboard</a> shows the approach on a front-end-only project, and <a href=\"/projects/my-store-ecommerce-platform\">my-store</a> shows it end to end with a Next.js storefront, admin area, database and browser tests.",
+        ],
+        points=["React and Next.js (App Router) applications", "Strict TypeScript and typed API clients", "Tailwind CSS and shadcn/ui design systems", "Responsive layouts and light/dark themes", "Accessibility: keyboard, labels, ARIA and contrast", "Component, unit and Playwright end-to-end tests"],
+        cases=["pulseboard-react-dashboard", "my-store-ecommerce-platform"],
+        faqs=[("Do you do both frontend and backend?", "Yes. I build the Laravel or PHP backend and the React or Next.js frontend, or I can take just one side and work with your existing team."),
+              ("Which frameworks do you use?", "React and Next.js with TypeScript and Tailwind CSS for new builds. I also customize Shopify (Liquid) and WordPress themes."),
+              ("Will the site be fast and accessible?", "That is the default, not an extra. I use semantic markup, labelled controls and keyboard support, keep dependencies small and check layouts from phone to desktop."),
+              ("Can you redesign an existing UI?", "Yes. I can rebuild screens incrementally against your current API so you ship improvements without a big-bang rewrite.")],
     ),
     dict(
         slug="rest-api-development", cover="rest-api", name="REST API Development",

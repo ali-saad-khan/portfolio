@@ -305,7 +305,7 @@ function initScrollProgress() {
 function initTyped() {
   const el = document.getElementById("typed-text");
   if (!el || REDUCED_MOTION) return;
-  const phrases = ["secure backends", "payment & wallet systems", "REST APIs that scale", "e-commerce platforms"];
+  const phrases = ["full stack web apps", "React & TypeScript interfaces", "secure Laravel backends", "payment & wallet systems", "e-commerce platforms"];
   let phrase = 0, char = 0, deleting = false;
 
   const tick = () => {

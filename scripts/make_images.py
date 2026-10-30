@@ -251,10 +251,28 @@ def about(u):
     return base(s, u)
 
 
+def pulseboard(u):
+    s = win(70, 80, 1060, 520, "pulseboard / dashboard")
+    for i, (lab, col) in enumerate([("Revenue", V), ("Orders", C), ("Avg order", G), ("Refunds", P)]):
+        x = 100 + i * 258
+        s += rect(x, 140, 238, 96, "#fff", 0.06, 14, "#fff")
+        s += t(x + 18, 172, lab, 14, DIM, 600) + t(x + 18, 214, ["$18,420", "120", "$212", "7.5%"][i], 28, col, 700)
+    s += rect(100, 256, 620, 320, "#fff", 0.05, 14, "#fff") + t(122, 290, "Weekly revenue", 15, TXT, 600)
+    hs = [90, 140, 110, 170, 130, 200, 160, 220, 180, 150, 190, 120]
+    for i, h in enumerate(hs):
+        s += f'<rect x="{128 + i * 48}" y="{556 - h}" width="30" height="{h}" rx="6" fill="{V if i % 3 else C}" fill-opacity="0.6"/>'
+    s += rect(740, 256, 360, 320, "#fff", 0.05, 14, "#fff") + t(762, 290, "Orders", 15, TXT, 600)
+    for i in range(5):
+        y = 316 + i * 50
+        s += bar(762, y, 90, TXT, 0.45, 9) + bar(870, y, 60, DIM, 0.45, 9) + chip(1000, y - 10, ["paid", "pending", "paid", "refund", "paid"][i], [G, Y, G, P, G][i], 12, 70)
+    s += chip(900, 40, "React · TypeScript", C, 15)
+    return base(s, u)
+
+
 IMAGES = {
     "fincore-ledger": ledger, "my-store-ecommerce": store, "practical-subscriptions": practical,
     "wordpress-revamp": wordpress, "shopify-store": shopify, "payment-gateways": payments,
-    "laravel-code": code, "rest-api": api, "database-schema": db, "about": about,
+    "laravel-code": code, "rest-api": api, "database-schema": db, "pulseboard": pulseboard, "about": about,
 }
 
 if __name__ == "__main__":

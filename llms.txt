@@ -10,6 +10,9 @@
 - [Blog](https://saadconsulting.tech/blog): articles on Laravel, payments, wallet ledgers and API design
 - [Contact](https://saadconsulting.tech/contact)
 
+## Projects
+- Pulseboard: React + TypeScript dashboard with live demo: https://saadconsulting.tech/projects/pulseboard-react-dashboard
+
 ## Contact
 - Email: saadalikhan0210@gmail.com
 - GitHub: https://github.com/ali-saad-khan
