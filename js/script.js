@@ -374,14 +374,14 @@ function initSpotlight() {
   import("/assets/vendor/server-buddies/index.js")
     .then((m) => {
       m.createBuddy({
-        character: "server",
+        character: "octopus",
         hang: "rope",
         position: "top-right",
         offset: { x: 24, y: 72 },
         hideBelow: 900,
-        size: 92,
-        label: "Server Buddy, a friendly mascot. Click to say hi",
-        messages: { hello: "Hi, I'm Saad's server buddy!" },
+        size: 110,
+        label: "Octopus buddy, a friendly mascot. Click to say hi",
+        messages: { hello: "Hi, I'm Saad's octopus buddy!" },
       });
     })
     .catch(() => {});

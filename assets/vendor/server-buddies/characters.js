@@ -156,6 +156,56 @@ export const CHARACTERS = {
       <ellipse cx="80" cy="24" rx="50" ry="13" ${L}/>
       <rect x="40" y="81" width="38" height="6" rx="3" ${D}/>
       ${led(102, 85, 3.2, S.led)}${led(114, 85, 3.2, "#a7f3d0", "sb-led-b")}`
+  },
+
+  rocket: {
+    id: "rocket",
+    name: "Rocket",
+    blurb: "Ships to prod on Fridays. Porthole doubles as the face.",
+    colors: { main: "#ef4444", shell: "#e2e8f0", screen: "#0b1220" },
+    theme: SCREEN_FACE,
+    face: { dx: 0, dy: 0, k: 1 },
+    anchor: { y: 10, hw: 46, earY: 40 },
+    body: (S) => `
+      <path d="M42 70L20 92C18 95 20 98 23 98H44Z" ${D}/>
+      <path d="M118 70L140 92C142 95 140 98 137 98H116Z" ${D}/>
+      <path class="sb-led" d="M64 96Q80 120 96 96Z" fill="#fbbf24"/>
+      <path class="sb-led" d="M72 96Q80 111 88 96Z" fill="#fef08a"/>
+      <path d="M80 5C52 12 34 36 34 62V90C34 94 36 96 40 96H120C124 96 126 94 126 90V62C126 36 108 12 80 5Z" ${SH}/>
+      <path d="M80 5C68 9 58 16 50 25H110C102 16 92 9 80 5Z" ${M}/>
+      <ellipse cx="80" cy="40" rx="37" ry="19" ${SC}/>
+      <rect x="34" y="72" width="92" height="8" ${M}/>
+      ${led(54, 87, 3.2, S.led)}${led(80, 87, 3.2, "#fca5a5", "sb-led-b")}${led(106, 87, 3.2, S.led, "sb-led-c")}`
+  },
+  octopus: {
+    id: "octopus",
+    name: "Octopus",
+    blurb: "A clever cephalopod in lab goggles, with eight arms for multitasking.",
+    colors: { main: "#8b5cf6", shell: "#1e293b", screen: "#0b1220" },
+    theme: BODY_FACE,
+    face: { dx: 0, dy: 6, k: 1 },
+    anchor: { y: 8, hw: 48, earY: 48 },
+    blush: true,
+    body: (S) => `
+      <g fill="none" stroke-width="12" stroke-linecap="round" style="stroke:var(--sb-main)">
+        <path d="M44 80C28 92 26 106 42 110"/>
+        <path d="M63 86C56 100 62 112 76 110"/>
+        <path d="M97 86C104 100 98 112 84 110"/>
+        <path d="M116 80C132 92 134 106 118 110"/>
+      </g>
+      <g ${L}>
+        <circle cx="35" cy="95" r="2.4"/><circle cx="58" cy="102" r="2.4"/><circle cx="102" cy="102" r="2.4"/><circle cx="125" cy="95" r="2.4"/>
+      </g>
+      <ellipse cx="80" cy="48" rx="50" ry="42" ${M}/>
+      <ellipse cx="66" cy="22" rx="16" ry="7" ${L} opacity=".45"/>
+      <rect x="30" y="35" width="100" height="11" rx="5.5" fill="#1f2937"/>
+      <rect x="45" y="39" width="70" height="3" rx="1.5" fill="#f59e0b" opacity=".55"/>
+      <path d="M74 41h12" stroke="#b45309" stroke-width="4" stroke-linecap="round"/>
+      <g fill="#e0f2fe" stroke="#b45309" stroke-width="3.6">
+        <circle cx="62" cy="41" r="14"/><circle cx="98" cy="41" r="14"/>
+      </g>
+      <path d="M53 33Q57 29 62 29M89 33Q93 29 98 29" stroke="#fff" stroke-width="2.4" stroke-linecap="round" fill="none" opacity=".8"/>
+      ${led(80, 15, 3.5, S.led)}`
   }
 };
 
