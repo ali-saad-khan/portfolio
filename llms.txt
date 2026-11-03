@@ -7,6 +7,7 @@
 - [About](https://saadconsulting.tech/about)
 - [Services](https://saadconsulting.tech/services)
 - [Projects and case studies](https://saadconsulting.tech/projects)
+- [Certifications](https://saadconsulting.tech/certifications): 24 verified certificates (AI agents, Claude Code, MCP, RAG, prompt engineering, n8n)
 - [Blog](https://saadconsulting.tech/blog): articles on Laravel, React, payments, wallet ledgers, API design and accessibility
 - [Contact](https://saadconsulting.tech/contact)
 
@@ -19,4 +20,10 @@
 - LinkedIn: https://www.linkedin.com/in/saad-ali-khan-01976124a/
 
 ## Certifications
-- n8n Academy (October 2026): Quickstart; Essentials: Your First Workflows; Integrations: APIs & Connected Workflows; In Practice: AI, Testing & Best Practices. Listed at https://saadconsulting.tech/about
+- AI Agents & Tool Use: AI Agents with Node.js & TypeScript; Agentic AI with Python & LangChain; Build Your First AI Agent in Python; How AI Agents Work; AI Browsers & Computer Use Agents; MCP: Model Context Protocol
+- Claude & AI-Assisted Engineering: Claude Code: AI-Powered Coding; Claude Code: Complete Guide; Claude Code Review; Spec-Driven Development with AI Coding Agents; Prompt Engineering with Claude
+- LLM Foundations & Prompting: Advanced Prompt Engineering; Context Engineering; How LLMs Work; Reasoning Models Explained; Machine Learning Fundamentals
+- RAG, Vector Search & Data: Full-Stack RAG with Next.js, Supabase & Gemini; Vector Databases for AI
+- AI Safety & Security: Hands-On AI for Cybersecurity: Phishing Labs; Using AI Safely at Work
+- n8n Workflow Automation: n8n Quickstart; Essentials: Your First Workflows; Integrations: APIs & Connected Workflows; In Practice: AI, Testing & Best Practices
+- All 24 with public verification links: https://saadconsulting.tech/certifications

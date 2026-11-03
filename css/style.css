@@ -2255,3 +2255,20 @@ img { height: auto; }
 .cert-card p{margin:0;flex:1;font-size:.92rem;opacity:.85}
 .cert-card .badge{align-self:flex-start}
 .cert-meta{display:flex;justify-content:space-between;gap:.5rem;flex-wrap:wrap;font-size:.85rem}
+
+/* Certification cards with certificate image */
+.cert-card-img{padding:0;overflow:hidden}
+.cert-thumb{display:block;background:#f4f6fb;border-bottom:1px solid var(--border-color,rgba(255,255,255,.12));line-height:0}
+.cert-thumb img{width:100%;height:auto;display:block;transition:transform .35s ease}
+.cert-thumb:hover img,.cert-thumb:focus-visible img{transform:scale(1.03)}
+.cert-card-img .cert-body{display:flex;flex-direction:column;gap:.6rem;padding:1.2rem 1.4rem 1.4rem;flex:1}
+.cert-card-img .cert-body p{flex:1}
+.cert-card-img .project-tags{margin:0}
+.cert-id{font-size:.78rem;opacity:.7}
+.cert-id code{font-size:.78rem}
+.cert-jump{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center}
+.chip-link{padding:.45rem .9rem;border-radius:999px;border:1px solid var(--border-color,rgba(255,255,255,.18));font-size:.9rem;text-decoration:none;color:inherit;transition:background .2s,border-color .2s}
+.chip-link:hover,.chip-link:focus-visible{background:rgba(139,124,255,.16);border-color:#8B7CFF}
+.cert-grid-home{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.cert-cta{display:flex;justify-content:center;margin-top:2rem}
+section[id]{scroll-margin-top:90px}

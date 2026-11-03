@@ -5,9 +5,11 @@ Pass --og to (re)render the 1200x630 social images with headless Chrome."""
 import html as _html, json, os, re, shutil, subprocess, sys, tempfile
 from content import *  # noqa
 from blog_content import POSTS
+import certs as C
+from PIL import Image
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-TODAY = "2026-10-30"
+TODAY = "2026-11-03"
 PMAP = {p["slug"]: p for p in PROJECTS}
 SMAP = {s["slug"]: s for s in SERVICES}
 BRAND = "Saad Ali Khan"
@@ -42,7 +44,7 @@ PERSON = {"@type": "Person", "@id": SITE + "/#person", "name": BRAND, "url": SIT
           "sameAs": [GITHUB, LINKEDIN],
           "knowsAbout": ["Laravel", "PHP", "MySQL", "REST APIs", "Payment integrations", "WordPress", "Shopify", "Next.js", "React", "TypeScript", "Tailwind CSS", "n8n", "Workflow automation"]}
 
-NAV = [("Home", "/"), ("About", "/about"), ("Services", "/services"), ("Projects", "/projects"), ("Blog", "/blog"), ("Contact", "/contact")]
+NAV = [("Home", "/"), ("About", "/about"), ("Services", "/services"), ("Projects", "/projects"), ("Certifications", "/certifications"), ("Blog", "/blog"), ("Contact", "/contact")]
 
 
 def page(path, title, desc, body, active, schema=(), og=None, robots=None):
@@ -347,6 +349,89 @@ def build_projects_index():
                       body, "Projects", schema, og="projects")
 
 
+def cert_card(c, eager=False):
+    w, hgt = Image.open(os.path.join(ROOT, "assets", "images", "certificates", c["slug"] + ".webp")).size
+    meta = [c["issued"]] + ([f'{c["lessons"]} lessons · final exam passed'] if c["lessons"] else [])
+    cid = f'<div class="cert-id">Credential ID <code>{c["cid"]}</code></div>' if c["cid"] else ""
+    badge = "badge-green" if c["issuer"] == "n8n Academy" else "badge-accent"
+    chips = "".join(f'<span class="project-tag">{e(x)}</span>' for x in c["skills"])
+    alt = f'{c["title"]} certificate of completion from {c["issuer"]} awarded to Saad Ali Khan'
+    return f'''<article class="cert-card cert-card-img reveal" id="{c["slug"]}">
+  <a class="cert-thumb" href="{c["url"]}" target="_blank" rel="noopener noreferrer" aria-label="Verify {e(c["title"])} certificate on {e(c["issuer"])}"><img src="/assets/images/certificates/{c["slug"]}.webp" width="{w}" height="{hgt}" {"" if eager else 'loading="lazy" '}decoding="async" alt="{e(alt)}"></a>
+  <div class="cert-body">
+    <span class="badge {badge}">{e(c["issuer"])}</span>
+    <h3>{e(c["title"])}</h3>
+    <p>{e(c["desc"])}</p>
+    <div class="project-tags">{chips}</div>
+    <div class="cert-meta"><span>{e(" · ".join(meta))}</span><a href="{c["url"]}" target="_blank" rel="noopener noreferrer">Verify certificate &rarr;</a></div>
+    {cid}
+  </div>
+</article>'''
+
+
+def cert_ld(c):
+    return {"@type": "EducationalOccupationalCredential", "name": c["title"], "description": c["desc"], "credentialCategory": "certificate",
+            "url": c["url"], "image": f'{SITE}/assets/images/certificates/{c["slug"]}.webp',
+            "recognizedBy": {"@type": "Organization", "name": c["issuer"]},
+            "about": ", ".join(c["skills"]), "dateCreated": "2026-11-03" if c["issuer"] != "n8n Academy" else "2026-10-29"}
+
+
+def build_certifications():
+    path = "/certifications"
+    items = [("Home", "/"), ("Certifications", path)]
+    body = hero(items, "// CERTIFICATIONS", f"{C.TOTAL} Verified Certifications: AI Agents, Claude Code, RAG & n8n",
+                f"{C.TOTAL} certificates with public verification links: AI agents in Python and TypeScript, Claude Code, MCP, RAG with vector databases, prompt and context engineering, AI security and n8n workflow automation. I use them to build AI features into full stack Laravel, React and Next.js products.",
+                None, actions='<div class="hero-actions"><a href="/contact" class="btn btn-primary">Hire me for AI features</a><a href="/projects" class="btn btn-secondary">See case studies</a></div>',
+                meta_chips=[f"{C.TOTAL} certificates", f"{C.LESSONS}+ lessons", "Issued 2026", "Verifiable online"])
+    nav = "".join(f'<a href="#{k}" class="chip-link">{e(n)}</a>' for k, n, _ in C.CATEGORIES)
+    body += f'''
+    <section class="section tight">
+      <div class="container">
+        <nav class="cert-jump" aria-label="Certification categories">{nav}</nav>
+      </div>
+    </section>'''
+    first = True
+    for i, (k, name, blurb) in enumerate(C.CATEGORIES):
+        cs = [c for c in C.CERTS if c["cat"] == k]
+        cards = "".join(cert_card(c, eager=(first and j < 2)) for j, c in enumerate(cs))
+        first = False
+        body += f'''
+    <section class="section{' section-alt' if i % 2 else ' tight'}" id="{k}">
+      <div class="container">
+        <div class="section-header reveal"><span class="section-tag">// {len(cs)} CERTIFICATE{"S" if len(cs) != 1 else ""}</span><h2 class="section-title">{e(name)}</h2><p class="section-subtitle">{e(blurb)}</p></div>
+        <div class="cert-grid">{cards}</div>
+      </div>
+    </section>'''
+    body += f'''
+    <section class="section tight">
+      <div class="container article-grid">
+        <article class="prose">
+          <h2>Why these certifications matter for your project</h2>
+          <p>Learning is part of the job. These certificates show I keep my skills current in the tools that are changing how software gets built. They complement three years of shipping Laravel, PHP and React in production, and six open-source projects with tests you can read.</p>
+          <ul class="check-list">
+            <li><strong>AI features that ship:</strong> RAG search, agents and MCP integrations added to existing Laravel or Next.js products.</li>
+            <li><strong>Faster, safer delivery:</strong> Claude Code, spec-driven development and AI code review used inside a disciplined engineering process.</li>
+            <li><strong>Automation:</strong> n8n workflows with authentication, retries and error handling instead of fragile happy paths.</li>
+            <li><strong>Responsible AI:</strong> data privacy, hallucination checks and security awareness built in from the start.</li>
+          </ul>
+          <p>Certificates show learning, not client delivery. For proof of shipped work, read the <a href="/projects">case studies</a> and public repositories. Every certificate above links to its public verification page, so you can confirm it yourself.</p>
+        </article>
+        <aside class="side-card-wrap">
+          <div class="side-card"><h3>At a glance</h3><ul class="link-list plain"><li><strong>{C.TOTAL}</strong> verified certificates</li><li><strong>{C.FA_COUNT}</strong> from FreeAcademy.ai</li><li><strong>4</strong> from n8n Academy</li><li><strong>{C.LESSONS}+</strong> lessons completed</li></ul></div>
+          <div class="side-card"><h3>Related</h3><ul class="link-list"><li><a href="/about">About Saad</a></li><li><a href="/services/workflow-automation">Workflow automation service</a></li><li><a href="/projects/n8n-automation-showcase">n8n showcase project</a></li><li><a href="/services/laravel-development">Laravel development</a></li></ul></div>
+        </aside>
+      </div>
+    </section>
+{cta("Need AI or automation in your product?", "Tell me what you want to build. I'll reply by email with questions or a suggested approach.")}'''
+    schema = [crumbs(items),
+              {"@context": "https://schema.org", "@type": "CollectionPage", "name": f"Certifications of Saad Ali Khan ({C.TOTAL})", "url": SITE + path,
+               "about": PERSON, "mainEntity": {"@type": "ItemList", "numberOfItems": C.TOTAL, "itemListElement": [
+                   {"@type": "ListItem", "position": i + 1, "item": cert_ld(c)} for i, c in enumerate(C.CERTS)]}}]
+    return path, page(path, f"{C.TOTAL} AI, Claude Code & n8n Certifications",
+                      f"{C.TOTAL} verified certifications: AI agents (Python, TypeScript), Claude Code, MCP, RAG, vector databases, prompt engineering, AI security and n8n automation, each with a public verification link.",
+                      body, "Certifications", schema, og="certifications")
+
+
 def build_services_index():
     path = "/services"
     items = [("Home", "/"), ("Services", path)]
@@ -387,7 +472,9 @@ def build_about():
                 "about", "Illustration with the initials SK, stack tags and a developer profile",
                 '<div class="hero-actions"><a href="/contact" class="btn btn-primary">Work With Me</a><a href="/projects" class="btn btn-secondary">See case studies</a></div>',
                 ["Karachi, Pakistan", "Remote · worldwide"])
-    certs = "<h2>Certifications</h2><p>In October 2026 I completed four <strong>n8n Academy</strong> certificates covering workflow automation, API integrations and AI agents, all built on a self-hosted n8n.</p><ul class=\"check-list\">" + "".join(f'<li><a href="{u}" target="_blank" rel="noopener noreferrer">{e(t)}</a>: {e(d)}</li>' for t, d, u in CERTS) + "</ul>"
+    certs = (f'<h2>Certifications</h2><p>I keep learning in public. I hold <strong>{C.TOTAL} verified certificates</strong>: {C.FA_COUNT} from <strong>FreeAcademy.ai</strong> (AI agents, Claude Code, MCP, RAG, vector databases, prompt and context engineering, AI security) and four from <strong>n8n Academy</strong> (workflow automation and API integrations). Every certificate has a public verification link.</p><ul class="check-list">'
+             + "".join(f'<li><strong>{e(t)}</strong>: {e(d)}</li>' for _, t, d in C.CATEGORIES)
+             + '</ul><p><a href="/certifications">See all %d certifications with verification links &rarr;</a></p>' % C.TOTAL)
     body += f'''
     <section class="section tight">
       <div class="container article-grid">
@@ -415,7 +502,7 @@ def build_about():
         </article>
         <aside class="side-card-wrap">
           <div class="side-card"><h3>At a glance</h3>
-            <ul class="link-list plain"><li><strong>3+</strong> years professional experience</li><li><strong>800+</strong> WordPress pages restructured</li><li><strong>150+</strong> automated tests in public projects</li><li><strong>6</strong> open-source case studies</li><li><strong>4</strong> n8n Academy certificates</li></ul></div>
+            <ul class="link-list plain"><li><strong>3+</strong> years professional experience</li><li><strong>800+</strong> WordPress pages restructured</li><li><strong>150+</strong> automated tests in public projects</li><li><strong>6</strong> open-source case studies</li><li><strong>{C.TOTAL}</strong> verified certificates</li></ul></div>
           <div class="side-card"><h3>Core stack</h3><div class="project-tags">{''.join(f'<span class="project-tag">{x}</span>' for x in ["React", "Next.js", "TypeScript", "Tailwind CSS", "PHP", "Laravel", "MySQL", "REST APIs", "PostgreSQL", "n8n", "WordPress", "Shopify", "Linux", "Nginx"])}</div></div>
           <div class="side-card"><h3>Services</h3><ul class="link-list">{''.join(f'<li><a href="/services/{s["slug"]}">{e(s["name"])}</a></li>' for s in SERVICES)}</ul></div>
           <div class="side-card side-cta"><h3>Let's work together</h3><p>Freelance and contract projects, remote.</p><a href="/contact" class="btn btn-primary btn-sm">Contact me</a></div>
@@ -536,7 +623,7 @@ def write(path, content):
 
 
 def sitemap(paths):
-    prio = {"/": "1.0", "/about": "0.8", "/projects": "0.9", "/services": "0.9", "/contact": "0.7", "/blog": "0.8"}
+    prio = {"/": "1.0", "/about": "0.8", "/projects": "0.9", "/services": "0.9", "/contact": "0.7", "/blog": "0.8", "/certifications": "0.9"}
     rows = "".join(f"  <url>\n    <loc>{SITE}{p if p != '/' else '/'}</loc>\n    <lastmod>{TODAY}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>{prio.get(p, '0.8')}</priority>\n  </url>\n" for p in paths)
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.w3.org/2000/svg">\n'.replace("http://www.w3.org/2000/svg", "http://www.sitemaps.org/schemas/sitemap/0.9") + rows + "</urlset>\n"
 
@@ -560,7 +647,7 @@ def render_og(slug, title, cover):
 
 
 def main():
-    pages = [build_about(), build_projects_index(), build_services_index(), build_contact(), build_blog_index()]
+    pages = [build_about(), build_certifications(), build_projects_index(), build_services_index(), build_contact(), build_blog_index()]
     pages += [build_post(b) for b in POSTS]
     pages += [build_case_study(p) for p in PROJECTS] + [build_service(s) for s in SERVICES]
     for path, content in pages:
@@ -569,7 +656,7 @@ def main():
         fh.write(sitemap(["/"] + [p for p, _ in pages]))
     print("built", len(pages), "pages")
     if "--og" in sys.argv:
-        jobs = [("about", "About Saad Ali Khan", "about"), ("projects", "Projects & Case Studies", "fincore-ledger"),
+        jobs = [("certifications", f"{C.TOTAL} Verified AI, Claude Code & n8n Certifications", "certifications"), ("about", "About Saad Ali Khan", "about"), ("projects", "Projects & Case Studies", "fincore-ledger"),
                 ("services", "Laravel, API & E-commerce Services", "rest-api"), ("contact", "Hire a Laravel & PHP Developer", "laravel-code")]
         jobs += [("blog", "Full Stack Engineering Blog: Laravel, APIs & Payments", "laravel-code")] + [("blog-" + b["slug"], b["title"], b["cover"]) for b in POSTS]
         jobs += [(p["slug"], p["title"], p["cover"]) for p in PROJECTS] + [(s["slug"], s["title"], s["cover"]) for s in SERVICES]
