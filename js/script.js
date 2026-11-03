@@ -376,7 +376,8 @@ function initSpotlight() {
       m.createBuddy({
         character: "server",
         hang: "rope",
-        position: "bottom-right",
+        position: "top-right",
+        offset: { x: 24, y: 72 },
         hideBelow: 900,
         size: 92,
         label: "Server Buddy, a friendly mascot. Click to say hi",
