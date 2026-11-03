@@ -367,3 +367,21 @@ function initSpotlight() {
     });
   });
 }
+
+// Server Buddy mascot (https://github.com/mahmed74/server-buddies, MIT), vendored for the strict CSP.
+(function initServerBuddy() {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  import("/assets/vendor/server-buddies/index.js")
+    .then((m) => {
+      m.createBuddy({
+        character: "server",
+        hang: "rope",
+        position: "bottom-right",
+        hideBelow: 900,
+        size: 92,
+        label: "Server Buddy, a friendly mascot. Click to say hi",
+        messages: { hello: "Hi, I'm Saad's server buddy!" },
+      });
+    })
+    .catch(() => {});
+})();
