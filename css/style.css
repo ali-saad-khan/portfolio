@@ -1900,7 +1900,7 @@ img { height: auto; }
   left: 1rem;
   z-index: 3000;
   background: var(--accent);
-  color: #fff;
+  color: #07080D;
   padding: 0.6rem 1rem;
   border-radius: var(--radius-md);
   font-weight: 600;
@@ -2282,3 +2282,4 @@ a.contact-card:focus-visible { outline: 2px solid var(--accent); outline-offset:
 [data-theme="light"] .btn-primary { background: linear-gradient(120deg, #5B49D1 0%, #0E7490 55%, #BE185D 100%); background-size: 160% 100%; color: #FFFFFF; }
 [data-theme="light"] .form-status.error { color: #B91C1C; }
 ::placeholder { color: var(--text-dim); opacity: 1; }
+[data-theme="light"] .skip-link { background: #5B49D1; color: #FFFFFF; }
