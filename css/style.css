@@ -2548,3 +2548,7 @@ h1 { font-weight: 600; letter-spacing: -0.02em; }
 /* Ledger polish */
 .github-box { background-image: none; }
 .github-box::before, .github-box::after { background: none; }
+
+/* Contrast fixes (light theme): deeper stamp red, readable text on always-dark code boxes */
+[data-theme="light"] { --accent-cyan: #A62F14; --accent-pink: #A62F14; --stamp: #A62F14; --accent2-rgb: 166, 47, 20; }
+.terminal-cmd, .terminal-cmd span { color: #FF9B7B; }
