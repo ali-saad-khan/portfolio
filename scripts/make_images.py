@@ -4,8 +4,8 @@ services and the About page). Run from anywhere: python3 scripts/make_images.py"
 import os
 
 OUT = os.path.join(os.path.dirname(__file__), "..", "assets", "images")
-V, C, P, G, Y = "#8B7CFF", "#22D3EE", "#F472B6", "#34D399", "#FBBF24"
-TXT, DIM = "#E5E7EB", "#8B93A7"
+V, C, P, G, Y = "#5fc79a", "#ff8a66", "#e8c46a", "#7fd9a8", "#FBBF24"
+TXT, DIM = "#E5E7EB", "#94a597"
 SANS = "Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
 MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
 
@@ -26,7 +26,7 @@ def rect(x, y, w, h, fill="#ffffff", op=0.06, r=10, stroke=None, sop=0.14):
 
 
 def win(x, y, w, h, title=""):
-    return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="18" fill="#12152A" fill-opacity="0.92" '
+    return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="18" fill="#0f1f18" fill-opacity="0.92" '
             f'stroke="#fff" stroke-opacity="0.14"/>'
             f'<path d="M{x} {y+46}H{x+w}" stroke="#fff" stroke-opacity="0.1"/>'
             f'<circle cx="{x+24}" cy="{y+23}" r="6" fill="#FF5F56"/><circle cx="{x+44}" cy="{y+23}" r="6" fill="#FFBD2E"/>'
@@ -52,7 +52,7 @@ def arrow(x1, y1, x2, y2, color=C):
 def base(inner, uid):
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img">
 <defs>
-<linearGradient id="bg{uid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0B0D18"/><stop offset="1" stop-color="#1A1240"/></linearGradient>
+<linearGradient id="bg{uid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a1410"/><stop offset="1" stop-color="#12291f"/></linearGradient>
 <linearGradient id="gr{uid}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="{V}"/><stop offset="0.55" stop-color="{C}"/><stop offset="1" stop-color="{P}"/></linearGradient>
 <filter id="bl{uid}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="70"/></filter>
 <pattern id="gd{uid}" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#fff" stroke-opacity="0.045"/></pattern>
@@ -106,7 +106,7 @@ def store(u):
         y = 190 + i * 52
         s += rect(872, y, 44, 38, [V, C, P][i], 0.35, 8) + bar(928, y + 6, 120, TXT, 0.5, 9) + bar(928, y + 24, 70, DIM, 0.5, 8)
     s += f'<rect x="872" y="352" width="246" height="42" rx="21" fill="{grad(u)}"/>' + t(995, 379, "Place order · COD", 16, "#fff", 700, False, "middle")
-    s += rect(850, 450, 290, 130, "#12152A", 0.92, 14, "#fff")
+    s += rect(850, 450, 290, 130, "#0f1f18", 0.92, 14, "#fff")
     s += t(872, 486, "inventory_movements", 13, DIM, 600, True) + t(872, 520, "− 2   order #1042", 16, P, 600, True)
     s += t(872, 552, "+ 40  manual adjust", 16, G, 600, True)
     return base(s, u)
@@ -146,7 +146,7 @@ def wordpress(u):
             b = a + (k - 3) * 0.2
             lx, ly = x + 82 * math.cos(b), y + 82 * math.sin(b)
             s += f'<path d="M{x:.0f} {y:.0f}L{lx:.0f} {ly:.0f}" stroke="{col}" stroke-opacity="0.25"/><circle cx="{lx:.0f}" cy="{ly:.0f}" r="6" fill="{col}" fill-opacity="0.8"/>'
-        s += f'<circle cx="{x:.0f}" cy="{y:.0f}" r="34" fill="#12152A" stroke="{col}" stroke-width="2"/>' + t(f"{x:.0f}", f"{y+5:.0f}", n, 13, col, 700, False, "middle")
+        s += f'<circle cx="{x:.0f}" cy="{y:.0f}" r="34" fill="#0f1f18" stroke="{col}" stroke-width="2"/>' + t(f"{x:.0f}", f"{y+5:.0f}", n, 13, col, 700, False, "middle")
     s += chip(60, 590, "800+ pages", V, 20)
     s += win(740, 110, 390, 300, "acf · field group")
     for i, (k, v) in enumerate([("hero_title", "text"), ("services", "repeater"), ("related_posts", "relationship"), ("locale", "select")]):
@@ -164,7 +164,7 @@ def shopify(u):
     s += chip(430, 286, "Bundle: 3 items", P, 14) + chip(430, 330, "Size · M", C, 14) + chip(540, 330, "Color · Ink", V, 14)
     s += f'<rect x="430" y="390" width="300" height="48" rx="24" fill="{grad(u)}"/>' + t(580, 421, "Add to cart", 17, "#fff", 700, False, "middle")
     s += t(100, 515, "{% section 'bundle-selector' %}", 15, C, 500, True)
-    s += f'<rect x="800" y="70" width="330" height="540" rx="20" fill="#12152A" stroke="#fff" stroke-opacity="0.2"/>'
+    s += f'<rect x="800" y="70" width="330" height="540" rx="20" fill="#0f1f18" stroke="#fff" stroke-opacity="0.2"/>'
     s += t(826, 118, "Your cart", 20, TXT, 700) + chip(1040, 94, "3", P, 14, 44)
     for i in range(3):
         y = 150 + i * 92
@@ -179,7 +179,7 @@ def payments(u):
     nodes = [("Client", V), ("Gateway", C), ("Webhook", P), ("Verified", G)]
     for i, (n, col) in enumerate(nodes):
         x = 110 + i * 290
-        s += f'<rect x="{x}" y="130" width="190" height="110" rx="20" fill="#12152A" stroke="{col}" stroke-width="2"/>'
+        s += f'<rect x="{x}" y="130" width="190" height="110" rx="20" fill="#0f1f18" stroke="{col}" stroke-width="2"/>'
         s += f'<circle cx="{x+95}" cy="170" r="16" fill="{col}" fill-opacity="0.5"/>' + t(x + 95, 215, n, 20, TXT, 700, False, "middle")
         if i < 3:
             s += arrow(x + 200, 185, x + 280, 185, col)
@@ -190,7 +190,7 @@ def payments(u):
     for i, (a, b, col) in enumerate(logs):
         s += t(134, 372 + i * 42, a, 15, DIM, 500, True) + t(236, 372 + i * 42, b, 16, col, 500, True)
     s += f'<path d="M930 330l110 40v90c0 70-50 110-110 140c-60-30-110-70-110-140v-90z" fill="{G}" fill-opacity="0.15" stroke="{G}" stroke-width="3"/>'
-    s += '<path d="M885 465l32 32l60-70" fill="none" stroke="#34D399" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>'
+    s += '<path d="M885 465l32 32l60-70" fill="none" stroke="#7fd9a8" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>'
     s += t(930, 625, "no card data stored", 14, DIM, 600, True, "middle")
     return base(s, u)
 
@@ -229,7 +229,7 @@ def db(u):
               (800, 120, "transactions", ["id PK", "wallet_id FK", "type", "amount"], P), (440, 370, "ledger_entries", ["id PK", "txn_id FK", "account", "debit", "credit"], G)]
     for x, y, n, cols, col in tables:
         h = 70 + len(cols) * 38
-        s += f'<rect x="{x}" y="{y}" width="320" height="{h}" rx="16" fill="#12152A" stroke="{col}" stroke-width="2"/>'
+        s += f'<rect x="{x}" y="{y}" width="320" height="{h}" rx="16" fill="#0f1f18" stroke="{col}" stroke-width="2"/>'
         s += f'<rect x="{x}" y="{y}" width="320" height="46" rx="16" fill="{col}" fill-opacity="0.25"/>' + t(x + 20, y + 30, n, 18, TXT, 700, True)
         for i, c in enumerate(cols):
             s += t(x + 20, y + 80 + i * 38, c, 16, DIM if "FK" not in c else col, 500, True)
@@ -241,7 +241,7 @@ def db(u):
 
 def about(u):
     s = f'<circle cx="330" cy="340" r="190" fill="none" stroke="{grad(u)}" stroke-width="6"/>'
-    s += f'<circle cx="330" cy="340" r="170" fill="#12152A"/>' + f'<circle cx="330" cy="340" r="170" fill="{V}" fill-opacity="0.12"/>'
+    s += f'<circle cx="330" cy="340" r="170" fill="#0f1f18"/>' + f'<circle cx="330" cy="340" r="170" fill="{V}" fill-opacity="0.12"/>'
     s += t(330, 378, "SK", 120, "#fff", 800, False, "middle")
     s += chip(120, 120, "Laravel", V, 18) + chip(470, 150, "PHP 8", C, 18) + chip(90, 560, "MySQL", P, 18) + chip(470, 540, "REST APIs", G, 18)
     s += win(700, 110, 430, 250, "about.php")

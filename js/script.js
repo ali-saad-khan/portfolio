@@ -375,6 +375,7 @@ function initSpotlight() {
     .then((m) => {
       m.createBuddy({
         character: "octopus",
+        colors: { main: "#D9532C", shell: "#11261D", screen: "#0B1511" },
         hang: "rope",
         position: "top-right",
         offset: { x: 24, y: 72 },

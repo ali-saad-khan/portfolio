@@ -98,7 +98,7 @@ def page(path, title, desc, body, active, schema=(), og=None, robots=None):
 
   <header class="navbar">
     <div class="container nav-container">
-      <a href="/" class="nav-brand" aria-label="Saad Ali Khan Portfolio Home"><span class="brand-tag">&lt;</span>SAAD<span class="brand-tag">/&gt;</span><span class="brand-dot"></span></a>
+      <a href="/" class="nav-brand" aria-label="Saad Ali Khan Portfolio Home"><span class="brand-mark" aria-hidden="true">SK</span><span class="brand-name">Saad Ali Khan</span></a>
       <div class="nav-right">
         <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation">{nav}</nav>
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Light and Dark Mode">
@@ -119,7 +119,7 @@ def page(path, title, desc, body, active, schema=(), og=None, robots=None):
     <div class="container">
       <div class="footer-grid">
         <div class="footer-about">
-          <div class="footer-brand">&lt;SAAD ALI KHAN /&gt;</div>
+          <div class="footer-brand"><span class="brand-mark" aria-hidden="true">SK</span>Saad Ali Khan</div>
           <p>Laravel &amp; PHP engineer in Karachi, Pakistan. I build secure backends, REST APIs, payment systems and e-commerce platforms for clients worldwide.</p>
           <a href="mailto:{EMAIL}" class="footer-link">{EMAIL}</a>
         </div>

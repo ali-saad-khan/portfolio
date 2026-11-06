@@ -11,7 +11,7 @@
   <meta name="title" content="Saad Ali Khan | Full Stack Developer: React, Laravel & PHP">
   <meta name="description" content="Freelance full stack developer in Karachi. React, Next.js and TypeScript front ends on secure Laravel and PHP backends: dashboards, APIs, payments and e-commerce, with code and tests you can read.">
   <meta name="author" content="Saad Ali Khan">
-  <meta name="theme-color" content="#0B0F14">
+  <meta name="theme-color" content="#11261D">
   <meta name="keywords" content="Saad Ali Khan, Full Stack Developer, Freelance Full Stack Developer Pakistan, Hire Full Stack Developer Karachi, React Developer, Next.js Developer, TypeScript, Laravel Developer, PHP Developer, REST API, MySQL, n8n Automation, AI Agents, Claude Code, RAG, Certifications, WordPress, Technyx">
 
   <!-- Open Graph / Facebook -->
@@ -85,7 +85,7 @@
        ========================================================================== -->
   <header class="navbar">
     <div class="container nav-container">
-      <a href="/" class="nav-brand" aria-label="Saad Ali Khan Portfolio Home"><span class="brand-tag">&lt;</span>SAAD<span class="brand-tag">/&gt;</span><span class="brand-dot"></span></a>
+      <a href="/" class="nav-brand" aria-label="Saad Ali Khan Portfolio Home"><span class="brand-mark" aria-hidden="true">SK</span><span class="brand-name">Saad Ali Khan</span></a>
       <div class="nav-right">
         <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation"><a href="/" class="nav-link active">Home</a><a href="/about" class="nav-link">About</a><a href="/services" class="nav-link">Services</a><a href="/projects" class="nav-link">Projects</a><a href="/certifications" class="nav-link">Certifications</a><a href="/blog" class="nav-link">Blog</a><a href="/contact" class="nav-link">Contact</a></nav>
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Light and Dark Mode">
@@ -106,86 +106,48 @@
     <section id="home" class="hero-section">
       <div class="container">
         <div class="hero-grid">
-          
-          <!-- Left Column: Content -->
+
           <div class="hero-content reveal">
-            <div class="hero-status">
-              <span class="badge badge-green">
-                <span class="pulse-dot"></span> Taking on new freelance &amp; contract projects
-              </span>
-            </div>
+            <p class="hero-eyebrow">Saad Ali Khan · Full stack developer · Karachi</p>
 
             <h1 class="hero-title">
-              Hi, I'm <span class="highlight">Saad Ali Khan</span>.
+              Software where every number <span class="highlight">adds up.</span>
             </h1>
 
-            <p class="hero-typed" aria-live="off">
-              <span class="typed-prefix">&gt; I build</span>
-              <span id="typed-text" class="typed-text">full stack web apps</span><span class="caret" aria-hidden="true"></span>
-            </p>
-
             <p class="hero-subtitle">
-              I build the whole product: fast, accessible React interfaces on top of secure APIs, payment flows and wallet systems that stay correct under load.
+              I build the whole product: fast, accessible React interfaces on secure Laravel and PHP APIs, with payment flows and wallet systems that stay correct under load.
             </p>
 
             <p class="hero-description">
-              Full stack engineer (React, Next.js, Laravel, PHP) with 3+ years shipping production systems. Don't take my word for it: my public repositories include a double-entry ledger API and a full e-commerce platform, with their tests and architecture docs open for you to read.
+              3+ years shipping production systems. Don't take my word for it: my public repositories include a double-entry ledger API and a full e-commerce platform, with tests and architecture docs open for you to read.
             </p>
 
             <div class="hero-actions">
-              <a href="/projects" class="btn btn-primary">
-                View My Work
-                <svg class="icon-svg" viewBox="0 0 24 24">
-                  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </a>
-              <a href="/contact" class="btn btn-secondary">Start a Project</a>
-              <a href="mailto:saadalikhan0210@gmail.com?subject=Project%20inquiry" class="btn btn-link">
-                <svg class="icon-svg" viewBox="0 0 24 24">
-                  <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                </svg>
-                Email Me
-              </a>
+              <a href="/projects" class="btn btn-primary">View my work <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a>
+              <a href="/contact" class="btn btn-secondary">Start a project</a>
+              <a href="mailto:saadalikhan0210@gmail.com?subject=Project%20inquiry" class="btn btn-link">Email me</a>
             </div>
+            <p class="ledger-note">&darr; This ledger is live. The same rule runs in my FinCore API: an entry that doesn't balance is never written.</p>
           </div>
 
-          <!-- Right Column: Developer Terminal Visual -->
           <div class="hero-visual reveal">
-            <div class="terminal-window">
-              <div class="terminal-header">
-                <div class="terminal-dots">
-                  <span class="terminal-dot dot-red"></span>
-                  <span class="terminal-dot dot-yellow"></span>
-                  <span class="terminal-dot dot-green"></span>
+            <figure class="ledger" id="ledger" aria-label="Animated sample of a double-entry ledger. Every transaction posts equal debits and credits, so the balance difference is always zero.">
+              <div class="ledger-head">
+                <span class="ledger-title">General ledger</span>
+                <span class="ledger-live">live demo · sample data</span>
+              </div>
+              <div class="ledger-cols" aria-hidden="true"><span>Ref</span><span>Account</span><span>Debit</span><span>Credit</span></div>
+              <div class="ledger-body" aria-hidden="true"></div>
+              <div class="ledger-foot">
+                <div class="ledger-total"><span class="lbl">Totals</span><span class="amt" data-total="debit">0.00</span><span class="amt" data-total="credit">0.00</span></div>
+                <div class="ledger-bar">
+                  <span class="ledger-delta" data-delta>Difference <span class="num">0.00</span> <span class="seal">Balanced</span></span>
+                  <button type="button" class="ledger-try">Try an unbalanced entry</button>
                 </div>
-                <div class="terminal-title">DeveloperProfile.php</div>
+                <div class="ledger-bar"><span class="ledger-call" aria-hidden="true"></span></div>
+                <div class="ledger-status" role="status"></div>
               </div>
-              <div class="terminal-body">
-<pre><code><span class="code-comment">&lt;?php</span>
-
-<span class="code-keyword">namespace</span> Developer\Profile;
-
-<span class="code-keyword">class</span> <span class="code-fn">SaadAliKhan</span>
-{
-    <span class="code-keyword">public string</span> <span class="code-variable">$name</span> = <span class="code-string">"Saad Ali Khan"</span>;
-    <span class="code-keyword">public string</span> <span class="code-variable">$role</span> = <span class="code-string">"Software Engineer"</span>;
-    <span class="code-keyword">public string</span> <span class="code-variable">$company</span> = <span class="code-string">"Technyx, Karachi"</span>;
-
-    <span class="code-keyword">public array</span> <span class="code-variable">$primaryStack</span> = [
-        <span class="code-string">"PHP"</span>, <span class="code-string">"Laravel"</span>, <span class="code-string">"MySQL"</span>,
-        <span class="code-string">"REST APIs"</span>, <span class="code-string">"JavaScript"</span>
-    ];
-
-    <span class="code-keyword">public function</span> <span class="code-fn">getMission</span>(): <span class="code-keyword">string</span>
-    {
-        <span class="code-keyword">return</span> <span class="code-string">"Designing backend logic, "</span> .
-            <span class="code-string">"protecting data integrity, "</span> .
-            <span class="code-string">"and shipping production code."</span>;
-    }
-}
-</code></pre>
-              </div>
-            </div>
+            </figure>
           </div>
 
         </div>
@@ -952,7 +914,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-about">
-          <div class="footer-brand">&lt;SAAD ALI KHAN /&gt;</div>
+          <div class="footer-brand"><span class="brand-mark" aria-hidden="true">SK</span>Saad Ali Khan</div>
           <p>Laravel &amp; PHP engineer in Karachi, Pakistan. I build secure backends, REST APIs, payment systems and e-commerce platforms for clients worldwide.</p>
           <a href="mailto:saadalikhan0210@gmail.com" class="footer-link">saadalikhan0210@gmail.com</a>
         </div>
@@ -972,5 +934,6 @@
 
   <!-- Main JavaScript -->
   <script src="/js/script.js"></script>
+  <script src="/js/ledger.js"></script>
 </body>
 </html>
