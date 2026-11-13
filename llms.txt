@@ -7,12 +7,18 @@
 - [About](https://saadconsulting.tech/about)
 - [Services](https://saadconsulting.tech/services)
 - [Projects and case studies](https://saadconsulting.tech/projects)
+- [Shopify storefronts](https://saadconsulting.tech/shopify): four original custom Shopify themes
 - [Certifications](https://saadconsulting.tech/certifications): 24 verified certificates (AI agents, Claude Code, MCP, RAG, prompt engineering, n8n)
 - [Blog](https://saadconsulting.tech/blog): articles on Laravel, React, payments, wallet ledgers, API design and accessibility
 - [Contact](https://saadconsulting.tech/contact)
 
 ## Projects
 - Pulseboard: React + TypeScript dashboard with live demo: https://saadconsulting.tech/projects/pulseboard-react-dashboard
+- Shopify storefronts (four original custom themes): https://saadconsulting.tech/shopify
+  - KAIROS (editorial fashion): https://saadconsulting.tech/projects/kairos-fashion-shopify-theme
+  - Tidemark (cinematic beverage, build-your-case cart widget): https://saadconsulting.tech/projects/tidemark-shopify-theme
+  - Arcline (performance gear, fit quiz and surface slider): https://saadconsulting.tech/projects/arcline-shopify-theme
+  - Pith (playful drinks brand, slice game and scroll mascot): https://saadconsulting.tech/projects/pith-shopify-theme
 
 ## Contact
 - Email: saadalikhan0210@gmail.com

@@ -387,3 +387,9 @@ function initSpotlight() {
     })
     .catch(() => {});
 })();
+
+// "Bit" the server bot: crawls a zig-zag trace down the page as you scroll (desktop, motion allowed).
+(function initBitRider() {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  import("/js/rider.js").then((m) => m.initRider()).catch(() => {});
+})();

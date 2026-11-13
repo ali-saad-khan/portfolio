@@ -19,6 +19,11 @@ def e(s):
     return _html.escape(s, quote=True)
 
 
+def cover_src(cover):
+    """Covers are SVG illustrations, or JPG screenshots for the Shopify showcase stores."""
+    return f"/assets/images/covers/{cover}.jpg" if os.path.exists(os.path.join(ROOT, "assets", "images", "covers", cover + ".jpg")) else f"/assets/images/covers/{cover}.svg"
+
+
 def h(s):
     """Escape text but keep <code> tags from the content files."""
     out = s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
@@ -44,7 +49,7 @@ PERSON = {"@type": "Person", "@id": SITE + "/#person", "name": BRAND, "url": SIT
           "sameAs": [GITHUB, LINKEDIN],
           "knowsAbout": ["Laravel", "PHP", "MySQL", "REST APIs", "Payment integrations", "WordPress", "Shopify", "Next.js", "React", "TypeScript", "Tailwind CSS", "n8n", "Workflow automation"]}
 
-NAV = [("Home", "/"), ("About", "/about"), ("Services", "/services"), ("Projects", "/projects"), ("Certifications", "/certifications"), ("Blog", "/blog"), ("Contact", "/contact")]
+NAV = [("Home", "/"), ("About", "/about"), ("Services", "/services"), ("Projects", "/projects"), ("Shopify", "/shopify"), ("Certifications", "/certifications"), ("Blog", "/blog"), ("Contact", "/contact")]
 
 
 def page(path, title, desc, body, active, schema=(), og=None, robots=None):
@@ -53,7 +58,7 @@ def page(path, title, desc, body, active, schema=(), og=None, robots=None):
     full = f"{title} | {BRAND}"
     nav = "".join(f'<a href="{u}" class="nav-link{" active" if n == active else ""}">{n}</a>' for n, u in NAV)
     svc = "".join(f'<li><a href="/services/{s["slug"]}">{e(s["name"])}</a></li>' for s in SERVICES)
-    cs = "".join(f'<li><a href="/projects/{p["slug"]}">{e(p["short"])}</a></li>' for p in PROJECTS)
+    cs = "".join(f'<li><a href="/projects/{p["slug"]}">{e(p["short"])}</a></li>' for p in PROJECTS if p["kind"] != "showcase") + '<li><a href="/shopify">Shopify storefronts</a></li>'
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -152,7 +157,7 @@ def breadcrumb_html(items):
 
 def hero(items, tag, title, lead, cover=None, alt="", actions="", meta_chips=()):
     chips = "".join(f'<span class="badge badge-cyan">{e(c)}</span>' for c in meta_chips)
-    art = (f'<figure class="cover-frame reveal"><img src="/assets/images/covers/{cover}.svg" width="1200" height="675" alt="{e(alt)}" fetchpriority="high"></figure>' if cover else "")
+    art = (f'<figure class="cover-frame reveal"><img src="{cover_src(cover)}" width="1200" height="675" alt="{e(alt)}" fetchpriority="high"></figure>' if cover else "")
     return f'''    <section class="page-hero">
       <div class="container">
         {breadcrumb_html(items)}
@@ -186,9 +191,10 @@ def cta(title="Have a project like this in mind?", text="Tell me what you're bui
 
 
 def project_card(p, size=""):
-    badge = '<span class="badge badge-green">Open Source</span>' if p["kind"] == "open" else '<span class="badge badge-cyan">Production · Private</span>'
+    badge = {"open": '<span class="badge badge-green">Open Source</span>', "showcase": '<span class="badge badge-green">Shopify Showcase</span>'}.get(p["kind"], '<span class="badge badge-cyan">Production · Private</span>')
+    code = p["kind"] == "open" or (p["kind"] == "showcase" and SHOWROOM_REPO_LIVE)
     return f'''<article class="project-card media-card reveal">
-  <a class="card-media" href="/projects/{p["slug"]}" tabindex="-1" aria-hidden="true"><img src="/assets/images/covers/{p["cover"]}.svg" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
+  <a class="card-media" href="/projects/{p["slug"]}" tabindex="-1" aria-hidden="true"><img src="{cover_src(p["cover"])}" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
   <div class="project-top">
     <div class="project-meta"><span class="project-category">{e(p["cat"])}</span>{badge}</div>
     <h3 class="project-title"><a href="/projects/{p["slug"]}">{e(p["title"])}</a></h3>
@@ -196,7 +202,7 @@ def project_card(p, size=""):
   </div>
   <div class="project-bottom">
     <a href="/projects/{p["slug"]}" class="btn btn-primary btn-sm">Read case study</a>
-    {f'<a href="{p["repo"]}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">View code</a>' if p["kind"] == "open" else ''}
+    {f'<a href="{p["repo"]}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">View code</a>' if code else ''}
     {f'<a href="{p["demo"]}" class="btn btn-secondary btn-sm">Live demo</a>' if p.get("demo") else ''}
   </div>
 </article>'''
@@ -204,7 +210,7 @@ def project_card(p, size=""):
 
 def service_card(s):
     return f'''<article class="service-card media-card reveal">
-  <a class="card-media" href="/services/{s["slug"]}" tabindex="-1" aria-hidden="true"><img src="/assets/images/covers/{s["cover"]}.svg" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
+  <a class="card-media" href="/services/{s["slug"]}" tabindex="-1" aria-hidden="true"><img src="{cover_src(s["cover"])}" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
   <h3 class="service-title"><a href="/services/{s["slug"]}">{e(s["name"])}</a></h3>
   <p class="service-description">{h(s["short"])}</p>
   <a href="/services/{s["slug"]}" class="card-link">Learn more &rarr;</a>
@@ -215,9 +221,12 @@ def service_card(s):
 def build_case_study(p):
     path = f"/projects/{p['slug']}"
     items = [("Home", "/"), ("Projects", "/projects"), (p["short"], path)]
-    badge_text = "Open source" if p["kind"] == "open" else "Production work (private code)"
+    badge_text = {"open": "Open source", "showcase": "Original Shopify showcase"}.get(p["kind"], "Production work (private code)")
     actions = ""
-    if p["kind"] == "open":
+    if p["kind"] == "showcase":
+        code = f'<a href="{p["repo"]}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View theme code on GitHub</a>' if SHOWROOM_REPO_LIVE else ""
+        actions = f'<div class="hero-actions">{code}<a href="/shopify" class="btn btn-primary">All Shopify storefronts</a><a href="/contact" class="btn btn-secondary">Start a Project</a></div>'
+    elif p["kind"] == "open":
         demo = f'<a href="{p["demo"]}" class="btn btn-primary">Live demo</a>' if p.get("demo") else ""
         actions = f'<div class="hero-actions">{demo}<a href="{p["repo"]}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View code on GitHub</a><a href="/contact" class="btn btn-secondary">Start a Project</a></div>'
     else:
@@ -272,7 +281,7 @@ def build_case_study(p):
               {"@context": "https://schema.org", "@type": "Article", "headline": p["title"], "description": p["meta"],
                "image": f"{SITE}/assets/images/og/{p['slug']}.png", "author": PERSON, "datePublished": TODAY, "dateModified": TODAY,
                "mainEntityOfPage": SITE + path, "publisher": PERSON}]
-    if p["kind"] == "open":
+    if p["kind"] == "open" or (p["kind"] == "showcase" and SHOWROOM_REPO_LIVE):
         schema.append({"@context": "https://schema.org", "@type": "SoftwareSourceCode", "name": p["short"], "codeRepository": p["repo"],
                        "author": PERSON, "description": p["lead"], "programmingLanguage": p["stack"][0], "url": SITE + path})
     return path, page(path, p["title"], p["meta"], body, "Projects", schema, og=p["slug"])
@@ -322,9 +331,10 @@ def build_projects_index():
     path = "/projects"
     items = [("Home", "/"), ("Projects", path)]
     openp = "".join(project_card(p) for p in PROJECTS if p["kind"] == "open")
-    priv = "".join(project_card(p) for p in PROJECTS if p["kind"] != "open")
+    priv = "".join(project_card(p) for p in PROJECTS if p["kind"] not in ("open", "showcase"))
+    shop = "".join(project_card(p) for p in PROJECTS if p["kind"] == "showcase")
     body = hero(items, "// PROJECTS & CASE STUDIES", "Full Stack Case Studies: React, Laravel & E-commerce",
-                "Six open-source builds you can read line by line (React, Next.js, Laravel and n8n), and four pieces of production work delivered at Technyx. Each case study explains the problem, the decisions and the result.",
+                "Open-source builds you can read line by line (React, Next.js, Laravel and n8n), four original Shopify storefronts, and production work delivered at Technyx. Each case study explains the problem, the decisions and the result.",
                 None)
     body += f'''
     <section class="section tight">
@@ -334,6 +344,12 @@ def build_projects_index():
       </div>
     </section>
     <section class="section section-alt">
+      <div class="container">
+        <div class="section-header reveal"><span class="section-tag">// SHOPIFY SHOWROOM</span><h2 class="section-title">Four original Shopify storefronts</h2><p class="section-subtitle">Custom themes with demo brands and generated artwork. <a href="/shopify">See the showroom</a>.</p></div>
+        <div class="projects-grid">{shop}</div>
+      </div>
+    </section>
+    <section class="section">
       <div class="container">
         <div class="section-header reveal"><span class="section-tag">// PRODUCTION WORK</span><h2 class="section-title">Delivered at Technyx</h2><p class="section-subtitle">Client and employer code is private, so these case studies describe the problem and approach without exposing anything confidential.</p></div>
         <div class="projects-grid">{priv}</div>
@@ -347,6 +363,53 @@ def build_projects_index():
     return path, page(path, "Full Stack Case Studies: React, Next.js & Laravel",
                       "Full stack case studies: a React and TypeScript dashboard, a Next.js store, an open-source Laravel wallet ledger API, WordPress, Shopify and payment integrations.",
                       body, "Projects", schema, og="projects")
+
+
+def build_shopify():
+    path = "/shopify"
+    items = [("Home", "/"), ("Shopify", path)]
+    shop = [p for p in PROJECTS if p["kind"] == "showcase"]
+    cards = "".join(project_card(p) for p in shop)
+    rows = "".join(f'''<li class="approach-item"><span class="approach-num">{i+1:02d}</span><div><h3>{e(p["short"])}</h3><p>{h(p["lead"])}</p></div></li>''' for i, p in enumerate(shop))
+    body = hero(items, "// SHOPIFY STOREFRONTS", "Custom Shopify Themes: Four Original Storefronts",
+                "A showroom of four bespoke stores I built end to end: design system, custom Liquid sections, interactive components, product data and imagery. Each is a different brand and a different art direction, built on the same reusable theme architecture.",
+                None, "", '<div class="hero-actions"><a href="/contact" class="btn btn-primary">Start a Shopify project</a><a href="/projects/shopify-store-customization" class="btn btn-secondary">Production Shopify work</a></div>', ["Online Store 2.0", "Liquid", "No apps"])
+    body += f'''
+    <section class="section tight">
+      <div class="container">
+        <div class="section-header reveal"><span class="section-tag">// THE SHOWROOM</span><h2 class="section-title">Pick a brand, see the build</h2><p class="section-subtitle">Click through for the full case study of each storefront.</p></div>
+        <div class="projects-grid">{cards}</div>
+      </div>
+    </section>
+    <section class="section section-alt">
+      <div class="container article-grid">
+        <article class="prose">
+          <h2>What these stores demonstrate</h2>
+          <ol class="approach-list">{rows}</ol>
+          <h2>How they are built</h2>
+          <ul class="check-list">
+            <li>Online Store 2.0 JSON templates with schema-driven sections, so everything is editable in the theme editor.</li>
+            <li>Vanilla JavaScript and the AJAX Cart API instead of apps, including multi-item cart builders and quick-add.</li>
+            <li>Products, variants, collections, menus and content created by repeatable Admin GraphQL scripts.</li>
+            <li>Original artwork generated procedurally in Python, so there are no licensing issues.</li>
+            <li>Checked with theme-check and deployed with Shopify CLI.</li>
+          </ul>
+          <div class="callout">These are original demo brands with sample content, not client work. The storefronts run on Shopify development stores and are password protected, so each case study shows the build instead of a public link. I am happy to walk through one on a call.</div>
+        </article>
+        <aside class="side-card-wrap">
+          <div class="side-card side-cta"><h3>Need a store like this?</h3><p>Custom themes, migrations and storefront features for Shopify merchants.</p><a href="/contact" class="btn btn-primary btn-sm">Get in touch</a></div>
+          <div class="side-card"><h3>Related services</h3><ul class="link-list"><li><a href="/services/ecommerce-development">{e(SMAP["ecommerce-development"]["name"])}</a></li><li><a href="/services/frontend-development">{e(SMAP["frontend-development"]["name"])}</a></li></ul></div>
+        </aside>
+      </div>
+    </section>
+{cta("Want a storefront with this level of polish?", "Tell me about your brand and your catalogue. I will reply by email with questions or a suggested approach.")}'''
+    schema = [crumbs(items),
+              {"@context": "https://schema.org", "@type": "CollectionPage", "name": "Shopify storefronts", "url": SITE + path,
+               "mainEntity": {"@type": "ItemList", "itemListElement": [
+                   {"@type": "ListItem", "position": i + 1, "url": f"{SITE}/projects/{p['slug']}", "name": p["title"]} for i, p in enumerate(shop)]}}]
+    return path, page(path, "Custom Shopify Theme Development: Showroom of Four Storefronts",
+                      "A showroom of four original custom Shopify storefronts with bespoke Liquid sections, interactive components, Cart API features and repeatable Admin API setup.",
+                      body, "Shopify", schema, og="shopify")
 
 
 def cert_card(c, eager=False):
@@ -623,7 +686,7 @@ def write(path, content):
 
 
 def sitemap(paths):
-    prio = {"/": "1.0", "/about": "0.8", "/projects": "0.9", "/services": "0.9", "/contact": "0.7", "/blog": "0.8", "/certifications": "0.9"}
+    prio = {"/": "1.0", "/about": "0.8", "/projects": "0.9", "/shopify": "0.9", "/services": "0.9", "/contact": "0.7", "/blog": "0.8", "/certifications": "0.9"}
     rows = "".join(f"  <url>\n    <loc>{SITE}{p if p != '/' else '/'}</loc>\n    <lastmod>{TODAY}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>{prio.get(p, '0.8')}</priority>\n  </url>\n" for p in paths)
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.w3.org/2000/svg">\n'.replace("http://www.w3.org/2000/svg", "http://www.sitemaps.org/schemas/sitemap/0.9") + rows + "</urlset>\n"
 
@@ -631,7 +694,7 @@ def sitemap(paths):
 def render_og(slug, title, cover):
     out = os.path.join(ROOT, "assets", "images", "og", slug + ".png")
     os.makedirs(os.path.dirname(out), exist_ok=True)
-    cov = os.path.join(ROOT, "assets", "images", "covers", cover + ".svg")
+    cov = os.path.join(ROOT, "assets", "images", "covers", cover + (".jpg" if os.path.exists(os.path.join(ROOT, "assets", "images", "covers", cover + ".jpg")) else ".svg"))
     doc = f'''<html><body style="margin:0;width:1200px;height:630px;background:linear-gradient(135deg,#0B0D18,#1A1240);font-family:Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#fff;position:relative;overflow:hidden">
 <img src="file://{cov}" style="position:absolute;right:-60px;top:70px;width:640px;border-radius:24px;border:1px solid rgba(255,255,255,.15);box-shadow:0 30px 80px rgba(139,124,255,.45)">
 <div style="position:absolute;left:64px;top:64px;font:600 22px ui-monospace,Menlo,monospace;color:#22D3EE">&lt;SAAD/&gt; saadconsulting.tech</div>
@@ -647,7 +710,7 @@ def render_og(slug, title, cover):
 
 
 def main():
-    pages = [build_about(), build_certifications(), build_projects_index(), build_services_index(), build_contact(), build_blog_index()]
+    pages = [build_about(), build_certifications(), build_projects_index(), build_shopify(), build_services_index(), build_contact(), build_blog_index()]
     pages += [build_post(b) for b in POSTS]
     pages += [build_case_study(p) for p in PROJECTS] + [build_service(s) for s in SERVICES]
     for path, content in pages:
@@ -657,7 +720,7 @@ def main():
     print("built", len(pages), "pages")
     if "--og" in sys.argv:
         jobs = [("certifications", f"{C.TOTAL} Verified AI, Claude Code & n8n Certifications", "certifications"), ("about", "About Saad Ali Khan", "about"), ("projects", "Projects & Case Studies", "fincore-ledger"),
-                ("services", "Laravel, API & E-commerce Services", "rest-api"), ("contact", "Hire a Laravel & PHP Developer", "laravel-code")]
+                ("services", "Laravel, API & E-commerce Services", "rest-api"), ("shopify", "Custom Shopify Storefronts: Four Original Themes", "shopify-pith"), ("contact", "Hire a Laravel & PHP Developer", "laravel-code")]
         jobs += [("blog", "Full Stack Engineering Blog: Laravel, APIs & Payments", "laravel-code")] + [("blog-" + b["slug"], b["title"], b["cover"]) for b in POSTS]
         jobs += [(p["slug"], p["title"], p["cover"]) for p in PROJECTS] + [(s["slug"], s["title"], s["cover"]) for s in SERVICES]
         for j in jobs:

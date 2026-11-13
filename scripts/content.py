@@ -3,6 +3,9 @@
 SITE = "https://saadconsulting.tech"
 EMAIL = "saadalikhan0210@gmail.com"
 GITHUB = "https://github.com/ali-saad-khan"
+# Flip to True once the shopify-showroom repo is public, so "View code" links go live.
+SHOWROOM_REPO_LIVE = False
+SHOWROOM_REPO = GITHUB + "/shopify-showroom"
 LINKEDIN = "https://www.linkedin.com/in/saad-ali-khan-01976124a/"
 
 CERTS = [
@@ -367,6 +370,148 @@ PROJECTS = [
         proves=["Treating every callback as untrusted until verified", "Idempotency as a default, not an afterthought", "Debugging payment flows end to end from logs"],
         related=["fincore-wallet-ledger-api", "practical-meal-subscription-backend", "my-store-ecommerce-platform"],
         services=["payment-gateway-integration", "rest-api-development", "production-debugging"],
+    ),
+
+    # ---- Shopify showroom: four original storefronts (generated art, demo content) ----
+    dict(
+        slug="kairos-fashion-shopify-theme",
+        cover="shopify-kairos", short="KAIROS Fashion Store", title="KAIROS: Editorial Fashion Storefront on Shopify",
+        kind="showcase", repo=SHOWROOM_REPO + "/tree/main/themes/fashion",
+        cat="Shopify / Liquid / Theme development",
+        meta="Case study: KAIROS, an original editorial fashion storefront with 13 custom Liquid sections: shop-the-look hotspots, hover-swap product cards with size quick-add, a drop countdown and a sticky add-to-cart bar.",
+        lead="A showcase store I built from scratch to show what a bespoke Shopify theme can look like: a dark, editorial fashion brand with shop-the-look pins, a countdown drop, count-up stats and product cards that quick-add straight into the cart drawer. Brand, products and artwork are all original demo content.",
+        facts=[("13", "custom Liquid sections"), ("12", "products, Color x Size variants"), ("8", "smart collections by tag"), ("0", "apps required")],
+        challenge=[
+            "A fashion pitch needs more than a re-skinned template. The storefront has to feel like a brand: confident type, rich imagery, motion that sells the product and a purchase path that never gets in the way.",
+            "The constraint was to do it on Online Store 2.0 with no apps and no front-end framework, so every interaction is plain Liquid, CSS and a few hundred lines of vanilla JavaScript that a merchant's developer can maintain.",
+        ],
+        approach=[
+            ("Design system first", "A single stylesheet carries the palette, type scale and motion tokens. Sections only compose those tokens, so a colour or font change in theme settings ripples through every custom section."),
+            ("Product cards that sell", "A <code>kx-product-card</code> snippet swaps to the second image on hover, shows colour swatches mapped from the variant option, and exposes size buttons that add to the cart through the AJAX Cart API and refresh Dawn's cart drawer."),
+            ("Shop the look", "A section lays product pins over an editorial flat-lay. Each pin is a block with a product picker and X/Y position, and clicking a pin highlights the matching product in the list."),
+            ("Everything is editable", "Every section is configurable in the theme editor: blocks, pickers, colour schemes and copy. The page can be rearranged without touching code."),
+            ("Original art, generated", "The product and campaign imagery is drawn procedurally in Python (Pillow): garment cutouts, grain, shadows and backdrops. There are no licensing issues and the whole set regenerates from a script."),
+            ("Seeded through the Admin API", "Products, variants, colour-linked media, collections, menus, pages and a journal are created by an idempotent script over the Admin GraphQL API, so the store can be rebuilt from scratch."),
+        ],
+        stack=["Shopify Online Store 2.0", "Liquid", "JSON templates", "Vanilla JavaScript", "CSS", "AJAX Cart API", "Admin GraphQL API", "Shopify CLI", "Python (Pillow)"],
+        did=[
+            "Designed and wrote 13 custom sections, 2 snippets and the shared stylesheet and script.",
+            "Built hover-swap cards with size quick-add wired into the cart drawer.",
+            "Built a shop-the-look section with hotspot pins, a drop countdown, count-up stats and a sticky add-to-cart bar.",
+            "Wrote the procedural illustration engine and the idempotent Admin API seeding scripts.",
+            "Shipped the theme with Shopify CLI and checked it with theme-check.",
+        ],
+        tradeoffs=[
+            "Imagery is generated illustration, not photography. It keeps the showcase free of licensing issues; a client build would swap in their own photography through the same image settings.",
+            "It is a demo store with sample products and copy, not a client launch.",
+        ],
+        proves=["Custom Shopify theme development beyond the theme editor", "Performance-minded vanilla JavaScript, no app bloat", "Admin API automation and repeatable store setup", "Design sense as well as engineering"],
+        related=["shopify-store-customization", "my-store-ecommerce-platform"],
+        services=["ecommerce-development", "frontend-development"],
+        note="Original showcase store built with demo content. The live storefront runs on a Shopify development store and is password protected.",
+    ),
+    dict(
+        slug="tidemark-shopify-theme",
+        cover="shopify-tidemark", short="Tidemark Water Store", title="Tidemark: Cinematic Beverage Storefront on Shopify",
+        kind="showcase", repo=SHOWROOM_REPO + "/tree/main/themes/water",
+        cat="Shopify / Liquid / Theme development",
+        meta="Case study: Tidemark, an original canned-mineral-water storefront with an interactive source journey, animated mineral cards, a build-your-case cart widget and a reusable page system.",
+        lead="A dark, cinematic beverage storefront with rising bubbles, an interactive journey of a single drop, mineral cards that count up, and a build-your-case widget that adds several cases to the cart at once with a free-shipping meter and a monthly-delivery toggle. The same page system (hero, collection, journal, article, footer) is reused across my other showcase stores.",
+        facts=[("13", "custom sections"), ("1", "multi-item cart builder"), ("7", "products with plan variants"), ("0", "apps required")],
+        challenge=[
+            "Beverage brands win on mood and on subscriptions. The page has to feel like the place the water comes from, then make buying a case, or setting up monthly delivery, effortless.",
+            "I wanted to prove that a conversion feature like a case builder with a free-shipping meter does not need an app. It is a section, some data attributes and the AJAX Cart API.",
+        ],
+        approach=[
+            ("Mood through restraint", "Layered gradients, a light-ray conic gradient and CSS-only bubbles set the scene without video or heavy assets, so the hero stays fast."),
+            ("An interactive story, not a carousel", "The source section maps five stages (rain to can) to a depth gauge. Hover or auto-advance and the gauge, years counter and copy animate together."),
+            ("Build your case", "Two steppers, a one-time or monthly toggle and a progress bar towards the free-shipping threshold. The widget posts all selected variants to <code>/cart/add.js</code> in one request and then refreshes the cart drawer."),
+            ("A reusable page system", "Page hero, collection grid with a promo tile, journal, article, closing banner and footer are sections with schema settings, so a new store is mostly content and a palette."),
+            ("Accessible motion", "Animations are CSS, respect <code>prefers-reduced-motion</code>, and the controls are real buttons with labels."),
+        ],
+        stack=["Shopify Online Store 2.0", "Liquid", "Vanilla JavaScript", "CSS gradients and keyframes", "AJAX Cart API", "Admin GraphQL API", "Shopify CLI", "Python (Pillow)"],
+        did=[
+            "Wrote 13 custom sections including the hero, source journey, mineral cards and case builder.",
+            "Built the multi-line add-to-cart with a free-shipping meter and monthly-delivery pricing.",
+            "Created the page system reused by the other storefronts.",
+            "Drew all can, scene and logo artwork procedurally and seeded the store through the Admin API.",
+        ],
+        tradeoffs=[
+            "Monthly delivery is a discounted variant to demonstrate the flow. A real subscription needs Shopify's selling plans or a subscription app.",
+            "It is a demo brand with sample content, not client work.",
+        ],
+        proves=["Conversion-minded custom sections without apps", "Cart API work beyond a single add-to-cart", "Reusable, schema-driven theme architecture", "Motion that is tasteful and accessible"],
+        related=["kairos-fashion-shopify-theme", "shopify-store-customization"],
+        services=["ecommerce-development", "frontend-development"],
+        note="Original showcase store built with demo content. The live storefront runs on a Shopify development store and is password protected.",
+    ),
+    dict(
+        slug="arcline-shopify-theme",
+        cover="shopify-arcline", short="Arcline Paddle Store", title="Arcline: Performance Gear Storefront on Shopify",
+        kind="showcase", repo=SHOWROOM_REPO + "/tree/main/themes/arcline",
+        cat="Shopify / Liquid / Theme development",
+        meta="Case study: Arcline, an original pickleball paddle storefront with sticky numbered tech chapters, a draggable before and after surface slider, a spec table and a three-question fit quiz.",
+        lead="A bold black-and-lime performance-gear storefront in the style of a product launch page: a giant outlined headline, sticky numbered chapters that zoom into the paddle as you scroll, a drag-to-compare surface slider, a versus table and a fit quiz that recommends a product and adds it to the cart.",
+        facts=[("7", "custom sections"), ("3", "question fit quiz"), ("8", "products, 7 collections"), ("0", "apps required")],
+        challenge=[
+            "Technical products sell on proof. Shoppers want to see the materials, compare specs and be told which model fits them, all before they reach the buy button.",
+            "The goal was to turn that into reusable sections a merchant can edit, rather than a one-off landing page.",
+        ],
+        approach=[
+            ("Scroll-linked chapters", "Numbered chapters sit beside a sticky image stage. An IntersectionObserver swaps the image and zooms to a per-chapter focus point set in the theme editor."),
+            ("Before and after, drag to compare", "Two images are clipped with a CSS variable driven by an accessible range input, so it works with mouse, touch and keyboard."),
+            ("A fit quiz that sells", "Three questions score power, control and forgiveness. The result card shows the matching product with price, reasoning and a quick add-to-cart."),
+            ("Spec and comparison tables", "A versus table and a spec list are schema-driven blocks, so merchants edit rows without touching code."),
+            ("Variants done properly", "Colour and weight options generate variant combinations with colour-linked media."),
+        ],
+        stack=["Shopify Online Store 2.0", "Liquid", "Vanilla JavaScript", "IntersectionObserver", "CSS clip-path and variables", "AJAX Cart API", "Admin GraphQL API", "Shopify CLI"],
+        did=[
+            "Wrote 7 sections: hero, chapters, surface slider, versus table, fit quiz, capsule bundle and spec table.",
+            "Reused the shared page system for the collection, journal, FAQ and footer, restyled for the brand.",
+            "Generated the paddle, bag, grip and ball artwork procedurally and seeded the catalogue through the Admin API.",
+        ],
+        tradeoffs=[
+            "Performance numbers and warranty claims are placeholder demo copy, not real product data.",
+            "It is a demo brand with sample content, not client work.",
+        ],
+        proves=["Launch-page storytelling inside editable theme sections", "Interactive components that stay accessible", "Rapid reuse of a component system across brands"],
+        related=["tidemark-shopify-theme", "kairos-fashion-shopify-theme"],
+        services=["ecommerce-development", "frontend-development"],
+        note="Original showcase store built with demo content. The live storefront runs on a Shopify development store and is password protected.",
+    ),
+    dict(
+        slug="pith-shopify-theme",
+        cover="shopify-pith", short="Pith Drinks Store", title="Pith: Playful Zero-Proof Drinks Storefront on Shopify",
+        kind="showcase", repo=SHOWROOM_REPO + "/tree/main/themes/pith",
+        cat="Shopify / Liquid / Theme development",
+        meta="Case study: Pith, an original zero-proof citrus drinks storefront with an entry splash, a canvas slice game, group-chat reviews, a draggable photo strip and a scroll-driven mascot.",
+        lead="A bright, sticker-style brand store with personality: a peel-to-enter splash, a canvas slice-the-fruit mini game, reviews as a group chat, a drag-to-scroll photo strip, a merch drop grid and a small citrus mascot that rides a zig-zag line down the page, reacting to the content as it passes.",
+        facts=[("10", "custom sections"), ("1", "canvas mini game"), ("1", "scroll-driven mascot"), ("0", "apps required")],
+        challenge=[
+            "Playful brands live or die on delight. The challenge was to add real interactivity (a game, an animated chat, a mascot) without hurting performance, accessibility or the purchase path.",
+            "Everything had to stay editable in the theme editor and degrade gracefully when motion is reduced.",
+        ],
+        approach=[
+            ("A mascot tied to scroll", "Scroll progress maps to a point on a zig-zag SVG path sampled once into an array, so each frame is cheap. The mascot walks down, climbs back up, waves when you pause and trips small reactions in nearby elements."),
+            ("A game in a canvas", "The slice game uses pointer events, swept-segment collision so fast swipes still connect, a timer, rarity-style ranks and a result card."),
+            ("Reviews as a chat", "Messages appear on scroll with a typing indicator, so social proof reads like a conversation instead of a carousel."),
+            ("Accessible by default", "The mascot and game are decorative or progressively enhanced, controls are real buttons, and reduced-motion users get a static page with every product still one click away."),
+            ("Same system, new skin", "The shared page system is re-skinned with rounded stickers, thick outlines and offset shadows, which shows how quickly a brand can be turned around."),
+        ],
+        stack=["Shopify Online Store 2.0", "Liquid", "Vanilla JavaScript", "Canvas 2D", "SVG path animation", "AJAX Cart API", "Admin GraphQL API", "Shopify CLI", "Python (Pillow)"],
+        did=[
+            "Wrote 10 sections and the scroll-driven mascot (Pip) with pose switching, wake effects and element reactions.",
+            "Built the slice game, chat reviews, drag strip, merch drop grid, retired-flavours lookbook and giveaway signup.",
+            "Drew all bottle, can, fruit and merch artwork procedurally and seeded the store through the Admin API.",
+        ],
+        tradeoffs=[
+            "The giveaway and swap guarantee are demo copy. A real brand would wire the signup to an email platform.",
+            "It is a demo brand with sample content, not client work.",
+        ],
+        proves=["Delightful, interactive storefront experiences built from scratch", "Canvas, SVG and scroll animation done with performance in mind", "Reduced-motion and keyboard consideration in playful UI"],
+        related=["tidemark-shopify-theme", "arcline-shopify-theme"],
+        services=["ecommerce-development", "frontend-development"],
+        note="Original showcase store built with demo content. The live storefront runs on a Shopify development store and is password protected.",
     ),
 ]
 
