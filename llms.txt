@@ -14,6 +14,7 @@
 
 ## Projects
 - Pulseboard: React + TypeScript dashboard with live demo: https://saadconsulting.tech/projects/pulseboard-react-dashboard
+- scroll-buddy: open-source npm package, a scroll-driven mascot for any website (zero dependencies, MIT): https://saadconsulting.tech/projects/scroll-buddy-npm-package | npm: https://www.npmjs.com/package/scroll-buddy | code: https://github.com/ali-saad-khan/scroll-buddy
 - Shopify storefronts (four original custom themes): https://saadconsulting.tech/shopify
   - KAIROS (editorial fashion): https://saadconsulting.tech/projects/kairos-fashion-shopify-theme
   - Tidemark (cinematic beverage, build-your-case cart widget): https://saadconsulting.tech/projects/tidemark-shopify-theme

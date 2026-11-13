@@ -372,6 +372,45 @@ PROJECTS = [
         services=["payment-gateway-integration", "rest-api-development", "production-debugging"],
     ),
 
+    dict(
+        slug="scroll-buddy-npm-package",
+        cover="scroll-buddy", short="scroll-buddy (npm)", title="scroll-buddy: A Scroll-Driven Mascot Library on npm",
+        kind="open", repo=GITHUB + "/scroll-buddy", npm="https://www.npmjs.com/package/scroll-buddy", demo="/shopify",
+        cat="JavaScript / SVG / npm package",
+        meta="Case study: scroll-buddy, an MIT-licensed npm package with zero dependencies. A mascot crawls a zig-zag trace down the page as you scroll, with reactions, reduced-motion handling, SSR safety, TypeScript types and tests.",
+        lead="An open-source npm package I published: a tiny mascot that follows a zig-zag trace down the page as you scroll. It walks, climbs, waves when you pause, drops a trail and makes elements react as it passes. It runs on this portfolio (Bit, a server bot) and on my Pith Shopify storefront (Pip, a citrus slice).",
+        facts=[("0", "runtime dependencies"), ("6.7 KB", "gzipped"), ("16", "automated tests"), ("3", "builds: ESM, CJS, browser")],
+        media=[("/assets/images/scroll-buddy/pip-in-action.gif", "Pip, a citrus slice mascot, rolling down a zig-zag trace on a Shopify storefront", "Pip on the Pith storefront"), ("/assets/images/scroll-buddy/bit-in-action.gif", "Bit, a server bot, walking a zig-zag trace down this portfolio", "Bit on this portfolio (scroll the home page to see it live)")],
+        challenge=[
+            "Scroll-driven mascots are a lovely touch of personality, but most implementations are one-off, tied to a single site, heavy, or careless about accessibility and performance.",
+            "I wanted a reusable package that is dependency-free, cheap per frame, safe to import in any framework and respectful of visitors who prefer reduced motion.",
+        ],
+        approach=[
+            ("Sample the path once", "A smooth zig-zag is generated as cubic curves and sampled once into an evenly spaced lookup table. Each scroll frame is just a table read and one transform write, with no <code>getPointAtLength</code> in the hot loop."),
+            ("Pure, tested core", "Path sampling, scroll progress, the walk/climb/wave state machine and the swept-box collision test are pure functions, unit-tested without a browser. A jsdom suite covers mounting, cleanup, scrolling and reactions."),
+            ("Reactions that never miss", "Elements react as the mascot passes. The test covers the whole span travelled between frames, so a fast flick still connects, with a one-shot latch per element per pass."),
+            ("Accessible by default", "Decorative and <code>aria-hidden</code>, never intercepts clicks, off for <code>prefers-reduced-motion</code> (and switches off live if the setting changes), and off on small screens."),
+            ("Works anywhere", "Framework-free with ESM, CJS and an IIFE build, SSR-safe, TypeScript declarations included, and a documented option to avoid injected styles under a strict CSP."),
+            ("Characters are data", "Pip and Bit are just three SVG strings each. Anyone can pass their own character and colour it through CSS variables."),
+        ],
+        stack=["JavaScript (ES modules)", "SVG", "CSSOM", "TypeScript declarations", "node:test", "jsdom", "esbuild", "npm"],
+        did=[
+            "Designed the API, the path generator and sampler, the pose state machine and the collision logic.",
+            "Drew the two built-in characters (Pip and Bit) with walk, climb and wave poses.",
+            "Wrote 16 unit and integration tests and a build that outputs ESM, CJS, an IIFE bundle and a stylesheet.",
+            "Published the package to npm, wrote the documentation and recorded demo GIFs from real sites.",
+            "Used it in production on this portfolio and on a Shopify storefront.",
+        ],
+        tradeoffs=[
+            "Version 1 follows the window scroll only. A custom scroll container would need a different progress source.",
+            "It is decoration, so it deliberately disappears on small screens and for reduced-motion visitors.",
+        ],
+        proves=["Publishing and maintaining an open-source npm package end to end", "Performance-minded animation and testable logic", "Accessibility, CSP and SSR awareness in a front-end library", "Clear documentation and developer experience"],
+        related=["pith-shopify-theme", "pulseboard-react-dashboard"],
+        services=["frontend-development", "ecommerce-development"],
+        note="MIT licensed. Install it with npm install scroll-buddy.",
+    ),
+
     # ---- Shopify showroom: four original storefronts (generated art, demo content) ----
     dict(
         slug="kairos-fashion-shopify-theme",

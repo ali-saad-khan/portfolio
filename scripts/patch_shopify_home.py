@@ -34,5 +34,14 @@ if "<!-- shopify-showroom:start -->" in s:
 else:
     i = s.index('<section id="projects"')
     s = s[:i] + block + "    " + s[i:]
+# scroll-buddy-card: featured npm package card at the start of the Featured Engineering Work grid
+buddy = next(p for p in PROJECTS if p["slug"] == "scroll-buddy-npm-package")
+card = "<!-- scroll-buddy-card:start -->\n" + project_card(buddy) + "\n<!-- scroll-buddy-card:end -->\n"
+if "<!-- scroll-buddy-card:start -->" in s:
+    s = re.sub(r"<!-- scroll-buddy-card:start -->.*?<!-- scroll-buddy-card:end -->\n", lambda m: card, s, flags=re.S)
+else:
+    i = s.index('<section id="projects"'); j = s.index('<div class="projects-grid">', i) + len('<div class="projects-grid">') + 1
+    s = s[:j] + card + s[j:]
+s = s.replace("Two open-source builds you can read line by line, plus production work delivered at Technyx.", "Open-source builds and an npm package you can read line by line, plus production work delivered at Technyx.")
 open(ROOT + "/index.html", "w").write(s)
 print("index.html updated")

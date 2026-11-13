@@ -193,6 +193,7 @@ def cta(title="Have a project like this in mind?", text="Tell me what you're bui
 def project_card(p, size=""):
     badge = {"open": '<span class="badge badge-green">Open Source</span>', "showcase": '<span class="badge badge-green">Shopify Showcase</span>'}.get(p["kind"], '<span class="badge badge-cyan">Production · Private</span>')
     code = p["kind"] == "open" or (p["kind"] == "showcase" and SHOWROOM_REPO_LIVE)
+    npm_btn = f'<a href="{p["npm"]}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">npm package</a>' if p.get("npm") else ""
     return f'''<article class="project-card media-card reveal">
   <a class="card-media" href="/projects/{p["slug"]}" tabindex="-1" aria-hidden="true"><img src="{cover_src(p["cover"])}" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
   <div class="project-top">
@@ -203,7 +204,8 @@ def project_card(p, size=""):
   <div class="project-bottom">
     <a href="/projects/{p["slug"]}" class="btn btn-primary btn-sm">Read case study</a>
     {f'<a href="{p["repo"]}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">View code</a>' if code else ''}
-    {f'<a href="{p["demo"]}" class="btn btn-secondary btn-sm">Live demo</a>' if p.get("demo") else ''}
+    {npm_btn}
+    {f'<a href="{p["demo"]}" class="btn btn-secondary btn-sm">{"See it live" if p.get("npm") else "Live demo"}</a>' if p.get("demo") else ''}
   </div>
 </article>'''
 
@@ -227,8 +229,9 @@ def build_case_study(p):
         code = f'<a href="{p["repo"]}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View theme code on GitHub</a>' if SHOWROOM_REPO_LIVE else ""
         actions = f'<div class="hero-actions">{code}<a href="/shopify" class="btn btn-primary">All Shopify storefronts</a><a href="/contact" class="btn btn-secondary">Start a Project</a></div>'
     elif p["kind"] == "open":
-        demo = f'<a href="{p["demo"]}" class="btn btn-primary">Live demo</a>' if p.get("demo") else ""
-        actions = f'<div class="hero-actions">{demo}<a href="{p["repo"]}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View code on GitHub</a><a href="/contact" class="btn btn-secondary">Start a Project</a></div>'
+        demo = f'<a href="{p["demo"]}" class="btn btn-primary">{"See it in use" if p.get("npm") else "Live demo"}</a>' if p.get("demo") else ""
+        npmb = f'<a href="{p["npm"]}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View on npm</a>' if p.get("npm") else ""
+        actions = f'<div class="hero-actions">{npmb}{demo}<a href="{p["repo"]}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View code on GitHub</a><a href="/contact" class="btn btn-secondary">Start a Project</a></div>'
     else:
         actions = '<div class="hero-actions"><a href="/contact" class="btn btn-primary">Start a Project</a><a href="/projects" class="btn btn-secondary">All case studies</a></div>'
     facts = "".join(f'<div class="stat-card"><div class="stat-number" style="font-size:1.6rem">{e(a)}</div><div class="stat-label">{e(b)}</div></div>' for a, b in p["facts"])
@@ -242,6 +245,10 @@ def build_case_study(p):
     stack = "".join(f'<span class="project-tag">{e(x)}</span>' for x in p["stack"])
     rel = "".join(project_card(PMAP[r]) for r in p["related"][:2])
     svcs = "".join(f'<li><a href="/services/{s}">{e(SMAP[s]["name"])}</a></li>' for s in p["services"])
+    media = ""
+    if p.get("media"):
+        media = '<section class="section tight"><div class="container"><div class="media-pair reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem">' + "".join(
+            f'<figure style="margin:0"><img src="{e(src)}" alt="{e(alt)}" loading="lazy" decoding="async" style="width:100%;height:auto;border:1px solid var(--border);border-radius:var(--radius-md)"><figcaption class="section-subtitle" style="margin-top:.6rem;font-size:.9rem">{e(cap)}</figcaption></figure>' for src, alt, cap in p["media"]) + "</div></div></section>"
     body = hero(items, "// CASE STUDY", p["title"], p["lead"], p["cover"], f"Illustration of the {p['short']} project", actions, [badge_text, p["cat"].split(" / ")[0]])
     body += f'''
     <section class="section tight">
@@ -249,6 +256,7 @@ def build_case_study(p):
         <div class="fact-grid reveal">{facts}</div>
       </div>
     </section>
+    {media}
     <section class="section tight">
       <div class="container article-grid">
         <article class="prose">
