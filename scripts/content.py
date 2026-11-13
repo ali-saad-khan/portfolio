@@ -4,8 +4,8 @@ SITE = "https://saadconsulting.tech"
 EMAIL = "saadalikhan0210@gmail.com"
 GITHUB = "https://github.com/ali-saad-khan"
 # Flip to True once the shopify-showroom repo is public, so "View code" links go live.
-SHOWROOM_REPO_LIVE = False
-SHOWROOM_REPO = GITHUB + "/shopify-showroom"
+SHOWROOM_REPO_LIVE = True
+SHOWROOM_REPO = GITHUB + "/shopify"
 LINKEDIN = "https://www.linkedin.com/in/saad-ali-khan-01976124a/"
 
 CERTS = [
