@@ -415,7 +415,7 @@ PROJECTS = [
     dict(
         slug="kairos-fashion-shopify-theme",
         cover="shopify-kairos", short="KAIROS Fashion Store", title="KAIROS: Editorial Fashion Storefront on Shopify",
-        kind="showcase", repo=SHOWROOM_REPO + "/tree/main/themes/fashion",
+        kind="showcase", store="https://showroom-fashion.myshopify.com/", store_pw="doffai", repo=SHOWROOM_REPO + "/tree/main/themes/fashion",
         cat="Shopify / Liquid / Theme development",
         meta="Case study: KAIROS, an original editorial fashion storefront with 13 custom Liquid sections: shop-the-look hotspots, hover-swap product cards with size quick-add, a drop countdown and a sticky add-to-cart bar.",
         lead="A showcase store I built from scratch to show what a bespoke Shopify theme can look like: a dark, editorial fashion brand with shop-the-look pins, a countdown drop, count-up stats and product cards that quick-add straight into the cart drawer. Brand, products and artwork are all original demo content.",
@@ -452,7 +452,7 @@ PROJECTS = [
     dict(
         slug="tidemark-shopify-theme",
         cover="shopify-tidemark", short="Tidemark Water Store", title="Tidemark: Cinematic Beverage Storefront on Shopify",
-        kind="showcase", repo=SHOWROOM_REPO + "/tree/main/themes/water",
+        kind="showcase", store="https://showroom-wellness.myshopify.com/", store_pw="liffau", repo=SHOWROOM_REPO + "/tree/main/themes/water",
         cat="Shopify / Liquid / Theme development",
         meta="Case study: Tidemark, an original canned-mineral-water storefront with an interactive source journey, animated mineral cards, a build-your-case cart widget and a reusable page system.",
         lead="A dark, cinematic beverage storefront with rising bubbles, an interactive journey of a single drop, mineral cards that count up, and a build-your-case widget that adds several cases to the cart at once with a free-shipping meter and a monthly-delivery toggle. The same page system (hero, collection, journal, article, footer) is reused across my other showcase stores.",
@@ -487,7 +487,7 @@ PROJECTS = [
     dict(
         slug="arcline-shopify-theme",
         cover="shopify-arcline", short="Arcline Paddle Store", title="Arcline: Performance Gear Storefront on Shopify",
-        kind="showcase", repo=SHOWROOM_REPO + "/tree/main/themes/arcline",
+        kind="showcase", store="https://showroom-electronics.myshopify.com/", store_pw="awjibi", repo=SHOWROOM_REPO + "/tree/main/themes/arcline",
         cat="Shopify / Liquid / Theme development",
         meta="Case study: Arcline, an original pickleball paddle storefront with sticky numbered tech chapters, a draggable before and after surface slider, a spec table and a three-question fit quiz.",
         lead="A bold black-and-lime performance-gear storefront in the style of a product launch page: a giant outlined headline, sticky numbered chapters that zoom into the paddle as you scroll, a drag-to-compare surface slider, a versus table and a fit quiz that recommends a product and adds it to the cart.",
@@ -521,7 +521,7 @@ PROJECTS = [
     dict(
         slug="pith-shopify-theme",
         cover="shopify-pith", short="Pith Drinks Store", title="Pith: Playful Zero-Proof Drinks Storefront on Shopify",
-        kind="showcase", repo=SHOWROOM_REPO + "/tree/main/themes/pith",
+        kind="showcase", store="https://showroom-home.myshopify.com/", store_pw="yietha", repo=SHOWROOM_REPO + "/tree/main/themes/pith",
         cat="Shopify / Liquid / Theme development",
         meta="Case study: Pith, an original zero-proof citrus drinks storefront with an entry splash, a canvas slice game, group-chat reviews, a draggable photo strip and a scroll-driven mascot.",
         lead="A bright, sticker-style brand store with personality: a peel-to-enter splash, a canvas slice-the-fruit mini game, reviews as a group chat, a drag-to-scroll photo strip, a merch drop grid and a small citrus mascot that rides a zig-zag line down the page, reacting to the content as it passes.",
@@ -551,6 +551,42 @@ PROJECTS = [
         related=["tidemark-shopify-theme", "arcline-shopify-theme"],
         services=["ecommerce-development", "frontend-development"],
         note="Original showcase store built with demo content. The live storefront runs on a Shopify development store and is password protected.",
+    ),
+    dict(
+        slug="mensiox-menswear-shopify-theme",
+        cover="shopify-mensiox", short="Mensiox Menswear Store", title="Mensiox: Animated Menswear Storefront on Shopify",
+        kind="showcase", store="https://mensiox-preview.myshopify.com/", store_pw="ohmeet", repo=SHOWROOM_REPO + "/tree/main/themes/mensiox",
+        cat="Shopify / Liquid / Theme development",
+        meta="Case study: Mensiox, an original menswear storefront with a pinned scroll-swapping headline, drifting product cards, a cycling word list, stacked layered cards, marquees and a free-shipping cart bar.",
+        lead="A modern, soft-pastel menswear store built for a client pitch: a floating pill header, a hero slider with word-by-word headline reveals, a pinned headline that changes as product cards drift past, a cycling word list, stacking layered cards with spinning stickers, wishlist hearts and a cart drawer with a free-shipping meter. Brand, products and artwork are original demo content.",
+        facts=[("10", "custom Liquid sections"), ("12", "products, Color x Size variants"), ("9", "smart collections by tag"), ("0", "apps required")],
+        challenge=[
+            "The brief was a menswear store with the polish of an award-style storefront: bold type, rounded surfaces and motion that guides the shopper down the page, without paying for a premium theme or installing apps.",
+            "Everything had to stay editable in the theme editor, respect reduced-motion settings and keep the purchase path (quick add, cart drawer, free-shipping nudge) one tap away.",
+        ],
+        approach=[
+            ("Scroll-driven storytelling", "A pinned headline swaps text and animates a marker highlight as the visitor scrolls, while product cards drift past at different speeds. Scroll progress is read once per frame and the cards use transforms only."),
+            ("Stacked layered cards", "Full-width cards use sticky positioning so each one slides over the last. A small script scales and dims the card underneath, and spinning circular stickers float on top."),
+            ("A cycling word list", "A pastel panel cycles through words (Work, Weekend, Travel, Dinner) with a wavy underline and a thumbnail pill. Hovering pins a word and pauses the loop."),
+            ("Cards that sell", "Product cards crossfade to a second image, show colour swatches mapped from the variant option, slide up size buttons that add straight to the cart drawer and keep a local wishlist heart."),
+            ("Conversion touches", "The cart drawer shows a free-shipping progress bar, a newsletter popup appears after a delay and remembers that it was dismissed, and an automatic discount powers the 'buy 3 shirts, save 15%' offer."),
+            ("Original art, generated", "Garment and scene artwork is drawn procedurally in Python (Pillow), so there are no licensing issues and the set regenerates from a script. The catalogue is seeded through an idempotent Admin GraphQL script."),
+        ],
+        stack=["Shopify Online Store 2.0", "Liquid", "JSON templates", "Vanilla JavaScript", "CSS", "AJAX Cart API", "Admin GraphQL API", "Shopify CLI", "Python (Pillow)"],
+        did=[
+            "Designed and wrote 10 custom sections, the product card snippet and the shared stylesheet and script.",
+            "Built the scroll-driven headline, layered cards, word list, marquees, hero slider, popup and cart free-shipping bar.",
+            "Wrote the procedural artwork engine and the Admin API seeding script, and set up the automatic bundle discount.",
+        ],
+        tradeoffs=[
+            "The imagery is illustrated, not photographed. A real launch would swap in product photography.",
+            "The bundle discount percentage shown on the page must be kept in sync with the store discount.",
+            "It is a demo brand with sample content, not client work.",
+        ],
+        proves=["Award-style scroll motion built from plain Liquid, CSS and JavaScript", "Reduced-motion and accessibility awareness", "Conversion-focused storefront features without apps"],
+        related=["kairos-fashion-shopify-theme", "shopify-store-customization"],
+        services=["ecommerce-development", "frontend-development"],
+        note="Original showcase store built with demo content. The storefront runs on a Shopify development store.",
     ),
 ]
 

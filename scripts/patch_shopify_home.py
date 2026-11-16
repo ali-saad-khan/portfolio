@@ -18,7 +18,7 @@ block = f'''<!-- shopify-showroom:start -->
       <div class="container">
         <div class="section-header reveal">
           <span class="section-tag">// SHOPIFY SHOWROOM</span>
-          <h2 class="section-title">Four original Shopify storefronts</h2>
+          <h2 class="section-title">Five original Shopify storefronts</h2>
           <p class="section-subtitle">Bespoke themes, interactive sections and repeatable store setup, each with its own brand and art direction.</p>
         </div>
         <div class="projects-grid">

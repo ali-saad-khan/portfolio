@@ -192,7 +192,7 @@ def cta(title="Have a project like this in mind?", text="Tell me what you're bui
 
 def project_card(p, size=""):
     badge = {"open": '<span class="badge badge-green">Open Source</span>', "showcase": '<span class="badge badge-green">Shopify Showcase</span>'}.get(p["kind"], '<span class="badge badge-cyan">Production · Private</span>')
-    code = p["kind"] == "open" or (p["kind"] == "showcase" and SHOWROOM_REPO_LIVE)
+    code = p["kind"] == "open"
     npm_btn = f'<a href="{p["npm"]}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">npm package</a>' if p.get("npm") else ""
     return f'''<article class="project-card media-card reveal">
   <a class="card-media" href="/projects/{p["slug"]}" tabindex="-1" aria-hidden="true"><img src="{cover_src(p["cover"])}" width="1200" height="675" loading="lazy" decoding="async" alt=""></a>
@@ -204,7 +204,9 @@ def project_card(p, size=""):
   <div class="project-bottom">
     <a href="/projects/{p["slug"]}" class="btn btn-primary btn-sm">Read case study</a>
     {f'<a href="{p["repo"]}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">View code</a>' if code else ''}
+    {f'<a href="{p["store"]}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">View store</a>' if p.get("store") else ''}
     {npm_btn}
+    {f'<p class="store-pass">Store password: <code>{p["store_pw"]}</code></p>' if p.get("store_pw") else ''}
     {f'<a href="{p["demo"]}" class="btn btn-secondary btn-sm">{"See it live" if p.get("npm") else "Live demo"}</a>' if p.get("demo") else ''}
   </div>
 </article>'''
@@ -226,8 +228,9 @@ def build_case_study(p):
     badge_text = {"open": "Open source", "showcase": "Original Shopify showcase"}.get(p["kind"], "Production work (private code)")
     actions = ""
     if p["kind"] == "showcase":
-        code = f'<a href="{p["repo"]}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View theme code on GitHub</a>' if SHOWROOM_REPO_LIVE else ""
-        actions = f'<div class="hero-actions">{code}<a href="/shopify" class="btn btn-primary">All Shopify storefronts</a><a href="/contact" class="btn btn-secondary">Start a Project</a></div>'
+        code = f'<a href="{p["store"]}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View store</a>' if p.get("store") else ""
+        pwn = f'<p class="store-pass">The store opens on a Shopify password page. Password: <code>{p["store_pw"]}</code></p>' if p.get("store_pw") else ""
+        actions = f'<div class="hero-actions">{code}<a href="/shopify" class="btn btn-primary">All Shopify storefronts</a><a href="/contact" class="btn btn-secondary">Start a Project</a></div>{pwn}'
     elif p["kind"] == "open":
         demo = f'<a href="{p["demo"]}" class="btn btn-primary">{"See it in use" if p.get("npm") else "Live demo"}</a>' if p.get("demo") else ""
         npmb = f'<a href="{p["npm"]}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View on npm</a>' if p.get("npm") else ""
@@ -342,7 +345,7 @@ def build_projects_index():
     priv = "".join(project_card(p) for p in PROJECTS if p["kind"] not in ("open", "showcase"))
     shop = "".join(project_card(p) for p in PROJECTS if p["kind"] == "showcase")
     body = hero(items, "// PROJECTS & CASE STUDIES", "Full Stack Case Studies: React, Laravel & E-commerce",
-                "Open-source builds you can read line by line (React, Next.js, Laravel and n8n), four original Shopify storefronts, and production work delivered at Technyx. Each case study explains the problem, the decisions and the result.",
+                "Open-source builds you can read line by line (React, Next.js, Laravel and n8n), five original Shopify storefronts, and production work delivered at Technyx. Each case study explains the problem, the decisions and the result.",
                 None)
     body += f'''
     <section class="section tight">
@@ -353,7 +356,7 @@ def build_projects_index():
     </section>
     <section class="section section-alt">
       <div class="container">
-        <div class="section-header reveal"><span class="section-tag">// SHOPIFY SHOWROOM</span><h2 class="section-title">Four original Shopify storefronts</h2><p class="section-subtitle">Custom themes with demo brands and generated artwork. <a href="/shopify">See the showroom</a>.</p></div>
+        <div class="section-header reveal"><span class="section-tag">// SHOPIFY SHOWROOM</span><h2 class="section-title">Five original Shopify storefronts</h2><p class="section-subtitle">Custom themes with demo brands and generated artwork. <a href="/shopify">See the showroom</a>.</p></div>
         <div class="projects-grid">{shop}</div>
       </div>
     </section>
@@ -379,8 +382,8 @@ def build_shopify():
     shop = [p for p in PROJECTS if p["kind"] == "showcase"]
     cards = "".join(project_card(p) for p in shop)
     rows = "".join(f'''<li class="approach-item"><span class="approach-num">{i+1:02d}</span><div><h3>{e(p["short"])}</h3><p>{h(p["lead"])}</p></div></li>''' for i, p in enumerate(shop))
-    body = hero(items, "// SHOPIFY STOREFRONTS", "Custom Shopify Themes: Four Original Storefronts",
-                "A showroom of four bespoke stores I built end to end: design system, custom Liquid sections, interactive components, product data and imagery. Each is a different brand and a different art direction, built on the same reusable theme architecture.",
+    body = hero(items, "// SHOPIFY STOREFRONTS", "Custom Shopify Themes: Five Original Storefronts",
+                "A showroom of five bespoke stores I built end to end: design system, custom Liquid sections, interactive components, product data and imagery. Each is a different brand and a different art direction, built on the same reusable theme architecture.",
                 None, "", '<div class="hero-actions"><a href="/contact" class="btn btn-primary">Start a Shopify project</a><a href="/projects/shopify-store-customization" class="btn btn-secondary">Production Shopify work</a></div>', ["Online Store 2.0", "Liquid", "No apps"])
     body += f'''
     <section class="section tight">
@@ -402,7 +405,7 @@ def build_shopify():
             <li>Original artwork generated procedurally in Python, so there are no licensing issues.</li>
             <li>Checked with theme-check and deployed with Shopify CLI.</li>
           </ul>
-          <div class="callout">These are original demo brands with sample content, not client work. The storefronts run on Shopify development stores and are password protected, so each case study shows the build instead of a public link. I am happy to walk through one on a call.</div>
+          <div class="callout">These are original demo brands with sample content, not client work. The storefronts run on Shopify development stores. Shopify protects development stores with a storefront password, so each card shows the password to enter after you click View store. I am happy to walk through one on a call.</div>
         </article>
         <aside class="side-card-wrap">
           <div class="side-card side-cta"><h3>Need a store like this?</h3><p>Custom themes, migrations and storefront features for Shopify merchants.</p><a href="/contact" class="btn btn-primary btn-sm">Get in touch</a></div>
@@ -415,8 +418,8 @@ def build_shopify():
               {"@context": "https://schema.org", "@type": "CollectionPage", "name": "Shopify storefronts", "url": SITE + path,
                "mainEntity": {"@type": "ItemList", "itemListElement": [
                    {"@type": "ListItem", "position": i + 1, "url": f"{SITE}/projects/{p['slug']}", "name": p["title"]} for i, p in enumerate(shop)]}}]
-    return path, page(path, "Custom Shopify Theme Development: Showroom of Four Storefronts",
-                      "A showroom of four original custom Shopify storefronts with bespoke Liquid sections, interactive components, Cart API features and repeatable Admin API setup.",
+    return path, page(path, "Custom Shopify Theme Development: Showroom of Five Storefronts",
+                      "A showroom of five original custom Shopify storefronts with bespoke Liquid sections, interactive components, Cart API features and repeatable Admin API setup.",
                       body, "Shopify", schema, og="shopify")
 
 
@@ -728,7 +731,7 @@ def main():
     print("built", len(pages), "pages")
     if "--og" in sys.argv:
         jobs = [("certifications", f"{C.TOTAL} Verified AI, Claude Code & n8n Certifications", "certifications"), ("about", "About Saad Ali Khan", "about"), ("projects", "Projects & Case Studies", "fincore-ledger"),
-                ("services", "Laravel, API & E-commerce Services", "rest-api"), ("shopify", "Custom Shopify Storefronts: Four Original Themes", "shopify-pith"), ("contact", "Hire a Laravel & PHP Developer", "laravel-code")]
+                ("services", "Laravel, API & E-commerce Services", "rest-api"), ("shopify", "Custom Shopify Storefronts: Five Original Themes", "shopify-pith"), ("contact", "Hire a Laravel & PHP Developer", "laravel-code")]
         jobs += [("blog", "Full Stack Engineering Blog: Laravel, APIs & Payments", "laravel-code")] + [("blog-" + b["slug"], b["title"], b["cover"]) for b in POSTS]
         jobs += [(p["slug"], p["title"], p["cover"]) for p in PROJECTS] + [(s["slug"], s["title"], s["cover"]) for s in SERVICES]
         for j in jobs:

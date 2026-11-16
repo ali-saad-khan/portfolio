@@ -2602,3 +2602,8 @@ h1 { font-weight: 600; letter-spacing: -0.02em; }
 .bitr-underline { background-image: linear-gradient(var(--stamp), var(--stamp)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0 3px; animation: bitrUnderline 0.9s ease forwards; }
 @media (max-width: 899px), (prefers-reduced-motion: reduce) { .bit-thread, .bit-layer { display: none !important; } }
 @media (prefers-reduced-motion: reduce) { .bitr-pop, .bitr-tilt, .bitr-nudge, .bitr-wobble, .bitr-jitter, .bitr-flash, .bitr-underline { animation: none !important; } }
+
+/* Shopify showroom: storefront password hint */
+.store-pass { flex-basis: 100%; margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-muted, inherit); opacity: 0.85; }
+.store-pass code { padding: 0.1rem 0.45rem; border-radius: 0.35rem; background: rgba(127,127,127,0.18); font-weight: 600; letter-spacing: 0.04em; user-select: all; }
+.hero-actions + .store-pass { margin-top: 1rem; }
