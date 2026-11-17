@@ -374,15 +374,15 @@ function initSpotlight() {
   import("/assets/vendor/server-buddies/index.js")
     .then((m) => {
       m.createBuddy({
-        character: "octopus",
+        character: "cat",
         colors: { main: "#D9532C", shell: "#11261D", screen: "#0B1511" },
         hang: "rope",
         position: "top-right",
         offset: { x: 24, y: 72 },
         hideBelow: 900,
         size: 110,
-        label: "Octopus buddy, a friendly mascot. Click to say hi",
-        messages: { hello: "Hi, I'm Saad's octopus buddy!" },
+        label: "Cat buddy, a friendly mascot. Click to say hi",
+        messages: { hello: "Hi, I'm Saad's cat buddy!" },
       });
     })
     .catch(() => {});
@@ -390,6 +390,8 @@ function initSpotlight() {
 
 // "Bit" the server bot: crawls a zig-zag trace down the page as you scroll (desktop, motion allowed).
 (function initBitRider() {
+  // Homepage only.
+  if (!/^\/(index(\.html)?)?$/.test(location.pathname)) return;
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   import("/js/rider.js").then((m) => m.initRider()).catch(() => {});
 })();
